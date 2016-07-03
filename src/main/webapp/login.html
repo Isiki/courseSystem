@@ -3,20 +3,126 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>测试学生信息</title>
+    <title>编辑个人信息</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta content="" name="description"/>
     <meta content="" name="author"/>
-<body>
 
-<div>
+    <!-- 开发智能提示需要，真正发布的时候需要删除-->
+    <link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet"
+          type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
 
-    <input name="id" id="id" type="text" th:value="${student.id}" />
-    <input name="name" id="name" type="text" th:value="${student.name}" />
+    <!---->
 
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
+<!--常用的公用的css-->
+<div th:include="common::css"></div>
+<!-- header -->
+<div th:replace="header :: header"></div>
+<!-- header结束 -->
+<div class="clearfix"></div>
+<div class="page-container">
+    <!-- 侧边导航栏 -->
+    <div th:replace="sidebar::sidebar"></div>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content" style="min-height: 1295px">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+                编辑个人信息
+            </h3>
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="#">用户管理</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">用户信息</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-11">
+                    <div class="portlet box blue">
+                        <div class="portlet-title">
+                            <div class="caption">编辑个人信息</div>
+                        </div>
+                        <div class="portlet-body form">
+                            <form th:action="@{/login.do}" class="form-horizontal" role="form" method="post" id="form">
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <label for="username" class="col-md-2 control-label" >用户名</label>
+                                        <div class="col-md-4">
+                                            <input class="form-control" readonly type="text" name="name" id="name" th:value="${student.name}">
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-6">
+                                            <button id="submit-btn" type="button" class="btn green" onclick="save_user_info()">确认提交</button>
+                                            <button id="return-btn" type="button" class="btn red col-md-offset-1" onclick="javascript:window.history.back(-1);">返回前页</button>
+                                        </div>
+                                    </div>
+                                    <input class="form-control invisible" readonly type="text" name="id" id="id" th:value="${student.id}" >
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT-->
+            </div>
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- footer-->
+    <div th:replace="footer::footer"></div>
+    <!-- 把公用的js包含进来,包含一些初始化的工作 -->
+    <div th:include="common::js"></div>
+    <script type="application/javascript">
+        function save_user_info(){
+            var result=checkNull("email");
+            if(result){
+                var data= $.param($('#form').serializeArray());
+                $.ajax({
+                    url:"saveUserInfo.do",
+                    type:"POST",
+                    data:data,
+                    dataType:"json",
+                    success:function(result){
+                        if(result.code==0)
+                            result.msg = "提交成功";
+                        layer.alert(result.msg);
+                    }
+                });
+            }
+        }
+    </script>
 </div>
 </body>
 </html>
