@@ -1,8 +1,65 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head></head>
 
-    <input id ="student" name="student"  th:value="${student}" type = text/>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link th:href="@{/resources/image/favicon.ico}" rel="shortcut icon">
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+    <link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="resources/assets/admin/pages/css/login.css" rel="stylesheet" type="text/css">
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME STYLES -->
+    <link id="style_components" href="resources/assets/global/css/components.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css">
+    <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css">
+    <!-- END THEME STYLES -->
+
+</head>
+
+<body class="login m-body-font">
+<div th:include="common::css"></div>
+<div class="content">
+    <!-- BEGIN LOGIN FORM -->
+    <form class="login-form" action="login_action.do" method="post" novalidate="novalidate">
+        <h3 class="form-title">登录</h3>
+        <div class="form-group" th:if="${errorInfo}!=''">
+            <label class="control-label text-danger" th:text="${errorInfo}"></label>
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">用户名</label>
+            <input name="username" class="form-control form-control-solid " type="text" placeholder="用户名" >
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">密码</label>
+            <input name="password" class="form-control form-control-solid placeholder-no-fix" type="password" placeholder="密码" autocomplete="off">
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-success uppercase" type="submit">登录</button>
+            <a class="forget-password" id="forget-password" th:href="@{/find_password.do}">忘记密码?</a>
+        </div>
+
+    </form>
+</div>
+
+<div th:include="common::js"></div>
+
+</body>
 
 </html>
