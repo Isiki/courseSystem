@@ -1,8 +1,6 @@
 package controller;
 
-
 import entity.BaseException;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,13 +10,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import service.StudentService;
+import model.Student;
+
 
 /**
- * Created by tuomao on 2016/3/17.
+ * Created by isiki on 2016/7/04.
  */
 
 @Controller
@@ -32,25 +31,16 @@ public class LoginController {
     @Autowired
     private TeacherService teacherService;
 
-    @Autowired
-    private WorkGroupService workGroupService;
-    @Autowired
-    private DepartmentService departmentService;
-    @Autowired
-    private TaskService taskService;
 
     @RequestMapping(value = "login")
     public String userLogin(@ModelAttribute("user") User user, @ModelAttribute("errorInfo") String errorInfo,
                             @ModelAttribute("isAdmin") String isAdmin, Model model) throws BaseException {
 
-        return "login";
-    }
 
     @RequestMapping(value = "findPasswordAction")
     public String findPasswordAction(int id,HttpServletRequest request,Model model) throws BaseException {
         String errorInfo="";
         String defaultPassword="";
-
         User user=userService.getUserById(id);
         if(user!=null){
             boolean result=GenerateLinkUtil.verifyCheckcode(String.valueOf(id), user.getRandomCode(),request);
@@ -133,3 +123,4 @@ public class LoginController {
         return "redirect:/login.do";
     }
 }
+

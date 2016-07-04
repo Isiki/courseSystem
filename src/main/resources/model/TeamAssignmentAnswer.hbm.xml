@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.TeamAssignmentAnswer" table="teamassignmentanswer" schema="coursecenter">
+        <composite-id mapped="true" class="model.TeamAssignmentAnswerPK">
+            <key-property name="teamId">
+                <column name="team_id" sql-type="varchar(50)" length="50"/>
+            </key-property>
+            <key-property name="assignmentId">
+                <column name="assignment_id" sql-type="varchar(50)" length="50"/>
+            </key-property>
+        </composite-id>
+        <property name="isSubmitted">
+            <column name="is_submitted" sql-type="tinyint(1)"/>
+        </property>
+        <property name="submitTime">
+            <column name="submit_time" sql-type="datetime" not-null="true"/>
+        </property>
+        <property name="text">
+            <column name="text" sql-type="longtext" not-null="true"/>
+        </property>
+        <property name="attachmentUrl">
+            <column name="attachment_url" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

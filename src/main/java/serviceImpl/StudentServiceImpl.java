@@ -1,10 +1,10 @@
 package serviceImpl;
 
 import dao.StudentDao;
-import model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.StudentService;
+import model.Student;
 
 /**
  * Created by isiki on 2016/7/3.
