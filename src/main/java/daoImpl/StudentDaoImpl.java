@@ -1,12 +1,10 @@
 package daoImpl;
 
 import dao.StudentDao;
-import model.Student;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
+import model.Student;
 /**
  * Created by isiki on 2016/7/3.
  */

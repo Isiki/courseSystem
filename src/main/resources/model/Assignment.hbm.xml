@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.Assignment" table="assignment" schema="coursecenter">
+        <id name="id">
+            <column name="id" sql-type="varchar(10)" length="10"/>
+        </id>
+        <property name="courseId">
+            <column name="course_id" sql-type="varchar(10)" length="10" not-null="true"/>
+        </property>
+        <property name="isTeamwork">
+            <column name="is_teamwork" sql-type="tinyint(1)"/>
+        </property>
+        <property name="idInCourse">
+            <column name="id_in_course" sql-type="int(11)"/>
+        </property>
+        <property name="heading">
+            <column name="heading" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="startTime">
+            <column name="start_time" sql-type="datetime" not-null="true"/>
+        </property>
+        <property name="endTime">
+            <column name="end_time" sql-type="datetime" not-null="true"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="longtext" not-null="true"/>
+        </property>
+        <property name="attachmentUrl">
+            <column name="attachment_url" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
