@@ -1,6 +1,9 @@
 package daoImpl;
 
 import dao.AssignmentDao;
+import entity.AjaxResponse;
+import entity.BaseException;
+import model.Assignment;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,18 +19,12 @@ public class AssignmentDaoImpl implements AssignmentDao{
     @Autowired
     private SessionFactory sessionFactory;
     public Assignment getAssignmentById(String id) {
-        return sessionFactory.getCurrentSession().get(Assignment.class,id);
+        Assignment assignment = (Assignment) sessionFactory.getCurrentSession().get(Assignment.class,id);
+        return assignment;
     }
 
-    @RequestMapping(value = "/admin/addtask_action")
-    public
-    @ResponseBody
-    AjaxResponse addTaskAction(Task task, BindingResult result) throws BaseException {
-        AjaxResponse response = new AjaxResponse();
-        task.setId(task.getTaskNumber() + ":" + task.getTaskDate());
-        task.setAppendRation(0);
-        taskService.insertTask(task);
-        return response;
+    public void insertAssignment(Assignment assignment) {
+        sessionFactory.getCurrentSession().save(assignment);
     }
 
 

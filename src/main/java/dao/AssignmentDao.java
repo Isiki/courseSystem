@@ -5,4 +5,5 @@ import model.Assignment;
  */
 public interface AssignmentDao {
     Assignment getAssignmentById(String id);
+    void insertAssignment(Assignment assignment);
 }

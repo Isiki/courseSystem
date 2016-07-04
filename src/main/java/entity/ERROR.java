@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class ERROR {
     public static int USER_NOT_EXIST=1;
     public static int PASSWORD_ERROR=2;
-    public static int TASK_NUMBER_EXIST=3;
+    public static int ASSIGNMENT_NUMBER_EXIST=3;
     public static int WORK_HOUR_EXIST=4;
     public static int DATE_ILLEGAL=5;
     public static int FILL_CURRENT_MONTH_WORKHOUR=6;
@@ -22,7 +22,7 @@ public class ERROR {
     static {
         hashMap.put(USER_NOT_EXIST,"用户名不存在");
         hashMap.put(PASSWORD_ERROR,"密码错误");
-        hashMap.put(TASK_NUMBER_EXIST,"任务已经存在");
+        hashMap.put(ASSIGNMENT_NUMBER_EXIST,"作业已经存在");
         hashMap.put(WORK_HOUR_EXIST,"您已填写过该工时，如果需要修改，请联系管理员");
         hashMap.put(DATE_ILLEGAL,"日期不合法");
         hashMap.put(UNKNOWN_ERROR,"未知错误");
