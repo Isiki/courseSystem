@@ -1,0 +1,19 @@
+.table-search{
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.m-body-font{
+    font-family: 微软雅黑;
+    font-size:14px ;
+}
+.m-table > tbody > tr > td {
+    vertical-align: middle;
+}
+.info-h{
+    color: white;
+    text-align: center;
+    margin-top: 150px
+}
+.info-bg{
+    background-color:#364150
+}
