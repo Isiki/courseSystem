@@ -1,12 +1,16 @@
 package controller;
 
+import entity.BaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import service.StudentService;
 import model.Student;
 import service.TeacherService;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -16,8 +20,6 @@ import service.TeacherService;
 @Controller
 public class LoginController {
 
-    private static Logger logger = Logger
-            .getLogger(LoginController.class);
 
     @Autowired
     private StudentService studentService;

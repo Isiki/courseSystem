@@ -7,67 +7,67 @@ import java.util.Map;
 import org.hibernate.LockMode;
 
 public interface Dao<T,PK> {
-	public abstract T get(PK id);
+    T get(PK id);
 
 
-    public abstract List<T> getList(List<PK> ids);
+    List<T> getList(List<PK> ids);
 
 
-    public abstract List<T> getAll();
+    List<T> getAll();
 
 
-    public abstract List<T> getAll(Boolean desc, String orderProperName);
+    List<T> getAll(Boolean desc, String orderProperName);
 
 
-    public abstract List<T> page(int pageIndex, int pageSize);
+    List<T> page(int pageIndex, int pageSize);
 
 
-    public abstract List<T> page(int pageIndex, int pageSize, Boolean desc, String orderProperName);
+    List<T> page(int pageIndex, int pageSize, Boolean desc, String orderProperName);
 
 
-    public abstract PK save(T entity);
+    PK save(T entity);
 
 
-    public abstract void saveOrUpdate(T entity, Boolean... cache);
+    void saveOrUpdate(T entity, Boolean... cache);
 
-    public abstract void merge(T entity);
-
-
-    public abstract int Count();
+    void merge(T entity);
 
 
-    public abstract void delete(T entity);
+    int Count();
 
 
-    public abstract void deleteAll(Collection<T> entities);
-    public abstract void deleteByKey(PK id);
+    void delete(T entity);
 
 
-    public abstract void flush();
+    void deleteAll(Collection<T> entities);
+    void deleteByKey(PK id);
 
 
-    public abstract void lock(T entity, LockMode lock);
+    void flush();
 
 
-    public abstract List<T> getPageByCriteria(Map<String, Object> params, final int indexPage,
+    void lock(T entity, LockMode lock);
+
+
+    List<T> getPageByCriteria(Map<String, Object> params, final int indexPage,
                                               final int pageSize, Boolean desc, String orderProperName, List<String> groupName, Boolean... cache);
 
 
-    public abstract List<T> getPageByCriteria(Map<String, Object> params, final int indexPage,
+    List<T> getPageByCriteria(Map<String, Object> params, final int indexPage,
                                               final int pageSize, Boolean desc, String orderProperName, Boolean... cache);
 
-    public abstract Integer getCountCriteria(Map<String, Object> params,
+    Integer getCountCriteria(Map<String, Object> params,
                                              List<String> nullColumnNames, String countName);
 
 
-    public abstract List<T> getCountByCriteria(Map<String, Object> params, List<String> groupNames);
+    List<T> getCountByCriteria(Map<String, Object> params, List<String> groupNames);
 
-    public abstract List<T> getTByExample(T example, Boolean... cache);
-
-
-    public abstract List<T> getTByExample(T example, Boolean desc, String orderProperName, Boolean... cache);
+    List<T> getTByExample(T example, Boolean... cache);
 
 
-    public abstract List<T> getTByExample(T example, final int indexPage, final int pageSize,
+    List<T> getTByExample(T example, Boolean desc, String orderProperName, Boolean... cache);
+
+
+    List<T> getTByExample(T example, final int indexPage, final int pageSize,
                                           Boolean desc, String orderProperName, Boolean... cache);
 }
