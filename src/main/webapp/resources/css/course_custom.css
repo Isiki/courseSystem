@@ -1,0 +1,57 @@
+
+#nav-header{
+    background-color: #222;
+    border-bottom: 1px solid #080808;
+}
+
+#nav-header ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    color: #676a6c;
+}
+
+#nav-header ul li {
+    float: left;
+    margin-left: 15px;
+    padding: 12px 0px;
+}
+
+#nav-header ul .glyphicon{
+    color: #676a6c;
+}
+
+.label-message {
+    background-color: #1ab394;
+}
+
+#nav-header ul a {
+    text-decoration: none;
+}
+
+#nav-header .logout {
+    color: #676a6c;
+}
+
+#nav-header .logout:hover {
+    color: #676a6c;
+}
+
+#nav-header ul .label {
+    position: absolute;
+    margin-top: -10px;
+    margin-left: -5px;
+}
+
+#nav-header .fixed-width {
+    width: 40px;
+}
+
+.course-table {
+    background-color: #e3e3c7;
+    border-style: solid;
+}
+
+.course-table .fixed-width{
+    width: 40px;
+}
