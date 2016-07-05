@@ -1,13 +1,12 @@
 package controller;
 
 
-import model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import service.StudentService;
-
+import model.Student;
 
 /**
  * Created by tuomao on 2016/6/2.
@@ -20,7 +19,7 @@ public class SecurityTestController {
     public String testLogin(String id, Model model) {
         Student student = studentService.getStudentById(id);
         System.out.print(student.getId());
-        System.out.println(student.getName());
+        System.out.println(student.getRealName());
         model.addAttribute("student", student);
         return "test";
     }

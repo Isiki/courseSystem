@@ -11,9 +11,33 @@
         <property name="hibernate.query.substitutions">
             true 1, false 0
         </property>
+        <property name="connection.url">jdbc:mysql://120.27.92.166:3306/CourseCenter</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 
+        <mapping resource="model/Admin.hbm.xml"/>
+        <mapping class="model.Admin"/>
+        <mapping resource="model/Assignment.hbm.xml"/>
+        <mapping class="model.Assignment"/>
+        <mapping resource="model/Course.hbm.xml"/>
+        <mapping class="model.Course"/>
+        <mapping resource="model/PersonalAssignmentAnswer.hbm.xml"/>
+        <mapping class="model.PersonalAssignmentAnswer"/>
+        <mapping resource="model/Selection.hbm.xml"/>
+        <mapping class="model.Selection"/>
         <mapping resource="model/Student.hbm.xml"/>
-
+        <mapping class="model.Student"/>
+        <mapping resource="model/Teacher.hbm.xml"/>
+        <mapping class="model.Teacher"/>
+        <mapping resource="model/Teaching.hbm.xml"/>
+        <mapping class="model.Teaching"/>
+        <mapping resource="model/Team.hbm.xml"/>
+        <mapping class="model.Team"/>
+        <mapping resource="model/TeamAssignmentAnswer.hbm.xml"/>
+        <mapping class="model.TeamAssignmentAnswer"/>
+        <mapping resource="model/Teaming.hbm.xml"/>
+        <mapping class="model.Teaming"/>
+        <mapping resource="model/Resources.hbm.xml"/>
+        <mapping class="model.Resources"/>
 
 
         <!-- DB schema will be updated if needed -->

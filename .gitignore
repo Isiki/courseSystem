@@ -2,4 +2,5 @@ out/
 target/
 .idea/
 .settings/
-springmvcdemo.iml
+*.iml
+

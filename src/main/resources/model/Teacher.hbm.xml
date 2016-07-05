@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="model.Student" table="student" schema="coursecenter">
+    <class name="model.Teacher" table="teacher" schema="coursecenter">
         <id name="id">
             <column name="id" sql-type="varchar(10)" length="10"/>
         </id>

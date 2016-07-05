@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.Course" table="course" schema="coursecenter">
+        <id name="id">
+            <column name="id" sql-type="varchar(10)" length="10"/>
+        </id>
+        <property name="courseName">
+            <column name="course_name" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="teamAllowed">
+            <column name="team_allowed" sql-type="tinyint(1)"/>
+        </property>
+        <property name="teamMinMember">
+            <column name="team_min_member" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="teamMaxNumber">
+            <column name="team_max_number" sql-type="varchar(50)" length="50"/>
+        </property>
+        <set name="resources" inverse="true">
+            <key>
+                <column name="id" not-null="true"/>
+            </key>
+            <one-to-many class="model.Resources"/>
+        </set>
+
+    </class>
+</hibernate-mapping>
