@@ -101,21 +101,20 @@
             <!-- important 在这里开始正文的内容-->
             <div class="row">
                 <div class="col-md-12">
-                    <p th:text="${plaintext}"></p>
                     <table class="course-table" border="1">
                         <tr>
                             <td>课程编号</td>
                             <td>课程名</td>
-                            <td>组队/个人</td>
+                            <td>组队要求</td>
                             <td>人数下限</td>
                             <td>人数上限</td>
                         </tr>
                         <tr th:each="cs:${courses}">
-                            <td th:text="${cs.id}" class="fixed-width"></td>
-                            <td th:text="${cs.name}"></td>
-                            <td th:text="${cs.team_allowed?'组队':'个人'}"></td>
-                            <td th:text="${cs.team_min_member}"></td>
-                            <td th:text="${cs.team_max_member}"></td>
+                            <td th:text="${cs.id}"></td>
+                            <td th:text="${cs.courseName}"></td>
+                            <td th:text="none"></td>
+                            <td th:text="none"></td>
+                            <td th:text="none"></td>
                         </tr>
                     </table>
                     </tr>

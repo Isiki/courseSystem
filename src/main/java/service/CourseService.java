@@ -13,6 +13,12 @@ public interface CourseService {
 
     public List<Course> getAllCourses();
 
+    public Course searchCourseByName(String name);
+
+    public Course searchCourseByTeacherName(String teacher);
+
+    public Course searchCourseById(String id);
+
     /*
     public String addCourse(String name, boolean team_allowed, String team_min_member, String team_max_member);
 
@@ -22,14 +28,6 @@ public interface CourseService {
 
     public String deleteCourse(int id);
 
-    public Course searchCourseByName(String name);
-
-    public List<Course> searchCoursesByNameString (String name);
-
-    public Course searchCourseById(int courseId);
-
-    public Course searchCourseByTeacherName(String name);
-
-    public List<Course> searchCoursesByTeacherName(String name);
+    ;
     */
 }

@@ -64,14 +64,15 @@ public class CourseDaoImpl implements CourseDao{
     // TODO: try join with dao & HQL
 
     public List<Course> getAll(){
-        Query query=sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM  Course");
+        Query query=sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM Course").addEntity(Course.class);
         return query.list();
     }
 
     public List<Course> getCoursesByTeacherNameBad(String tname){
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT * FROM Course, Teaching, Teacher WHERE Teacher.name=="+tname)
+                .createSQLQuery("select course.id, course_name, team_allowed, team_min_member, team_max_number from course left join teaching on course.id=teaching.course_id left join teacher on teaching.teacher_id=teacher.id where teacher.real_name=\'"+tname+"\'")
                 .addEntity(Course.class);
+
         return query.list();
     }
 }

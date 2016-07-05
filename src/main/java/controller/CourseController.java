@@ -10,6 +10,7 @@ import service.CourseService;
 import org.springframework.ui.Model;
 
 import javax.validation.Constraint;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,26 +31,30 @@ public class CourseController {
             //String result = courseService.addCourse(name, teacher, desc);
         //model.addAttribute("result", result);
         return "addresult";
-    }
+    }*/
 
 
     @RequestMapping(value = "searchcourse", method = RequestMethod.GET)
     public String searchCourse(@RequestParam("value") String val,
                                @RequestParam("method") String meth,
                                Model model) {
+        System.out.println(val);
+
         Course course = null;
-        if (meth == "ById")
-            course = courseService.searchCourseById(Integer.parseInt(val));
-        else if (meth == "ByName")
+        if (meth.equals("ById"))
+            course = courseService.searchCourseById(val);
+        else if (meth.equals("ByName"))
             course = courseService.searchCourseByName(val);
-        else if (meth == "ByTeacherName")
+        else if (meth.equals("ByTeacherName"))
             course = courseService.searchCourseByTeacherName(val);
 
-        model.addAttribute("course", course);
-        return "searchresult";
+        List<Course> courses = new ArrayList<Course>();
+        courses.add(course);
+        model.addAttribute("courses", courses);
+        return "course_front";
     }
 
-
+/*
     @RequestMapping(value = "deletecourse", method = RequestMethod.GET)
     public String deleteCourseInfo(@RequestParam("courseid") int id, Model model) {
         String result = courseService.deleteCourse(id);
@@ -69,8 +74,8 @@ public class CourseController {
 
     @RequestMapping(value="coursetable")
     public String giveYouAll(Model model){
-        List<Course> course=courseService.getAllCourses();
-        model.addAttribute("courses",course);
+        List<Course> courses = courseService.getAllCourses();
+        model.addAttribute("courses", courses);
         return "course_front";
     }
 

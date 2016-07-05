@@ -60,18 +60,14 @@ public class CourseServiceImpl implements CourseService {
         courseDao.delCourse(id);
         return "success";
     }
-
+*/
     public Course searchCourseByName(String name) {
         Course course=courseDao.getCourseByName(name);
         return course;
     }
 
-    public List<Course> searchCoursesByNameString (String name){
-        List<Course> course=courseDao.getCoursesByName(name);
-        return course;
-    }
 
-    public Course searchCourseById(int id) {
+    public Course searchCourseById(String id) {
         Course course=courseDao.getCourseById(id);
         return course;
     }
@@ -82,6 +78,7 @@ public class CourseServiceImpl implements CourseService {
         return course.get(0);
 
     }
+    /*
     public List<Course> searchCoursesByTeacherName(String name){
         List<Course> course=courseDao.getCoursesByTeacherNameBad(name);
         return course;
