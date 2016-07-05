@@ -15,7 +15,7 @@ public class Course {
     private boolean teamAllowed;
     private String teamMinMember;
     private String teamMaxNumber;
-    private Set resources = new HashSet(0);
+
 
 
     public String getId() {
@@ -62,8 +62,7 @@ public class Course {
         this.teamMaxNumber = teamMaxNumber;
     }
 
-    public void setResources(Set resources){this.resources = resources;}
-    public Set getResources(){return this.resources;}
+
 
 
     @Override
