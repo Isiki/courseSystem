@@ -4,20 +4,22 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Admin on 2016/7/4.
  */
-@Entity
+
 public class Course {
     private String id;
     private String courseName;
     private boolean teamAllowed;
     private String teamMinMember;
     private String teamMaxNumber;
+    private Set resources = new HashSet(0);
 
-    @Id
-    @Column(name = "id", nullable = false, length = 10)
+
     public String getId() {
         return id;
     }
@@ -26,8 +28,7 @@ public class Course {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "course_name", nullable = false, length = 50)
+
     public String getCourseName() {
         return courseName;
     }
@@ -36,8 +37,7 @@ public class Course {
         this.courseName = courseName;
     }
 
-    @Basic
-    @Column(name = "team_allowed", nullable = false)
+
     public boolean isTeamAllowed() {
         return teamAllowed;
     }
@@ -46,8 +46,7 @@ public class Course {
         this.teamAllowed = teamAllowed;
     }
 
-    @Basic
-    @Column(name = "team_min_member", nullable = false, length = 50)
+
     public String getTeamMinMember() {
         return teamMinMember;
     }
@@ -56,8 +55,7 @@ public class Course {
         this.teamMinMember = teamMinMember;
     }
 
-    @Basic
-    @Column(name = "team_max_number", nullable = false, length = 50)
+
     public String getTeamMaxNumber() {
         return teamMaxNumber;
     }
@@ -65,6 +63,10 @@ public class Course {
     public void setTeamMaxNumber(String teamMaxNumber) {
         this.teamMaxNumber = teamMaxNumber;
     }
+
+    public void setResources(Set resources){this.resources = resources;}
+    public Set getResources(){return this.resources;}
+
 
     @Override
     public boolean equals(Object o) {
