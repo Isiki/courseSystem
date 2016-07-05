@@ -15,12 +15,10 @@ import model.Student;
 public class SecurityTestController {
     @Autowired
     private StudentService studentService;
-    @RequestMapping(value = "test_login")
-    public String testLogin(String id, Model model) {
-        Student student = studentService.getStudentById(id);
-        System.out.print(student.getId());
-        System.out.println(student.getRealName());
-        model.addAttribute("student", student);
-        return "test";
+    @RequestMapping(value = "test")
+    public String testLogin() {
+
+        return "layout_template";
     }
+
 }

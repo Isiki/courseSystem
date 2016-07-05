@@ -1,8 +1,5 @@
 package model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Created by Admin on 2016/7/4.
  */
@@ -13,7 +10,7 @@ public class Course {
     private boolean teamAllowed;
     private String teamMinMember;
     private String teamMaxNumber;
-    private Set resources = new HashSet(0);
+
 
 
     public String getId() {
@@ -59,7 +56,6 @@ public class Course {
     public void setTeamMaxNumber(String teamMaxNumber) {
         this.teamMaxNumber = teamMaxNumber;
     }
-
 
 
     @Override
