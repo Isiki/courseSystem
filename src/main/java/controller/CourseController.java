@@ -10,6 +10,7 @@ import service.CourseService;
 import org.springframework.ui.Model;
 
 import javax.validation.Constraint;
+import java.util.List;
 
 /**
  * Created by ElaineC on 2016/7/4.
@@ -19,20 +20,20 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
-
-    @RequestMapping(value = "addcourse", method = RequestMethod.POST)
+/*
+    @RequestMapping(value = "addcourse", method = RequestMethod.GET)
     public String addCourseInfo(@RequestParam("courseid") int id,
                                 @RequestParam("coursename") String name,
                                 @RequestParam("techerid") int teacher,
                                 @RequestParam("description") String desc,
                                 Model model) {
-        String result = courseService.addCourse(name, id, teacher, desc);
-        model.addAttribute("result", result);
+            //String result = courseService.addCourse(name, teacher, desc);
+        //model.addAttribute("result", result);
         return "addresult";
     }
 
 
-    @RequestMapping(value = "searchcourse", method = RequestMethod.POST)
+    @RequestMapping(value = "searchcourse", method = RequestMethod.GET)
     public String searchCourse(@RequestParam("value") String val,
                                @RequestParam("method") String meth,
                                Model model) {
@@ -49,27 +50,28 @@ public class CourseController {
     }
 
 
-    @RequestMapping(value = "deletecourse", method = RequestMethod.POST)
+    @RequestMapping(value = "deletecourse", method = RequestMethod.GET)
     public String deleteCourseInfo(@RequestParam("courseid") int id, Model model) {
         String result = courseService.deleteCourse(id);
         model.addAttribute("result", result);
         return "deleteresult";
     }
 
+*/
 
-    @RequestMapping(value = "editcourse", method = RequestMethod.POST)
-    public String editCourseInfo(@RequestParam("courseid")      int id,
-                                  @RequestParam("coursename")   String name,
-                                  @RequestParam("techerid")     int teacher,
-                                  @RequestParam("coursedes")    String des,
-                                  Model model) {
-        boolean success = true;
-        if(name!="")    success &= (courseService.editCourseName(id, name)=="success");
-        if(teacher>0)   success &= (courseService.editCourseTeacher(id, teacher)=="success");
-        if(des!="")     success &= (courseService.editCourseDescription(id, des)=="success");
-        model.addAttribute("result", success?"success":"fail");
-        return "editresult";
+    @RequestMapping(value = "editcourse", method = RequestMethod.GET)
+    public String editCourseInfo(@RequestParam("id") String id,
+                                  @RequestParam("course_name") String cname){
+        String res = courseService.editCourseName(id, cname);
+        System.out.println("course_name: "+cname);
+        return "error";
     }
 
+    @RequestMapping(value="coursetable")
+    public String giveYouAll(Model model){
+        List<Course> course=courseService.getAllCourses();
+        model.addAttribute("courses",course);
+        return "course_front";
+    }
 
 }

@@ -11,10 +11,14 @@ public interface CourseDao {
 
     public int addCourse(Course course);
     public void delCourse(int id);
-    public Course getCourseById(int id);
+    public void updateCourse(Course course);
+    public Course getCourseById(String id);
     public Course getCourseByName(String name);
     public Course getCourseByTeacherId(int id);
 
     public List<Course> getCoursesByName(String name);
     public List<Course> getCoursesByTeacherId(int id);
+    public List<Course> getCoursesByTeacherNameBad(String tname);
+
+    public List<Course> getAll();
 }

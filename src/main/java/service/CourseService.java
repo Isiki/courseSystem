@@ -2,13 +2,19 @@ package service;
 
 import model.Course;
 
+import java.util.List;
+
 /**
  * Created by ElaineC on 2016/7/4.
  */
 public interface CourseService {
-    public String addCourse(String name, int id, int teacher, String desc);
 
-    public String editCourseName(int id, String name);
+    public String editCourseName(String id, String name);
+
+    public List<Course> getAllCourses();
+
+    /*
+    public String addCourse(String name, boolean team_allowed, String team_min_member, String team_max_member);
 
     public String editCourseTeacher(int id, int teacherId);
 
@@ -18,7 +24,12 @@ public interface CourseService {
 
     public Course searchCourseByName(String name);
 
+    public List<Course> searchCoursesByNameString (String name);
+
     public Course searchCourseById(int courseId);
 
     public Course searchCourseByTeacherName(String name);
+
+    public List<Course> searchCoursesByTeacherName(String name);
+    */
 }
