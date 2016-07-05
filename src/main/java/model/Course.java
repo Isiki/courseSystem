@@ -1,9 +1,5 @@
 package model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -64,8 +60,6 @@ public class Course {
         this.teamMaxNumber = teamMaxNumber;
     }
 
-    public void setResources(Set resources){this.resources = resources;}
-    public Set getResources(){return this.resources;}
 
 
     @Override

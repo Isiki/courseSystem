@@ -36,8 +36,6 @@
         <mapping class="model.TeamAssignmentAnswer"/>
         <mapping resource="model/Teaming.hbm.xml"/>
         <mapping class="model.Teaming"/>
-        <mapping resource="model/Resources.hbm.xml"/>
-        <mapping class="model.Resources"/>
 
 
         <!-- DB schema will be updated if needed -->

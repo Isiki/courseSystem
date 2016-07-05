@@ -20,12 +20,6 @@
         <property name="teamMaxNumber">
             <column name="team_max_number" sql-type="varchar(50)" length="50"/>
         </property>
-        <set name="resources" inverse="true">
-            <key>
-                <column name="id" not-null="true"/>
-            </key>
-            <one-to-many class="model.Resources"/>
-        </set>
 
     </class>
 </hibernate-mapping>
