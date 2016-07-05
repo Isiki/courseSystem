@@ -1,722 +1,153 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<!-- MARK:HEAD -->
 <head>
-    <meta charset="utf-8" />
-    <title>Metronic Admin Dashboard Template</title>
+    <meta charset="utf-8"/>
+    <title>Metronic | Page Layouts - Blank Page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
 
     <!-- 开发智能提示需要，真正发布的时候需要删除-->
-    <link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet"
-          type="text/css"/>
+    <link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet"
-          type="text/css"/>
+    <link href="resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN THEME STYLES -->
     <link href="resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
-    <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet"
-          type="text/css"/>
+    <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
-    <!---->
+    <link href="resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/course_custom.css" rel="stylesheet" type="text/css"/>
+
 </head>
 
-<!-- MARK:BODY -->
-<body class="page-sidebar-fixed page-footer-fixed">
-<!-- BEGIN HEADER -->
-<div class="header navbar navbar-inverse">
-    <!-- BEGIN TOP NAVIGATION BAR -->
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <!-- HEADER CONTENT GOES HERE -->
-        </div>
-    </div>
-    <!-- END TOP NAVIGATION BAR -->
-</div>
-<!-- END HEADER -->
 
 
-<!-- BEGIN CONTAINER -->
-<div class="page-container row-fluid">
+<body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
 
-    <!-- BEGIN SIDEBAR -->
-    <div class="page-sidebar">
-        <!-- BEGIN SIDEBAR MENU -->
-        <ul class="page-sidebar-menu">
-        <li>
-            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-            <div class="sidebar-toggler hidden-phone">
-            </div>
-            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-        </li>
-        <li>
-            <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-            <form class="sidebar-search">
-                <div class="input-box">
-                    <a href="javascript:;" class="remove">
-                    </a>
-                    <input type="text" placeholder="Search..." />
-                    <input type="button" class="submit" value=" " />
+<!--常用的公用的css-->
+<div th:include="common::css"></div>
+<!-- header -->
+<div th:replace="header :: header"></div>
+<!-- header结束 -->
+
+<div class="clearfix"></div>
+
+
+
+
+
+<!-- CONTENT START -->
+<div class="page-container">
+
+    <!-- 侧边导航栏 -->
+    <div th:replace="sidebar::sidebar"></div>
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
                 </div>
-            </form>
-            <!-- END RESPONSIVE QUICK SEARCH FORM -->
-        </li>
-        <li class="start active ">
-            <a href="index.html">
-                <i class="icon-home">
-                </i>
-      <span class="title">
-        Dashboard
-      </span>
-      <span class="selected">
-      </span>
-            </a>
-        </li>
-        <li class="">
-            <a href="javascript:;">
-                <i class="icon-cogs">
-                </i>
-      <span class="title">
-        Layouts
-      </span>
-      <span class="arrow ">
-      </span>
-            </a>
-            <ul class="sub-menu">
-                <li >
-                    <a href="layout_horizontal_sidebar_menu.html">
-                        Horzontal & Sidebar Menu
-                    </a>
-                </li>
-                <li >
-                    <a href="layout_horizontal_menu1.html">
-                        Horzontal Menu 1
-                    </a>
-                </li>
-                <li >
-                    <a href="layout_horizontal_menu2.html">
-                        Horzontal Menu 2
-                    </a>
-                </li>
-                <li >
-                    <a href="layout_promo.html">
-                        Promo Page
-                    </a>
-                </li>
-                <li >
-                    <a href="layout_email.html">
-                        Email Templates
-                    </a>
-                </li>
-                <li >
-                    <a href="layout_ajax.html">
-                        Content Loading via Ajax
-                    </a>
-                </li>
-                <li >
-                    <a href="layout_sidebar_closed.html">
-                        Sidebar Closed Page
-                    </a>
-                </li>
-                <li >
-                    <a href="layout_blank_page.html">
-                        Blank Page
-                    </a>
-                </li>
-                <li >
-                    <a href="layout_boxed_page.html">
-                        Boxed Page
-                    </a>
-                </li>
-                <li >
-                    <a href="layout_boxed_not_responsive.html">
-                        Non-Responsive Boxed Layout
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="">
-            <a href="javascript:;">
-                <i class="icon-bookmark-empty">
-                </i>
-      <span class="title">
-        UI Features
-      </span>
-      <span class="arrow ">
-      </span>
-            </a>
-            <ul class="sub-menu">
-                <li >
-                    <a href="ui_general.html">
-                        General
-                    </a>
-                </li>
-                <li >
-                    <a href="ui_buttons.html">
-                        Buttons
-                    </a>
-                </li>
-                <li >
-                    <a href="ui_modals.html">
-                        Enhanced Modals
-                    </a>
-                </li>
-                <li >
-                    <a href="ui_tabs_accordions.html">
-                        Tabs & Accordions
-                    </a>
-                </li>
-                <li >
-                    <a href="ui_jqueryui.html">
-                        jQuery UI Components
-                    </a>
-                </li>
-                <li >
-                    <a href="ui_sliders.html">
-                        Sliders
-                    </a>
-                </li>
-                <li >
-                    <a href="ui_tiles.html">
-                        Tiles
-                    </a>
-                </li>
-                <li >
-                    <a href="ui_typography.html">
-                        Typography
-                    </a>
-                </li>
-                <li >
-                    <a href="ui_tree.html">
-                        Tree View
-                    </a>
-                </li>
-                <li >
-                    <a href="ui_nestable.html">
-                        Nestable List
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="">
-            <a href="javascript:;">
-                <i class="icon-table">
-                </i>
-      <span class="title">
-        Form Stuff
-      </span>
-      <span class="arrow ">
-      </span>
-            </a>
-            <ul class="sub-menu">
-                <li >
-                    <a href="form_layout.html">
-                        Form Layouts
-                    </a>
-                </li>
-                <li >
-                    <a href="form_samples.html">
-                        Advance Form Samples
-                    </a>
-                </li>
-                <li >
-                    <a href="form_component.html">
-                        Form Components
-                    </a>
-                </li>
-                <li >
-                    <a href="form_wizard.html">
-                        Form Wizard
-                    </a>
-                </li>
-                <li >
-                    <a href="form_validation.html">
-                        Form Validation
-                    </a>
-                </li>
-                <li >
-                    <a href="form_fileupload.html">
-                        Multiple File Upload
-                    </a>
-                </li>
-                <li >
-                    <a href="form_dropzone.html">
-                        Dropzone File Upload
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="">
-            <a href="javascript:;">
-                <i class="icon-briefcase">
-                </i>
-      <span class="title">
-        Pages
-      </span>
-      <span class="arrow ">
-      </span>
-            </a>
-            <ul class="sub-menu">
-                <li >
-                    <a href="page_timeline.html">
-                        <i class="icon-cogs">
-                        </i>
-                        Timeline
-                    </a>
-                </li>
-                <li >
-                    <a href="page_coming_soon.html">
-                        <i class="icon-cogs">
-                        </i>
-                        Coming Soon
-                    </a>
-                </li>
-                <li >
-                    <a href="page_blog.html">
-                        <i class="icon-comments">
-                        </i>
-                        Blog
-                    </a>
-                </li>
-                <li >
-                    <a href="page_news.html">
-                        <i class="icon-coffee">
-                        </i>
-                        News
-                    </a>
-                </li>
-                <li >
-                    <a href="page_about.html">
-                        <i class="icon-group">
-                        </i>
-                        About Us
-                    </a>
-                </li>
-                <li >
-                    <a href="page_contact.html">
-                        <i class="icon-envelope-alt">
-                        </i>
-                        Contact Us
-                    </a>
-                </li>
-                <li >
-                    <a href="page_calendar.html">
-                        <i class="icon-calendar">
-                        </i>
-                        Calendar
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="">
-            <a href="javascript:;">
-                <i class="icon-gift">
-                </i>
-      <span class="title">
-        Extra
-      </span>
-      <span class="arrow ">
-      </span>
-            </a>
-            <ul class="sub-menu">
-                <li >
-                    <a href="extra_profile.html">
-                        User Profile
-                    </a>
-                </li>
-                <li >
-                    <a href="extra_lock.html">
-                        Lock Screen
-                    </a>
-                </li>
-                <li >
-                    <a href="extra_faq.html">
-                        FAQ
-                    </a>
-                </li>
-                <li >
-                    <a href="inbox.html">
-                        Inbox
-                    </a>
-                </li>
-                <li >
-                    <a href="extra_search.html">
-                        Search Results
-                    </a>
-                </li>
-                <li >
-                    <a href="extra_invoice.html">
-                        Invoice
-                    </a>
-                </li>
-                <li >
-                    <a href="extra_pricing_table.html">
-                        Pricing Tables
-                    </a>
-                </li>
-                <li >
-                    <a href="extra_image_manager.html">
-                        Image Manager
-                    </a>
-                </li>
-                <li >
-                    <a href="extra_404_option1.html">
-                        404 Page Option 1
-                    </a>
-                </li>
-                <li >
-                    <a href="extra_404_option2.html">
-                        404 Page Option 2
-                    </a>
-                </li>
-                <li >
-                    <a href="extra_404_option3.html">
-                        404 Page Option 3
-                    </a>
-                </li>
-                <li >
-                    <a href="extra_500_option1.html">
-                        500 Page Option 1
-                    </a>
-                </li>
-                <li >
-                    <a href="extra_500_option2.html">
-                        500 Page Option 2
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a class="active" href="javascript:;">
-                <i class="icon-sitemap">
-                </i>
-      <span class="title">
-        3 Level Menu
-      </span>
-      <span class="arrow ">
-      </span>
-            </a>
-            <ul class="sub-menu">
-                <li>
-                    <a href="javascript:;">
-                        Item 1
-          <span class="arrow">
-          </span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a href="#">
-                                Sample Link 1
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Sample Link 2
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Sample Link 3
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        Item 1
-          <span class="arrow">
-          </span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a href="#">
-                                Sample Link 1
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Sample Link 1
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Sample Link 1
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        Item 3
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;">
-                <i class="icon-folder-open">
-                </i>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
-      <span class="title">
-        4 Level Menu
-      </span>
-      <span class="arrow ">
-      </span>
-            </a>
-            <ul class="sub-menu">
-                <li>
-                    <a href="javascript:;">
-                        <i class="icon-cogs">
-                        </i>
-                        Item 1
-          <span class="arrow">
-          </span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a href="javascript:;">
-                                <i class="icon-user">
-                                </i>
-                                Sample Link 1
-              <span class="arrow">
-              </span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="#">
-                                        <i class="icon-remove">
-                                        </i>
-                                        Sample Link 1
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="icon-pencil">
-                                        </i>
-                                        Sample Link 1
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="icon-edit">
-                                        </i>
-                                        Sample Link 1
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-user">
-                                </i>
-                                Sample Link 1
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-external-link">
-                                </i>
-                                Sample Link 2
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-bell">
-                                </i>
-                                Sample Link 3
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="icon-globe">
-                        </i>
-                        Item 2
-          <span class="arrow">
-          </span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a href="#">
-                                <i class="icon-user">
-                                </i>
-                                Sample Link 1
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-external-link">
-                                </i>
-                                Sample Link 1
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-bell">
-                                </i>
-                                Sample Link 1
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-folder-open">
-                        </i>
-                        Item 3
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="">
-            <a href="javascript:;">
-                <i class="icon-user">
-                </i>
-      <span class="title">
-        Login Options
-      </span>
-      <span class="arrow ">
-      </span>
-            </a>
-            <ul class="sub-menu">
-                <li >
-                    <a href="login.html">
-                        Login Form 1
-                    </a>
-                </li>
-                <li >
-                    <a href="login_soft.html">
-                        Login Form 2
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="">
-            <a href="javascript:;">
-                <i class="icon-th">
-                </i>
-      <span class="title">
-        Data Tables
-      </span>
-      <span class="arrow ">
-      </span>
-            </a>
-            <ul class="sub-menu">
-                <li >
-                    <a href="table_basic.html">
-                        Basic Tables
-                    </a>
-                </li>
-                <li >
-                    <a href="table_responsive.html">
-                        Responsive Tables
-                    </a>
-                </li>
-                <li >
-                    <a href="table_managed.html">
-                        Managed Tables
-                    </a>
-                </li>
-                <li >
-                    <a href="table_editable.html">
-                        Editable Tables
-                    </a>
-                </li>
-                <li >
-                    <a href="table_advanced.html">
-                        Advanced Tables
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="">
-            <a href="javascript:;">
-                <i class="icon-file-text">
-                </i>
-      <span class="title">
-        Portlets
-      </span>
-      <span class="arrow ">
-      </span>
-            </a>
-            <ul class="sub-menu">
-                <li >
-                    <a href="portlet_general.html">
-                        General Portlets
-                    </a>
-                </li>
-                <li >
-                    <a href="portlet_draggable.html">
-                        Draggable Portlets
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="">
-            <a href="javascript:;">
-                <i class="icon-map-marker">
-                </i>
-      <span class="title">
-        Maps
-      </span>
-      <span class="arrow ">
-      </span>
-            </a>
-            <ul class="sub-menu">
-                <li >
-                    <a href="maps_google.html">
-                        Google Maps
-                    </a>
-                </li>
-                <li >
-                    <a href="maps_vector.html">
-                        Vector Maps
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="last ">
-            <a href="charts.html">
-                <i class="icon-bar-chart">
-                </i>
-      <span class="title">
-        Visual Charts
-      </span>
-            </a>
-        </li>
-    </ul>
-        <!-- END SIDEBAR MENU -->
-    </div>
-    <!-- END SIDEBAR -->
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+                Blank Page <small>blank page</small>
+            </h3>
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="#">教务后台</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">课程管理</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">课程详情</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <!-- important 在这里开始正文的内容-->
+            <div class="row">
+                <div class="col-md-12">
+                    <p th:text="${plaintext}"></p>
+                    <table class="course-table" border="1">
+                        <tr>
+                            <td>课程编号</td>
+                            <td>课程名</td>
+                            <td>组队/个人</td>
+                            <td>人数下限</td>
+                            <td>人数上限</td>
+                        </tr>
+                        <tr th:each="cs:${courses}">
+                            <td th:text="${cs.id}" class="fixed-width"></td>
+                            <td th:text="${cs.name}"></td>
+                            <td th:text="${cs.team_allowed?'组队':'个人'}"></td>
+                            <td th:text="${cs.team_min_member}"></td>
+                            <td th:text="${cs.team_max_member}"></td>
+                        </tr>
+                    </table>
+                    </tr>
+                </div>
+                <!-- END PAGE CONTENT-->
+            </div>
+        </div>
+        <!-- END CONTENT -->
 
-    <!-- BEGIN PAGE -->
-    <div class="page-content">
-        <!-- PAGE CONTENT GOES HERE -->
     </div>
-    <!-- END PAGE -->
+    <!-- CONTENT END -->
+
+
+
+
+
+
+    <!-- footer-->
+    <div th:replace="footer::footer"></div>
+    <!-- 把公用的js包含进来,包含一些初始化的工作 -->
+    <div th:include="common::js"></div>
+    <!-- footer end -->
+
 
 
 </div>
-<!-- END CONTAINER -->
 
-
-
-
-<!-- BEGIN FOOTER -->
-<div class="footer">
-    <div class="container">
-        <div th:replace="footer::footer"></div>
-        <!-- 把公用的js包含进来,包含一些初始化的工作 -->
-        <div th:include="common::js"></div>
-    </div>
-</div>
-<!-- END FOOTER -->
 
 </body>
+
+
+
+
+
 </html>
