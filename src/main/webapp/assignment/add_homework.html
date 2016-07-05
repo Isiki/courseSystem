@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link th:href="@{/resources/image/favicon.ico}" rel="shortcut icon">
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+    <link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="resources/assets/admin/pages/css/login.css" rel="stylesheet" type="text/css">
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME STYLES -->
+    <link id="style_components" href="resources/assets/global/css/components.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css">
+    <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css">
+    <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css">
+    <!-- END THEME STYLES -->
+
+</head>
+
+<div id="add_homework">
+    <p3>添加作业</p3>
+    <form action="#" th:action="@{/assignment/saveassignment}" method="post">
+        <table>
+            <tr class="hidden">
+                <td>
+                    <input type="hidden" th:field="*{courseId}"  th:value="${course.id}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>标题：</td>
+                <td>
+                    <input type="text" th:field="*{heading}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>作业描述：</td>
+                <td>
+                    <textarea th:field="*{description}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>起始时间：</td>
+                <td>
+                    <input type="date" th:field="*{startTime}"/>
+                </td>
+                <td>截止时间：</td>
+                <td>
+                    <input type="date" th:field="*{endTime}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>是否为团队作业：</td>
+                <td><input type="radio" th:field="*{isTeamwork}" value="true" checked="checked"/>是</td>
+                <td><input type="radio" th:field="*{isTeamwork}" value="false" >否</td>
+            </tr>
+        </table>
+    </form>
+</div>

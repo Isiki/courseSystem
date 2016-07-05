@@ -19,15 +19,14 @@ public class ResourcesController {
     @Autowired
     private ResourcesService resourcesService;
 
-    @Autowired
-    private FileValidator fileValidator;
-
-
-
-}
-
 
 
 
 
 }
+
+
+
+
+
+
