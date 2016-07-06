@@ -88,7 +88,48 @@
             <!-- important 在这里开始正文的内容-->
             <div class="row">
                 <div class="col-md-12">
-                    Page content goes here
+                    <div id="aassignment">
+                        <p3>添加作业</p3>
+                        <form id="add_assignment" action="save_assignment.do" method="post">
+                            <table>
+                                <tr class="hidden">
+                                    <td>
+                                        <input type="hidden" name="courseId"  th:value="${course.id}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>标题：</td>
+                                    <td>
+                                        <input type="text" name="heading"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>作业描述：</td>
+                                    <td>
+                                        <textarea name="description"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>起始时间：</td>
+                                    <td>
+                                        <input id="startDate" type="date" name="startDate"/>
+                                    </td>
+                                    <td>截止时间：</td>
+                                    <td>
+                                        <input id="endDate" type="date" name="endDate"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>是否为团队作业：</td>
+                                    <td><input type="radio" name="isTeamwork" value="true" checked="checked"/>是</td>
+                                    <td><input type="radio" name="isTeamwork" value="false" >否</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="submit" name ="submit" value="发布"/></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
                 </div>
             </div>
             <!-- END PAGE CONTENT-->

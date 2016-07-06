@@ -1,157 +1,146 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
-    <title>登录</title>
+    <meta charset="utf-8"/>
+    <title>Metronic | Page Layouts - Blank Page</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link th:href="@{/resources/image/favicon.ico}" rel="shortcut icon">
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
 
-    <link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css">
-    <link href="resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
+    <!-- 开发智能提示需要，真正发布的时候需要删除-->
+    <link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="resources/assets/admin/pages/css/login.css" rel="stylesheet" type="text/css">
-    <!-- END PAGE LEVEL SCRIPTS -->
     <!-- BEGIN THEME STYLES -->
-    <link id="style_components" href="resources/assets/global/css/components.css" rel="stylesheet" type="text/css">
-    <link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css">
-    <link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css">
-    <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css">
-    <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css">
-    <!-- END THEME STYLES -->
+    <link href="resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
 
 </head>
-<body>
+<body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
+<!--常用的公用的css-->
+<div th:include="common::css"></div>
+<!-- header -->
+<div th:replace="header :: header"></div>
+<!-- header结束 -->
+<div class="clearfix"></div>
+<div class="page-container">
+    <!-- 侧边导航栏 -->
+    <div th:replace="sidebar::sidebar"></div>
 
-<div id="aassignment">
-    <p3>添加作业</p3>
-    <form id="add_assignment" action="save_assignment.do" method="post">
-        <table>
-            <tr class="hidden">
-                <td>
-                    <input type="hidden" name="courseId"  th:value="${course.id}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>标题：</td>
-                <td>
-                    <input type="text" name="heading"/>
-                </td>
-            </tr>
-            <tr>
-                <td>作业描述：</td>
-                <td>
-                    <textarea name="description"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td>起始时间：</td>
-                <td>
-                    <input id="startDate" type="date" name="startDate"/>
-                </td>
-                <td>截止时间：</td>
-                <td>
-                    <input id="endDate" type="date" name="endDate"/>
-                </td>
-            </tr>
-            <tr>
-                <td>是否为团队作业：</td>
-                <td><input type="radio" name="isTeamwork" value="true" checked="checked"/>是</td>
-                <td><input type="radio" name="isTeamwork" value="false" >否</td>
-            </tr>
-            <tr>
-                <td><input type="submit" name ="submit" value="发布"/></td>
-            </tr>
-        </table>
-    </form>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+                Blank Page <small>blank page</small>
+            </h3>
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="index.html">Home</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">Page Layouts</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">Blank Page</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <!-- important 在这里开始正文的内容-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="aassignment">
+                        <p3>添加作业</p3>
+                        <form id="add_assignment" action="save_assignment.do" method="post">
+                            <table>
+                                <tr class="hidden">
+                                    <td>
+                                        <input type="hidden" name="courseId"  th:value="${course.id}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>标题：</td>
+                                    <td>
+                                        <input type="text" name="heading"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>作业描述：</td>
+                                    <td>
+                                        <textarea name="description"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>起始时间：</td>
+                                    <td>
+                                        <input id="startDate" type="date" name="startDate"/>
+                                    </td>
+                                    <td>截止时间：</td>
+                                    <td>
+                                        <input id="endDate" type="date" name="endDate"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>是否为团队作业：</td>
+                                    <td><input type="radio" name="isTeamwork" value="true" checked="checked"/>是</td>
+                                    <td><input type="radio" name="isTeamwork" value="false" >否</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="submit" name ="submit" value="发布"/></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
     </div>
+    <!-- END CONTENT -->
+</div>
+<!-- footer-->
+<div th:replace="footer::footer"></div>
+<!-- 把公用的js包含进来,包含一些初始化的工作 -->
+<div th:include="common::js"></div>
+</div>
 </body>
-<!--<script type="text/javascript" src="resources/jquery/dist/jquery.js"></script>
-<script type="text/javascript" src="resources/jquery/src/jquery-ui-1.10.3.custom.js"></script>
-<script type="text/javascript">
-    var editor = new baidu.editor.ui.Editor();
-    function setEditorContents(content) {
-        editor.setContent(content);
-    }
-    $(document).ready(function () {
-        $.datepicker.regional['zh-CN'] = {
-            clearText: '清除',
-            clearStatus: '清除已选日期',
-            closeText: '关闭',
-            closeStatus: '不改变当前选择',
-            prevText: '<上月',
-            prevStatus: '显示上月',
-            prevBigText: '<<',
-            prevBigStatus: '显示上一年',
-            nextText: '下月>',
-            nextStatus: '显示下月',
-            nextBigText: '>>',
-            nextBigStatus: '显示下一年',
-            currentText: '今天',
-            currentStatus: '显示本月',
-            monthNames: ['一月','二月','三月','四月','五月','六月', '七月','八月','九月','十月','十一月','十二月'],
-            monthNamesShort: ['一','二','三','四','五','六', '七','八','九','十','十一','十二'],
-            monthStatus: '选择月份',
-            yearStatus: '选择年份',
-            weekHeader: '周',
-            weekStatus: '年内周次',
-            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
-            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
-            dayNamesMin: ['日','一','二','三','四','五','六'],
-            dayStatus: '设置 DD 为一周起始',
-            dateStatus: '选择 m月 d日, DD',
-            dateFormat: 'yy-mm-dd hh:mm:ss',
-            firstDay: 1,
-            initStatus: '请选择日期',
-            isRTL: false
-        };
-        $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
-
-        $("#starDate").datepicker({
-            yearRange:'1900:2020',
-            changeMonth: true,
-            changeYear: true,
-            showButtonPanel: true,
-            dateFormat: 'yy-mm-dd hh:mm:ss',  //日期格式，自己设置              buttonImage: 'calendar.gif',  //按钮的图片路径，自己设置              buttonImageOnly: true,  //Show an image trigger without any button.             showOn: 'both',//触发条件，both表示点击文本域和图片按钮都生效         yearRange: '1990:2008',//年份范围          clearText:'清除',//下面的就不用详细写注释了吧，呵呵，都是些文本设置         closeText:'关闭',         prevText:'前一月',         nextText:'后一月',         currentText:' ',          monthNames:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-
-        });
-
-        $("#startDate").change(function() {
-            //alert(editor.getContent());
-            setEditorContents(editor.getContent().replace(/\S\S\S\S-\S\S-\S\S \S\S:\S\S:\S\S/g, $(this).val()));
-        });
-
-        jQuery("#startDate").click(function(){
-            $("#ui-datepicker-div").css({"z-index":"2000"});
-        });
-        $("#endDate").datepicker({
-            yearRange:'1900:2020',
-            changeMonth: true,
-            changeYear: true,
-            showButtonPanel: true,
-            dateFormat: 'yy-mm-dd hh:mm:ss',  //日期格式，自己设置              buttonImage: 'calendar.gif',  //按钮的图片路径，自己设置              buttonImageOnly: true,  //Show an image trigger without any button.             showOn: 'both',//触发条件，both表示点击文本域和图片按钮都生效         yearRange: '1990:2008',//年份范围          clearText:'清除',//下面的就不用详细写注释了吧，呵呵，都是些文本设置         closeText:'关闭',         prevText:'前一月',         nextText:'后一月',         currentText:' ',          monthNames:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-
-        });
-
-        $("#endDate").change(function() {
-            //alert(editor.getContent());
-            setEditorContents(editor.getContent().replace(/\S\S\S\S-\S\S-\S\S \S\S:\S\S:\S\S/g, $(this).val()));
-        });
-
-        jQuery("#endDate").click(function(){
-            $("#ui-datepicker-div").css({"z-index":"2000"});
-        });
-    });
-</script>-->
 </html>

@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
  * Created by isiki on 2016/7/4.
  */
 @Controller
+@RequestMapping("teacher")
 public class AssignmentController {
     @Autowired
     private AssignmentService assignmentService;
@@ -44,7 +45,7 @@ public class AssignmentController {
             System.out.println(e);
             return "fail";
         }
-        assignment.setId("7");
+/*        assignment.setId("7");*/
             assignmentService.insertAssignment(assignment);
         return "success";
 

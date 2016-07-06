@@ -3,13 +3,15 @@ package model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Admin on 2016/7/4.
  */
 @Entity
-public class Assignment {
+@Table(name="assignment")
+public class Assignment implements Serializable {
     private String id;
     private String courseId;
     private boolean isTeamwork;
@@ -21,8 +23,6 @@ public class Assignment {
     private String attachmentUrl;
 
     @Id
-    @GenericGenerator(name = "idGenerator", strategy = "guid")
-    @GeneratedValue(generator = "idGenerator")
     @Column(name = "id", nullable = false, length = 10)
     public String getId() {
         return id;
