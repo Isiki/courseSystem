@@ -2,6 +2,7 @@ package controller;
 
 import dao.StudentDao;
 import entity.BaseException;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,9 @@ import model.Student;
 import service.TeacherService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 
@@ -65,10 +69,27 @@ public class LoginController {
                               Model model)
     {
         boolean success = false;
-        String redirect = "login";
+        String redirect = "login.do";
         String username = (String)request.getParameter("username");
-        String password = (String)request.getParameter("password");
+        String password_raw = (String)request.getParameter("password");
         String authtype = (String)request.getParameter("authtype");
+
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            md.update(password_raw.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        byte[] bts = md.digest();
+        String password = new String(encodeHex(bts));
+
 
         System.out.equals("Login username " + username + " authtype " + authtype);
 
@@ -90,7 +111,7 @@ public class LoginController {
         if("teacher".equals(authtype))
         {
             success = service.LoginAsTeacher(username, password);
-            if(success) redirect = "teacher/course.do";
+            if(success) redirect = "teacher/add_assignment.do?courseId=1";
         }
 
         if(success)
@@ -100,6 +121,22 @@ public class LoginController {
         }
 
         return "redirect:"+redirect;
+    }
+
+    private static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6',
+            '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+    private static char[] encodeHex(byte[] data) {
+        int l = data.length;
+
+        char[] out = new char[l << 1];
+
+        int i = 0;
+        for (int j = 0; i < l; ++i) {
+            out[(j++)] = DIGITS[((0xF0 & data[i]) >>> 4)];
+            out[(j++)] = DIGITS[(0xF & data[i])];
+        }
+
+        return out;
     }
 
 

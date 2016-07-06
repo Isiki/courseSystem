@@ -25,16 +25,16 @@ public class LoginServiceImpl implements LoginService {
 
     public boolean LoginAsAdmin(String id, String password) {
         Admin ad = adao.get(id);
-        return ad==null || ad.getPassword().equals(password);
+        return (ad.getPassword().equals(password));
     }
 
     public boolean LoginAsStudent(String id, String password) {
         Student st = sdao.getStudentById(id);
-        return st==null || st.getPassword().equals(password);
+        return (st.getPassword().equals(password));
     }
 
     public boolean LoginAsTeacher(String id, String password) {
         Teacher tc = tdao.get(id);
-        return tc==null || tc.getPassword().equals(password);
+        return (tc.getPassword().equals(password));
     }
 }
