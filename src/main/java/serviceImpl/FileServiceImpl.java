@@ -1,5 +1,9 @@
 package serviceImpl;
 
+
+import com.google.gson.JsonArray;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -8,8 +12,9 @@ import service.FileService;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
+
 /**
  * Created by isiki on 2016/7/5.
  */
@@ -58,5 +63,55 @@ public class FileServiceImpl implements FileService {
         file.transferTo(targetFile);
 
         return targetFile;
+    }
+
+    public File[] getAllFiles(String dir)
+    {
+        File dirFile = new File(dir);
+        File[] files = dirFile.listFiles();
+        return files;
+    }
+
+    public String filesToJson(File[] files)
+    {
+        if (files == null)
+            return "";
+        JSONArray arr = new JSONArray();
+        for(File file : files)
+        {
+            List<String> list = new ArrayList<String>();
+            list.add(file.getName());
+            list.add(file.isDirectory()?"folder":"file");
+            list.add(getFormatSize(file.length()));
+            arr.add(list);
+        }
+        return arr.toString();
+    }
+
+    private String getFormatSize(long size) {
+        double kiloByte = (double)size/1024;
+        if(kiloByte < 1) {
+            return size + "B";
+        }
+
+        double megaByte = kiloByte/1024;
+        if(megaByte < 1) {
+            BigDecimal result1 = new BigDecimal(Double.toString(kiloByte));
+            return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";
+        }
+
+        double gigaByte = megaByte/1024;
+        if(gigaByte < 1) {
+            BigDecimal result2  = new BigDecimal(Double.toString(megaByte));
+            return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
+        }
+
+        double teraBytes = gigaByte/1024;
+        if(teraBytes < 1) {
+            BigDecimal result3 = new BigDecimal(Double.toString(gigaByte));
+            return result3.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";
+        }
+        BigDecimal result4 = new BigDecimal(teraBytes);
+        return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
     }
 }
