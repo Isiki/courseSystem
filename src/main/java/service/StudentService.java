@@ -10,6 +10,6 @@ import java.util.ArrayList;
  */
 public interface StudentService {
     Student getStudentById(String id);
-    ArrayList<String> getAllCourseById(String id);
+    ArrayList<Course> getAllCourseById(String id);
 
 }
