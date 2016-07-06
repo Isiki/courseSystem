@@ -43,6 +43,11 @@
             <label class="control-label text-danger" th:text="${errorInfo}"></label>
         </div>
         <div class="form-group">
+            <input type="radio" name="authtype" value="admin">管理员
+            <input type="radio" name="authtype" value="student">学生
+            <input type="radio" name="authtype" value="teacher">老师
+        </div>
+        <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">用户名</label>
             <input name="username" class="form-control form-control-solid " type="text" placeholder="用户名" >
         </div>

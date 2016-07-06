@@ -24,29 +24,16 @@
     <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/css/course_custom.css" rel="stylesheet" type="text/css"/>
 
 </head>
-
-
-
 <body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
-
 <!--常用的公用的css-->
 <div th:include="common::css"></div>
 <!-- header -->
 <div th:replace="header :: header"></div>
 <!-- header结束 -->
-
 <div class="clearfix"></div>
-
-
-
-
-
-<!-- CONTENT START -->
 <div class="page-container">
-
     <!-- 侧边导航栏 -->
     <div th:replace="sidebar::sidebar"></div>
 
@@ -84,59 +71,98 @@
                 <ul class="page-breadcrumb">
                     <li>
                         <i class="fa fa-home"></i>
-                        <a href="#">教务后台</a>
+                        <a href="index.html">提交作业</a>
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <a href="#">课程管理</a>
-                        <i class="fa fa-angle-right"></i>
-                    </li>
-                    <li>
-                        <a href="#">课程详情</a>
+                        <a href="#">作业信息</a>
                     </li>
                 </ul>
             </div>
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
             <!-- important 在这里开始正文的内容-->
-            <h2 th:text="${course.courseName}">
-                <h4>授课教师</h4>
-                <div th:unless="${teachers.isEmpty()}" th:each="t:${teachers}">
-                    <a href="#" th:text="${t.realName}"></a>
+            <div class="row">
+                <div class="col-md-11">
+                    <div class="portlet box blue">
+                        <div class="portlet-title">
+                            <div class="caption">编辑作业</div>
+                        </div>
+                        <div class="portlet-body form">
+                            <form th:action="@{handin.do}" class="form-horizontal" role="form" method="post" id="form">
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <label for="number" class="col-md-2 control-label" >作业编号</label>
+                                        <div class="col-md-4">
+                                            <span class="form-control-static" name="number" id="number" th:text="${assignment.idInCourse}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="heading" class="col-md-2 control-label" >作业名称</label>
+                                        <div class="col-md-4">
+                                            <span class="form-control-static" name="heading" id="heading" th:text="${assignment.heading}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="startTime" class="col-md-2 control-label">开始时间</label>
+                                        <div class="col-md-4">
+                                            <span class="form-control-static" name="startTime" id="startTime" th:text="${assignment.startTime}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="endTime" class="col-md-2 control-label">结束时间</label>
+                                        <div class="col-md-4">
+                                            <span class="form-control-static" name="endTime" id="endTime" th:text="${assignment.endTime}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="text" class="col-md-2 control-label">提交内容</label>
+                                        <div class="col-md-6">
+                                            <textarea id="text" name="text" class="form-control" rows="3" ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-6">
+                                            <button id="submit-btn" type="button" class="btn green" onclick="assign()">确认提交</button>
+                                            <button id="return-btn" type="button" class="btn red col-md-offset-1" onclick="javascript:window.history.back(-1);">返回前页</button>
+                                        </div>
+                                    </div>
+                                    <input class="form-control invisible" readonly type="text" name="id" id="id" th:value="${assignment.id}" >
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <h4>学生名单</h4>
-                <div th:unless="${students.isEmpty()}" th:each="s:${students}">
-                    <a href="#" th:text="${s.realName}"></a>
-                </div>
-            </h2>
+            </div>
             <!-- END PAGE CONTENT-->
         </div>
     </div>
     <!-- END CONTENT -->
-
 </div>
-<!-- CONTENT END -->
-
-
-
-
-
-
 <!-- footer-->
 <div th:replace="footer::footer"></div>
 <!-- 把公用的js包含进来,包含一些初始化的工作 -->
 <div th:include="common::js"></div>
-<!-- footer end -->
-
+<script type="application/javascript">
+    function assign(){
+        var data= $.param($('#form').serializeArray());
+        $.ajax({
+            url:"handin_action.do",
+            type:"POST",
+            data:data,
+            dataType:"json",
+            success:function(result){
+                if(result.code==0)
+                    result.msg = "提交成功"
+                layer.alert(result.msg);
+            }
+        });
+    }
+</script>
 
 
 </div>
-
-
 </body>
-
-
-
-
-
 </html>
