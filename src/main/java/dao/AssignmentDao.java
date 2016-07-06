@@ -3,6 +3,6 @@ import model.Assignment;
 /**
  * Created by isiki on 2016/7/4.
  */
-public interface AssignmentDao extends Dao{
+public interface AssignmentDao extends Dao<Assignment,String>{
     int countByCourseId(String courseId);
 }

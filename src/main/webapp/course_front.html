@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Metronic | Page Layouts - Blank Page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <!-- 开发智能提示需要，真正发布的时候需要删除-->
+    <link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/course_custom.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+
+
+<body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
+
+<!--常用的公用的css-->
+<div th:include="common::css"></div>
+<!-- header -->
+<div th:replace="header :: header"></div>
+<!-- header结束 -->
+
+<div class="clearfix"></div>
+
+
+
+
+
+<!-- CONTENT START -->
+<div class="page-container">
+
+    <!-- 侧边导航栏 -->
+    <div th:replace="sidebar::sidebar"></div>
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+                Blank Page <small>blank page</small>
+            </h3>
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="#">教务后台</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">课程管理</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">课程详情</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <!-- important 在这里开始正文的内容-->
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="course-table" border="1">
+                        <tr>
+                            <td>课程编号</td>
+                            <td>课程名</td>
+                            <td>组队要求</td>
+                            <td>人数下限</td>
+                            <td>人数上限</td>
+                        </tr>
+                        <tr th:each="cs:${courses}">
+                            <td th:text="${cs.id}"></td>
+                            <td th:text="${cs.courseName}"></td>
+                            <td th:text="none"></td>
+                            <td th:text="none"></td>
+                            <td th:text="none"></td>
+                        </tr>
+                    </table>
+                    </tr>
+                </div>
+                <!-- END PAGE CONTENT-->
+            </div>
+        </div>
+        <!-- END CONTENT -->
+
+    </div>
+    <!-- CONTENT END -->
+
+
+
+
+
+
+    <!-- footer-->
+    <div th:replace="footer::footer"></div>
+    <!-- 把公用的js包含进来,包含一些初始化的工作 -->
+    <div th:include="common::js"></div>
+    <!-- footer end -->
+
+
+
+</div>
+
+
+</body>
+
+
+
+
+
+</html>

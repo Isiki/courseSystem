@@ -1,9 +1,8 @@
 package model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -22,6 +21,8 @@ public class Assignment {
     private String attachmentUrl;
 
     @Id
+    @GenericGenerator(name = "idGenerator", strategy = "guid")
+    @GeneratedValue(generator = "idGenerator")
     @Column(name = "id", nullable = false, length = 10)
     public String getId() {
         return id;

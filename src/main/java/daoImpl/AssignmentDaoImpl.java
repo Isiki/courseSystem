@@ -18,12 +18,12 @@ import java.util.List;
  * Created by isiki on 2016/7/4.
  */
 @Repository("AssignmentDao")
-public class AssignmentDaoImpl extends DaoImpl implements AssignmentDao{
+public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements AssignmentDao{
     @Override
     public int countByCourseId(String courseId) {
         List<Object> params = new ArrayList<Object>(0);
-        String sql="SELECT * FROM ASSIGNMENT WHERE COURSE_ID = ?";
+        String hql="from Assignment n where n.id is not null and n.courseId = ?";
         params.add(courseId);
-        return super.sqlCount(sql,params.toArray());
+        return super.hqlFind(hql,params.toArray(),false).size();
     }
 }
