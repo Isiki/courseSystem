@@ -2,6 +2,9 @@ package daoImpl;
 
 import dao.CourseDao;
 import model.Course;
+import model.Student;
+import model.Teacher;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,33 +33,56 @@ public class CourseDaoImpl implements CourseDao{
     }
 
     public Course getCourseById(String id) {
-        return (Course)sessionFactory.getCurrentSession().get(Course.class, id);
+        Course cs;
+        try{
+            cs = (Course)sessionFactory.getCurrentSession().get(Course.class, id);
+        }catch (HibernateException e){
+            e.printStackTrace();
+            return null;
+        }
+        return cs;
     }
 
     public Course getCourseByName(String name) {
-        return getCoursesByName(name).get(0);
+        List<Course> cl = getCoursesByName(name);
+        if(cl == null) return null;
+        return cl.get(0);
     }
 
     public Course getCourseByTeacherId(int id) {
-        return getCoursesByTeacherId(id).get(0);
+        List<Course> cl = getCoursesByTeacherId(id);
+        if(cl == null) return null;
+        return cl.get(0);
     }
 
     public List<Course> getCoursesByName(String name) {
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT * FROM Course WHERE name=="+name)
+                .createSQLQuery("SELECT * FROM Course WHERE name= '"+name+"\'")
                 .addEntity(Course.class);
         // TODO: fix injection problem (HQL instead)
-        List<Course> css = query.list();
+        List<Course> css;
+        try {
+             css = query.list();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return null;
+        }
         return css;
     }
 
     public List<Course> getCoursesByTeacherId(int id) {
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT * FROM Course WHERE teacher_id=="+id)
+                .createSQLQuery("SELECT * FROM Course WHERE teacher_id=\'"+id+"\'")
                 .addEntity(Course.class);
-        // TODO: fix injection problems (HQL instead)
 
-        List<Course> css = query.list();
+        // TODO: fix injection problems (HQL instead)
+        List<Course> css;
+        try {
+            css = query.list();
+        } catch (HibernateException e){
+            e.printStackTrace();
+            return null;
+        }
         return css;
     }
 
@@ -64,7 +90,7 @@ public class CourseDaoImpl implements CourseDao{
     // TODO: try join with dao & HQL
 
     public List<Course> getAll(){
-        Query query=sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM Course").addEntity(Course.class);
+        Query query = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM Course").addEntity(Course.class);
         return query.list();
     }
 
@@ -74,5 +100,35 @@ public class CourseDaoImpl implements CourseDao{
                 .addEntity(Course.class);
 
         return query.list();
+    }
+
+    public List<Teacher> getTeachersByCourseId(String id){
+        Query query = sessionFactory.getCurrentSession()
+                .createSQLQuery("select teacher.id, teacher.real_name from course left join teaching on course.id=teaching.course_id left join teacher on teaching.teacher_id=teacher.id where course.id=\'"+id+"\'")
+                .addEntity(Teacher.class);
+
+        List<Teacher> tcs;
+        try{
+            tcs = query.list();
+        } catch (HibernateException e){
+            e.printStackTrace();
+            return null;
+        }
+        return tcs;
+    }
+
+    public List<Student> getStudentsByCourseId(String id){
+        Query query = sessionFactory.getCurrentSession()
+                .createSQLQuery("select student.id, student.real_name from course left join selection on course.id=selection.course_id left join student on selection.student_id=student.id where course.id=\'"+id+"\'")
+                .addEntity(Student.class);
+
+        List<Student> sts;
+        try{
+            sts = query.list();
+        } catch (HibernateException e){
+            e.printStackTrace();
+            return null;
+        }
+        return sts;
     }
 }

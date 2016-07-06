@@ -55,3 +55,10 @@
 .course-table .fixed-width{
     width: 40px;
 }
+
+
+.submit-transparent {
+    background: none;
+    background-color: transparent;
+    border: 0px;
+}
