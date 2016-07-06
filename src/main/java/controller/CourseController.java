@@ -19,8 +19,8 @@ import java.util.Map;
  * Created by ElaineC on 2016/7/4.
  */
 @Controller
+@RequestMapping("/admin")
 public class CourseController {
-
 
     /*
     Mapping
@@ -66,22 +66,23 @@ public class CourseController {
         return "course_front";
     }
 
+
     @RequestMapping(value="showdetail", method = RequestMethod.GET)
     public String showDetail(@RequestParam("id") String id, Model model){
         Course course = courseService.searchCourseById(id);
-
         if(course == null)
             return "error";
 
         List<Teacher> teachers = courseService.getTeachers(course.getId());
         List<Student> students = courseService.getStudents(course.getId());
-        if(course != null)
-        {
-            model.addAttribute("course", course);
-            model.addAttribute("teachers", teachers);
-            model.addAttribute("students", students);
-        }
+
+        model.addAttribute("course", course);
+        if(teachers.get(0) != null) model.addAttribute("teachers", teachers);
+        if(students.get(0) != null) model.addAttribute("students", students);
+
+        System.out.println(teachers);
+        System.out.println(students);
+
         return "course_detail";
     }
-
 }

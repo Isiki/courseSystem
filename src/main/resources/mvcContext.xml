@@ -42,10 +42,30 @@
         <bean class="interceptor.LoginInterceptor">
             <property name="excludeUrls">
                 <list>
-
+                    <value>login.do</value>
                 </list>
             </property>
         </bean>
+
+        <!-- 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 -->
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+
+        <!-- 如果不定义 mvc:mapping path 将拦截所有的URL请求 -->
+        <!-- 基于URL二级名的权限控制器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/*"/>
+            <bean class="interceptor.AdminInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/student/*"/>
+            <bean class="interceptor.StudentInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/teacher/*"/>
+            <bean class="interceptor.TeacherInterceptor"/>
+        </mvc:interceptor>
 
         <!-- 管理员界面的拦截器，检查是不是管理员
         <mvc:interceptor>

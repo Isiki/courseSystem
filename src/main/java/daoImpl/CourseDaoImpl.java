@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,25 +34,24 @@ public class CourseDaoImpl implements CourseDao{
     }
 
     public Course getCourseById(String id) {
-        Course cs;
+        Course cs = null;
         try{
             cs = (Course)sessionFactory.getCurrentSession().get(Course.class, id);
         }catch (HibernateException e){
             e.printStackTrace();
-            return null;
         }
         return cs;
     }
 
     public Course getCourseByName(String name) {
         List<Course> cl = getCoursesByName(name);
-        if(cl == null) return null;
+        if(cl.isEmpty()) return null;
         return cl.get(0);
     }
 
     public Course getCourseByTeacherId(int id) {
         List<Course> cl = getCoursesByTeacherId(id);
-        if(cl == null) return null;
+        if(cl.isEmpty()) return null;
         return cl.get(0);
     }
 
@@ -65,7 +65,7 @@ public class CourseDaoImpl implements CourseDao{
              css = query.list();
         } catch (HibernateException e) {
             e.printStackTrace();
-            return null;
+            return new ArrayList<Course>();
         }
         return css;
     }
@@ -81,7 +81,7 @@ public class CourseDaoImpl implements CourseDao{
             css = query.list();
         } catch (HibernateException e){
             e.printStackTrace();
-            return null;
+            return new ArrayList<Course>();
         }
         return css;
     }
@@ -104,31 +104,30 @@ public class CourseDaoImpl implements CourseDao{
 
     public List<Teacher> getTeachersByCourseId(String id){
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("select teacher.id, teacher.real_name from course left join teaching on course.id=teaching.course_id left join teacher on teaching.teacher_id=teacher.id where course.id=\'"+id+"\'")
+                .createSQLQuery("select teacher.id, teacher.real_name, teacher.password from course left join teaching on course.id=teaching.course_id left join teacher on teaching.teacher_id=teacher.id where course.id='"+id+"'")
                 .addEntity(Teacher.class);
-
-        List<Teacher> tcs;
+        List<Teacher> tcs = new ArrayList<>();
         try{
             tcs = query.list();
         } catch (HibernateException e){
             e.printStackTrace();
-            return null;
         }
         return tcs;
     }
 
     public List<Student> getStudentsByCourseId(String id){
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("select student.id, student.real_name from course left join selection on course.id=selection.course_id left join student on selection.student_id=student.id where course.id=\'"+id+"\'")
+                .createSQLQuery("select student.id, student.real_name, student.password from course left join selection on course.id=selection.course_id left join student on selection.student_id=student.id where course.id='"+id+"'")
                 .addEntity(Student.class);
 
-        List<Student> sts;
+        List<Student> sts = new ArrayList<>();
         try{
             sts = query.list();
         } catch (HibernateException e){
             e.printStackTrace();
-            return null;
         }
+
+        if(sts == null) sts = new ArrayList<>();
         return sts;
     }
 }

@@ -99,15 +99,15 @@
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
             <!-- important 在这里开始正文的内容-->
-            <h2 th:if="${course}" th:text="${course.courseName}">
+            <h2 th:text="${course.courseName}">
                 <h4>授课教师</h4>
-                <p th:unless="${teachers.isEmpty()}" th:each="t:${teachers}">
+                <div th:unless="${teachers.isEmpty()}" th:each="t:${teachers}">
                     <a href="#" th:text="${t.realName}"></a>
-                </p>
+                </div>
                 <h4>学生名单</h4>
-                <p th:unless="${students.isEmpty()}" th:each="s:${students}">
+                <div th:unless="${students.isEmpty()}" th:each="s:${students}">
                     <a href="#" th:text="${s.realName}"></a>
-                </p>
+                </div>
             </h2>
             <!-- END PAGE CONTENT-->
         </div>
