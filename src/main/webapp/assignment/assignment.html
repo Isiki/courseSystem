@@ -1,0 +1,27 @@
+
+
+
+<html>
+<head>
+    <title>Homework Management</title>
+</head>
+<body>
+<div id="content">
+    <button id="publish_btn" value="发布新作业"/>
+</div>
+</body>
+
+<script type="text/javascript" defer="defer">
+    $(document).ready(function() {
+
+        $('button').button();
+        $('#publish_btn').click(function(){
+            $.get('${ContextPath}/add_homwork',function (data) {
+                $('#content').empty();
+                $('#content').append(data);
+            },'html');
+            event.preventDefault();
+        })
+    });
+    </script>
+</html>

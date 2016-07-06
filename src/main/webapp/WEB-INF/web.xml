@@ -67,7 +67,6 @@
         </init-param>
     </filter>
 
-
     <filter-mapping>
         <filter-name>setCharacter</filter-name>
         <url-pattern>/*</url-pattern>

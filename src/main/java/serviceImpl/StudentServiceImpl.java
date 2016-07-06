@@ -1,13 +1,13 @@
 package serviceImpl;
 
+import dao.CourseDao;
 import dao.SelectionDao;
 import dao.StudentDao;
 import model.Course;
-import model.Selection;
+import model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.StudentService;
-import model.Student;
 
 import java.util.ArrayList;
 
@@ -22,14 +22,19 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private SelectionDao selectionDao;
 
+    @Autowired
+    private CourseDao courseDao;
+
     public Student getStudentById(String id) {
         return studentDao.getStudentById(id);
     }
 
-    public ArrayList<String> getAllCourseById(String id) {
+    public ArrayList<Course> getAllCourseById(String id) {
         ArrayList<String> courseid = selectionDao.getCourseIdByStudentId(id);
-        ArrayList<Course> course = new ArrayList<Course>();
-        //// TODO: 2016/7/5 Need getCourseById
-        return courseid;
+        ArrayList<Course> courses = new ArrayList<>();
+        for (String cid:courseid ){
+            courses.add(courseDao.getCourseById(cid));
+        }
+        return courses;
     }
 }

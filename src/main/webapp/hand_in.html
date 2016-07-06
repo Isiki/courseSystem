@@ -71,15 +71,11 @@
                 <ul class="page-breadcrumb">
                     <li>
                         <i class="fa fa-home"></i>
-                        <a href="index.html">Home</a>
+                        <a href="index.html">提交作业</a>
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <a href="#">Page Layouts</a>
-                        <i class="fa fa-angle-right"></i>
-                    </li>
-                    <li>
-                        <a href="#">Blank Page</a>
+                        <a href="#">作业信息</a>
                     </li>
                 </ul>
             </div>
@@ -87,48 +83,56 @@
             <!-- BEGIN PAGE CONTENT-->
             <!-- important 在这里开始正文的内容-->
             <div class="row">
-                <div class="col-md-12">
-                    <div id="aassignment">
-                        <p3>添加作业</p3>
-                        <form id="add_assignment" action="save_assignment.do" method="post">
-                            <table>
-                                <tr class="hidden">
-                                    <td>
-                                        <input type="hidden" name="courseId"  th:value="${course.id}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>标题：</td>
-                                    <td>
-                                        <input type="text" name="heading"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>作业描述：</td>
-                                    <td>
-                                        <textarea name="description"></textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>起始时间：</td>
-                                    <td>
-                                        <input id="startDate" type="date" name="startDate"/>
-                                    </td>
-                                    <td>截止时间：</td>
-                                    <td>
-                                        <input id="endDate" type="date" name="endDate"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>是否为团队作业：</td>
-                                    <td><input type="radio" name="isTeamwork" value="true" checked="checked"/>是</td>
-                                    <td><input type="radio" name="isTeamwork" value="false" >否</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="submit" name ="submit" value="发布"/></td>
-                                </tr>
-                            </table>
-                        </form>
+                <div class="col-md-11">
+                    <div class="portlet box blue">
+                        <div class="portlet-title">
+                            <div class="caption">编辑作业</div>
+                        </div>
+                        <div class="portlet-body form">
+                            <form th:action="@{handin.do}" class="form-horizontal" role="form" method="post" id="form">
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <label for="number" class="col-md-2 control-label" >作业编号</label>
+                                        <div class="col-md-4">
+                                            <span class="form-control-static" name="number" id="number" th:text="${assignment.idInCourse}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="heading" class="col-md-2 control-label" >作业名称</label>
+                                        <div class="col-md-4">
+                                            <span class="form-control-static" name="heading" id="heading" th:text="${assignment.heading}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="startTime" class="col-md-2 control-label">开始时间</label>
+                                        <div class="col-md-4">
+                                            <span class="form-control-static" name="startTime" id="startTime" th:text="${assignment.startTime}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="endTime" class="col-md-2 control-label">结束时间</label>
+                                        <div class="col-md-4">
+                                            <span class="form-control-static" name="endTime" id="endTime" th:text="${assignment.endTime}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="text" class="col-md-2 control-label">提交内容</label>
+                                        <div class="col-md-6">
+                                            <textarea id="text" name="text" class="form-control" rows="3" ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-6">
+                                            <button id="submit-btn" type="button" class="btn green" onclick="assign()">确认提交</button>
+                                            <button id="return-btn" type="button" class="btn red col-md-offset-1" onclick="javascript:window.history.back(-1);">返回前页</button>
+                                        </div>
+                                    </div>
+                                    <input class="form-control invisible" readonly type="text" name="id" id="id" th:value="${assignment.id}" >
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,6 +145,24 @@
 <div th:replace="footer::footer"></div>
 <!-- 把公用的js包含进来,包含一些初始化的工作 -->
 <div th:include="common::js"></div>
+<script type="application/javascript">
+    function assign(){
+        var data= $.param($('#form').serializeArray());
+        $.ajax({
+            url:"handin_action.do",
+            type:"POST",
+            data:data,
+            dataType:"json",
+            success:function(result){
+                if(result.code==0)
+                    result.msg = "提交成功"
+                layer.alert(result.msg);
+            }
+        });
+    }
+</script>
+
+
 </div>
 </body>
 </html>

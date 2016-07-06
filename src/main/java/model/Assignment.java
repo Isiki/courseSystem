@@ -1,15 +1,11 @@
 package model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.Date;
 
 /**
  * Created by Admin on 2016/7/4.
  */
-@Entity
+
 public class Assignment {
     private String id;
     private String courseId;
@@ -21,8 +17,7 @@ public class Assignment {
     private String description;
     private String attachmentUrl;
 
-    @Id
-    @Column(name = "id", nullable = false, length = 10)
+
     public String getId() {
         return id;
     }
@@ -31,8 +26,7 @@ public class Assignment {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "course_id", nullable = true, length = 10)
+
     public String getCourseId() {
         return courseId;
     }
@@ -41,8 +35,7 @@ public class Assignment {
         this.courseId = courseId;
     }
 
-    @Basic
-    @Column(name = "is_teamwork", nullable = false)
+
     public boolean getIsTeamwork() {
         return isTeamwork;
     }
@@ -51,8 +44,7 @@ public class Assignment {
         isTeamwork = teamwork;
     }
 
-    @Basic
-    @Column(name = "id_in_course", nullable = false)
+
     public int getIdInCourse() {
         return idInCourse;
     }
@@ -61,8 +53,7 @@ public class Assignment {
         this.idInCourse = idInCourse;
     }
 
-    @Basic
-    @Column(name = "heading", nullable = true, length = 50)
+
     public String getHeading() {
         return heading;
     }
@@ -71,8 +62,7 @@ public class Assignment {
         this.heading = heading;
     }
 
-    @Basic
-    @Column(name = "start_time", nullable = true)
+
     public Date getStartTime() {
         return startTime;
     }
@@ -81,8 +71,7 @@ public class Assignment {
         this.startTime = startTime;
     }
 
-    @Basic
-    @Column(name = "end_time", nullable = true)
+
     public Date getEndTime() {
         return endTime;
     }
@@ -91,8 +80,7 @@ public class Assignment {
         this.endTime = endTime;
     }
 
-    @Basic
-    @Column(name = "description", nullable = true, length = -1)
+
     public String getDescription() {
         return description;
     }
@@ -101,8 +89,7 @@ public class Assignment {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "attachment_url", nullable = true, length = 50)
+
     public String getAttachmentUrl() {
         return attachmentUrl;
     }

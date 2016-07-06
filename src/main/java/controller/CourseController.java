@@ -1,38 +1,39 @@
 package controller;
 
 import model.Course;
+import model.Student;
+import model.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import service.CourseService;
 import org.springframework.ui.Model;
 
 import javax.validation.Constraint;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ElaineC on 2016/7/4.
  */
 @Controller
+@RequestMapping("/admin")
 public class CourseController {
+
+    /*
+    Mapping
+    {
+        searchcourse    >   search by id/cname/tname
+        editcourse      >   update course information
+        course          >   simply show all
+    }
+     */
+
 
     @Autowired
     private CourseService courseService;
-/*
-    @RequestMapping(value = "addcourse", method = RequestMethod.GET)
-    public String addCourseInfo(@RequestParam("courseid") int id,
-                                @RequestParam("coursename") String name,
-                                @RequestParam("techerid") int teacher,
-                                @RequestParam("description") String desc,
-                                Model model) {
-            //String result = courseService.addCourse(name, teacher, desc);
-        //model.addAttribute("result", result);
-        return "addresult";
-    }*/
-
 
     @RequestMapping(value = "searchcourse", method = RequestMethod.GET)
     public String searchCourse(@RequestParam("value") String val,
@@ -48,35 +49,40 @@ public class CourseController {
         else if (meth.equals("ByTeacherName"))
             course = courseService.searchCourseByTeacherName(val);
 
-        List<Course> courses = new ArrayList<Course>();
-        courses.add(course);
-        model.addAttribute("courses", courses);
+        if(course != null)
+        {
+            List<Course> courses = new ArrayList<Course>();
+            courses.add(course);
+            model.addAttribute("courses", courses);
+        }
+
         return "course_front";
     }
 
-/*
-    @RequestMapping(value = "deletecourse", method = RequestMethod.GET)
-    public String deleteCourseInfo(@RequestParam("courseid") int id, Model model) {
-        String result = courseService.deleteCourse(id);
-        model.addAttribute("result", result);
-        return "deleteresult";
-    }
-
-*/
-
-    @RequestMapping(value = "editcourse", method = RequestMethod.GET)
-    public String editCourseInfo(@RequestParam("id") String id,
-                                  @RequestParam("course_name") String cname){
-        String res = courseService.editCourseName(id, cname);
-        System.out.println("course_name: "+cname);
-        return "error";
-    }
-
-    @RequestMapping(value="coursetable")
-    public String giveYouAll(Model model){
+    @RequestMapping(value="testxx")
+    public String showAll(Model model){
         List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
         return "course_front";
     }
 
+
+    @RequestMapping(value="showdetail", method = RequestMethod.GET)
+    public String showDetail(@RequestParam("id") String id, Model model){
+        Course course = courseService.searchCourseById(id);
+        if(course == null)
+            return "error";
+
+        List<Teacher> teachers = courseService.getTeachers(course.getId());
+        List<Student> students = courseService.getStudents(course.getId());
+
+        model.addAttribute("course", course);
+        if(teachers.get(0) != null) model.addAttribute("teachers", teachers);
+        if(students.get(0) != null) model.addAttribute("students", students);
+
+        System.out.println(teachers);
+        System.out.println(students);
+
+        return "course_detail";
+    }
 }
