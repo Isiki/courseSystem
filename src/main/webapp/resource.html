@@ -24,6 +24,8 @@
     <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/treetable/css/jquery.treetable.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css"/>
 
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
@@ -88,6 +90,24 @@
             <!-- important 在这里开始正文的内容-->
             <div class="row">
                 <div class="col-md-12">
+                    <table id="example-advanced">
+                        <caption>
+                            <a href="#" onclick="jQuery('#example-advanced').treetable('expandAll'); return false;">全部展开</a>
+                            <a href="#" onclick="jQuery('#example-advanced').treetable('collapseAll'); return false;">全部折叠</a>
+                        </caption>
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>种类</th>
+                            <th>大小</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-12">
                     <label class="control-label">Select File</label>
                     <input id="input-file" name="resource" type="file" class="file" data-show-preview="false">
                 </div>
@@ -106,13 +126,74 @@
 
 <script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/fileinput.js}"></script>
 <script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>
+<script th:src="@{/resources/treetable/js/jquery.treetable.js}"></script>
 <script type="text/javascript">
+
+    var refreshTable = function refreshTable(data){
+        var table = $("#example-advanced");
+        table.treetable({expandable: true});
+
+        var tbody = table.find("tbody");
+        tbody.empty();
+
+        for(var i=1; i<=data.length; i++)
+        {
+            var row = data[i-1];
+            var span = $('<span></span>', {
+                class: row[1],
+                text: row[0],
+            });
+            var td1 = $('<td></td>').append(span);
+            var td2 = $('<td></td>', {
+                text: row[1]=='folder'?'文件夹':'文件'
+            });
+            var td3 = $('<td></td>', {
+                text: row[2]
+            });
+
+            var tr = $('<tr></tr>');
+            tr.attr("data-tt-id",i);
+
+            tr.append(td1);
+            tr.append(td2);
+            tr.append(td3);
+
+
+            tbody.append(tr);
+        }
+    }
+
+
     $("#input-file").fileinput({
         language: "zh",
         uploadUrl: "/saveResource_action.do",
         uploadAsync: true,
-        maxFileCount: 1
+        maxFileCount: 1,
+        autoReplace: true
+    }).on("fileuploaded", function(e, data){
+        var resp = data.response;
+        refreshTable(resp);
+        alert("上传成功！");
+    })
+
+    $.ajax({
+        type:"post",
+        url:"show_resource.do",
+        data:"",
+        async:false,
+        success: refreshTable
+    })
+
+
+
+
+    // Highlight selected row
+    $("#example-advanced tbody").on("click", "tr", function() {
+        $(".selected").not(this).removeClass("selected");
+        $(this).toggleClass("selected");
     });
+
+
 </script>
 </html>
 

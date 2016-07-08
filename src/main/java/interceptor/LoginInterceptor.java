@@ -5,6 +5,7 @@ import entity.Constants;
 import model.User;
 */
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.Constants;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 //import service.UserService;
@@ -31,11 +32,12 @@ public class LoginInterceptor implements  HandlerInterceptor {
         }
 
         if(!flag) {
+            String user = (String)httpServletRequest.getSession().getAttribute("id");
             // TODO 为了方便开发和调试，直接添加管理员
             //User user = (User) httpServletRequest.getSession().getAttribute(Constants.USER_INFO);
 //            User user=userService.getUserById(4);
 //            httpServletRequest.getSession().setAttribute(Constants.USER_INFO,user);
-            String user = "isiki" ;  //user not defined, delete later
+            //String user = "isiki" ;  //user not defined, delete later
             if(user!=null) {
                 flag = true;
             }else{

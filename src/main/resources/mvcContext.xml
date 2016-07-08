@@ -43,6 +43,9 @@
             <property name="excludeUrls">
                 <list>
                     <value>login.do</value>
+                    <value>login_action.do</value>
+                    <value>find_password.do</value>
+                    <value>error</value>
                 </list>
             </property>
         </bean>
