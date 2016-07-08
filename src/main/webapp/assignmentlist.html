@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>作业列表</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <!-- 开发智能提示需要，真正发布的时候需要删除-->
+    <!--<link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"-->
+          <!--type="text/css"/>-->
+    <!--<link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet"-->
+          <!--type="text/css"/>-->
+    <!--<link href="resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
+    <!--<link href="resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>-->
+    <!--<link href="resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet"-->
+          <!--type="text/css"/>-->
+    <!--&lt;!&ndash; END GLOBAL MANDATORY STYLES &ndash;&gt;-->
+    <!--&lt;!&ndash; BEGIN THEME STYLES &ndash;&gt;-->
+    <!--<link href="resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>-->
+    <!--<link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>-->
+    <!--<link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>-->
+    <!--<link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet"-->
+          <!--type="text/css"/>-->
+    <!--<link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>-->
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
+<!--常用的公用的css-->
+<div th:include="common::css"></div>
+<!-- header -->
+<div th:replace="header :: header"></div>
+<!-- header结束 -->
+<div class="clearfix"></div>
+<div class="page-container">
+    <!-- 侧边导航栏 -->
+    <div th:replace="sidebar::sidebar"></div>
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+                作业列表
+            </h3>
+
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="#">作业管理</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">作业列表</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <!-- important 在这里开始正文的内容-->
+            <div class="row" >
+                <div class="col-md-12">
+                    <div class="portlet box blue">
+                        <div class="portlet-title">
+                            <div class="caption">作业列表</div>
+                        </div>
+                        <div class="portlet-body">
+                            <form th:action="@{/admin/tasklist.do}" method="post" id="form" role="form">
+                                <hr class="clearfix"/>
+                                <table class="table table-striped table-bordered table-hover table-full-width m-table"
+                                       id="sample_1">
+                                    <thead>
+                                    <tr>
+                                        <th>作业号</th>
+                                        <th>是否为团队作业</th>
+                                        <th>作业标题</th>
+                                        <th>作业描述</th>
+                                        <th>开始时间</th>
+                                        <th>结束时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="homework:${assignment}">
+                                        <td th:text="${homework.id_in_course}" class="text-info"></td>
+                                        <td th:text="${homework.is_homework}"></td>
+                                        <td th:text="${homework.heading}"></td>
+                                        <td th:text="${homework.descrption}"></td>
+                                        <td th:text="${homework.start_time}"></td>
+                                        <td th:text="${homework.end_time}"></td>
+                                        <td>
+                                            <a class="btn blue btn-sm"  href="javascript:void(0)" th:onclick="|openUrl('${homework.id}')|"
+                                               role="button b">查看作业</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <ul class="pager" th:with="pager=${assignment.pageInfo}">
+                                    <li th:switch="*{pager.hasPrevious}"
+                                        th:class="(*{pager.hasPrevious}==false)?'disabled'">
+
+                                        <a th:case="*" href="javascript:void(0)"
+                                           th:onclick="|commitForm(*{pager.currentPage-1})|">上一页</a>
+                                    </li>
+                                    <li th:switch="*{pager.hasNext}" th:class="(*{pager.hasNext}==false)?'disabled'">
+
+                                        <a th:case="*" href="javascript:void(0)"
+                                           th:onclick="|commitForm(*{pager.currentPage+1})|">下一页</a>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT-->
+            </div>
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- footer-->
+    <div th:replace="footer::footer"></div>
+    <!-- 把公用的js包含进来,包含一些初始化的工作 -->
+    <div th:include="common::js"></div>
+    <script type="application/javascript">
+        function commitForm(page) {
+            var url = $('#form').attr('action');
+            url = url + '?page=' + page;
+            $('#form').attr('action', url);
+            $('#form').submit();
+        }
+        function openUrl(id){
+            openUrlUtil('POST','taskinfo.do',{id:id},'_blank');
+        }
+    </script>
+</div>
+</body>
+</html>

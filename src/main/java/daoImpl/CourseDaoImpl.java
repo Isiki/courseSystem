@@ -52,7 +52,7 @@ public class CourseDaoImpl implements CourseDao{
 
     public List<Course> getCoursesByTeacherId(int id) {
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT * FROM Course WHERE teacher_id=="+id)
+                .createSQLQuery("SELECT * FROM Course WHERE teacher_id="+id)
                 .addEntity(Course.class);
         // TODO: fix injection problems (HQL instead)
 
