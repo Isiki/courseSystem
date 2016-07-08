@@ -2,6 +2,8 @@ package controller;
 
 import dao.StudentDao;
 import entity.BaseException;
+import model.Admin;
+import model.Teacher;
 import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +16,10 @@ import service.LoginService;
 import service.StudentService;
 import model.Student;
 import service.TeacherService;
+import util.UserSession;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -65,7 +69,7 @@ public class LoginController {
     private LoginService service;
 
     @RequestMapping(value = "login_action", method = RequestMethod.POST)
-    public String loginAction(HttpServletRequest request,
+    public String loginAction(HttpServletRequest request, HttpSession session,
                               Model model)
     {
         boolean success = false;
@@ -89,35 +93,41 @@ public class LoginController {
 
         byte[] bts = md.digest();
         String password = new String(encodeHex(bts));
-
+        UserSession user=new UserSession(session);
 
         System.out.equals("Login username " + username + " authtype " + authtype);
 
         if("admin".equals(authtype))
         {
-            success = service.LoginAsAdmin(username, password);
-            if(success)
+            Admin admin =service.LoginAsAdmin(username, password);
+            if(null!=admin)
             {
+                user.setCurrentUser(admin);
                 redirect = "admin/course.do";
             }
         }
 
         if("student".equals(authtype))
         {
-            success = service.LoginAsStudent(username, password);
-            if(success) redirect = "student/course.do";
+            Student student = service.LoginAsStudent(username, password);
+            if(null!=student){
+                user.setCurrentUser(student);
+                redirect = "student/course.do";
+            }
         }
 
         if("teacher".equals(authtype))
         {
-            success = service.LoginAsTeacher(username, password);
-            if(success) redirect = "teacher/add_assignment.do?courseId=1";
+            Teacher teacher = service.LoginAsTeacher(username, password);
+            if(null!=teacher){
+                user.setCurrentUser(teacher);
+                redirect = "teacher/add_assignment.do?courseId=1";
+            }
         }
 
-        if(success)
+        if(null!=user.getUserId())
         {
-            request.getSession().setAttribute("id", username);
-            request.getSession().setAttribute("auth", authtype);
+            /*request.getSession().setAttribute("id", username);*/
         }
 
         return "redirect:"+redirect;

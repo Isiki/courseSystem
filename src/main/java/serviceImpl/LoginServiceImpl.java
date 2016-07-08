@@ -23,18 +23,32 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     AdminDao adao;
 
-    public boolean LoginAsAdmin(String id, String password) {
+    public Admin LoginAsAdmin(String id, String password) {
         Admin ad = adao.get(id);
-        return (ad.getPassword().equals(password));
+        if (null!=ad&&ad.getPassword().equals(password)) {
+            return ad;
+        }else
+        {
+            return null;
+        }
     }
 
-    public boolean LoginAsStudent(String id, String password) {
+    public Student LoginAsStudent(String id, String password) {
         Student st = sdao.getStudentById(id);
-        return (st.getPassword().equals(password));
+        if(null!=st&&st.getPassword().equals(password)) {
+            return st;
+        }else
+        {
+            return null;
+        }
     }
 
-    public boolean LoginAsTeacher(String id, String password) {
+    public Teacher LoginAsTeacher(String id, String password) {
         Teacher tc = tdao.get(id);
-        return (tc.getPassword().equals(password));
+        if(null!=tc&&tc.getPassword().equals(password)) {
+            return tc;
+        }else{
+            return null;
+        }
     }
 }
