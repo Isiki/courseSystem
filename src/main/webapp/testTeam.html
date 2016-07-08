@@ -128,17 +128,21 @@
     <div th:include="common::js"></div>
     <script type="application/javascript">
         function createTeam(){
-                var data=$.param($('#form').serializeArray());
+            var result =checkNull("team_id")&checkNull("team_name");
+            if(reasult) {
+                var data = $.param($('#form').serializeArray());
                 $.ajax({
-                    url:"createTeam.do",
-                    type:"POST",
-                    data:data,
-                    dataType:"json",
-                    success:function(result){
-
+                    url: "createTeam.do",
+                    type: "POST",
+                    data: data,
+                    dataType: "json",
+                    success: function (result) {
+                        if(result.code==0)
+                            result.msg = "提交成功"
                         layer.alert();
                     }
                 });
+            }
         }
     </script>
 </div>
