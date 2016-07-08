@@ -18,26 +18,25 @@ public class TeamServiceImpl implements TeamService {
     @Autowired
     private TeamDao teamDao;
 
-    public String createTeam( String teamid, String course_id, String student_id,String team_name,String description){
+    public String createTeam( String team_id, String course_id, String student_id,String team_name,String description){
 
             Team team=new Team();
-            team.setId(teamid);
+            team.setId(team_id);
             team.setCourseId(course_id);
             team.setTeamleaderId(student_id);
             team.setTeamDescription(description);
             team.setTeamName(team_name);
-            teamDao.createTeam(team);
-            return  "success";
-
+            String result =teamDao.createTeam(team);
+            return  result;
     }
 
-    public Team searchTeamByName(String name){
-        Team team=teamDao.getTeamByName(name);
+    public Team searchTeamByName(String name,String course_id){
+        Team team=teamDao.getTeamByName(name,course_id);
         return team;
     }
 
-    public Team searchTeamById(String id){
-        Team team=teamDao.getTeamById(id);
+    public Team searchTeamById(String id,String course_id){
+        Team team=teamDao.getTeamById(id,course_id);
         return team;
     }
 

@@ -23,19 +23,20 @@ import java.util.List;
 public class TeamController {
     @Autowired
     private TeamService teamService;
-    @RequestMapping(value = "Team")
+
+   @RequestMapping(value = "createTeam")
     public String CreateTeam(){
-        return "testTeam";
+        return "createTeam";
     }
 
-
-    @RequestMapping(value = "createTeam")
+    @RequestMapping(value = "createTeamAction")
     public
     @ResponseBody
-    AjaxResponse saveUserInfo(String team_id,String course_id,String student_id, String team_name,String description){
+    String saveUserInfo(String team_id,String course_id,String student_id, String team_name,String description){
         AjaxResponse response = new AjaxResponse();
-        String string = teamService.createTeam(team_id,course_id,student_id,team_name,description);
-        return response;
+        String result =teamService.createTeam(team_id,course_id,student_id,team_name,description);
+            return result;
+
     }
 
 
@@ -56,15 +57,36 @@ public class TeamController {
         return response;
     }
 
+    /*//TODO: 测试用
+    @RequestMapping("testTeam")
+    public String forTestTeam(){
+        return "testTeam";
+    }
+    */
+
+    /*@RequestMapping(value = "createTeam",method = RequestMethod.GET)
+    public String createTeam(@RequestParam("team_id") String team_id,
+                             @RequestParam("course_id") String course_id,
+                             @RequestParam("student_id") String  student_id,
+                             @RequestParam("team_name") String team_name,
+                             @RequestParam("description") String desc,
+                             Model model){
+        String result = teamService.createTeam(team_id, course_id, student_id,team_name,desc);
+        model.addAttribute("result", result);
+        return "createTeamResult";
+    }
+*/
+
     @RequestMapping(value = "searchTeam", method = RequestMethod.GET)
-    public String searchCourse(@RequestParam("value") String val,
+    public String searchTeam(@RequestParam("value") String val,
                                @RequestParam("method") String meth,
+                             @RequestParam("course_id") String c_id,
                                Model model) {
         Team team = null;
         if (meth.equals("ById"))
-            team = teamService.searchTeamById(val);
+            team = teamService.searchTeamById(val,c_id);
         else if (meth.equals("ByName"))
-            team = teamService.searchTeamByName(val);
+            team = teamService.searchTeamByName(val,c_id);
 
         List<Team> teams = new ArrayList<Team>();
         teams.add(team);
@@ -73,7 +95,7 @@ public class TeamController {
     }
 
     @RequestMapping(value="course_team")
-    public String getTeamsInCourse(@RequestParam("course_id") String c_id,Model model){
+    public String getTeamsIncourse(@RequestParam("course_id") String c_id,Model model){
         List<Team> teams = teamService.getTeamsInCourse(c_id);
         model.addAttribute("teams", teams);
         return "team_front";

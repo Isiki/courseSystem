@@ -17,24 +17,35 @@ public class TeamDaoImpl implements TeamDao{
     @Autowired
     private SessionFactory sessionFactory;
 
-    public int createTeam(Team team) {
-        sessionFactory.getCurrentSession().save(team);
-        return 0;
+    public String createTeam(Team team) {
+        Query query1=sessionFactory.getCurrentSession()
+                .createSQLQuery("SELECT * FROM Team WHERE id=\'"+team.getId()+"\' AND course_id=\'"+team.getCourseId()+"\'")
+                .addEntity(Team.class);
+        Query query2=sessionFactory.getCurrentSession()
+                .createSQLQuery("SELECT * FROM Team WHERE teamleader_id = \'"+team.getTeamleaderId()+"\' AND course_id = \'"+team.getCourseId()+"\'")
+                .addEntity(Team.class);
+        if(query1==null && query2==null)
+        {
+            sessionFactory.getCurrentSession().save(team);
+            return  "success";
+        }
+        else
+            return "error";
     }
 
-    public Team getTeamById(String id){
+    public Team getTeamById(String id,String course_id){
         return (Team)sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT * FROM Team WHERE id="+id)
+                .createSQLQuery("SELECT * FROM Team WHERE id=\'"+id+"\'AND course_id=\'"+course_id+"\'")
                 .addEntity(Team.class);
     }
-    public Team getTeamByName(String name){
+    public Team getTeamByName(String name,String course_id){
         return (Team)sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT * FROM Team WHERE team_name="+name)
+                .createSQLQuery("SELECT * FROM Team WHERE team_name=\'"+name+"\'AND course_id=\'"+course_id+"\'")
                 .addEntity(Team.class);
     }
     public List<Team> getTeamInCourse(String course_id){
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT * from Team where course_id="+course_id)
+                .createSQLQuery("SELECT * FROM Team WHERE course_id=\'"+course_id+"\'")
                 .addEntity(Team.class);
 
         return query.list();

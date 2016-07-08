@@ -28,8 +28,8 @@ public class CourseController {
                                 @RequestParam("techerid") int teacher,
                                 @RequestParam("description") String desc,
                                 Model model) {
-            //String result = courseService.addCourse(name, teacher, desc);
-        //model.addAttribute("result", result);
+            String result = courseService.addCourse(name, teacher, desc);
+        model.addAttribute("result", result);
         return "addresult";
     }*/
 

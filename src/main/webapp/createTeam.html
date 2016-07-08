@@ -74,7 +74,7 @@
                             <div class="caption">创建团队</div>
                         </div>
                         <div class="portlet-body form">
-                            <form th:action="@{/createTeam}" class="form-horizontal" role="form" method="post" id="form">
+                            <form  class="form-horizontal" role="form" method="post" id="form">
                                 <div class="form-body">
                                     <div class="form-group">
                                         <label for="student_id" class="col-md-2 control-label" >学生id</label>
@@ -93,12 +93,14 @@
                                         <div class="col-md-4">
                                             <input  type="text" id="team_id" class="form-control" name="team_id">
                                         </div>
+                                        <label id = "team_idcheck" class="control-label"></label>
                                     </div>
                                     <div class="form-group">
                                         <label for="team_name" class="col-md-2 control-label">团队名字</label>
                                         <div class="col-md-4">
                                             <input  type="text" id="team_name" class="form-control" name="team_name">
                                         </div>
+                                        <label id="team_namecheck" class="control-label"></label>
                                     </div>
                                     <div class="form-group">
                                         <label for="description" class="col-md-2 control-label">团队详细描述</label>
@@ -108,7 +110,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-6">
-                                            <button id="submit-btn" type="button" class="btn green" onclick="createTeam()">确认创建</button>
+                                            <button id="submit-btn" type="button" class="btn green" onclick="create_Team()">确认创建</button>
                                             <button id="return-btn" type="button" class="btn red col-md-offset-1" onclick="javascript:window.history.back(-1);">返回前页</button>
                                         </div>
                                     </div>
@@ -127,24 +129,28 @@
     <!-- 把公用的js包含进来,包含一些初始化的工作 -->
     <div th:include="common::js"></div>
     <script type="application/javascript">
-        function createTeam(){
-            var result =checkNull("team_id")&checkNull("team_name");
-            if(reasult) {
-                var data = $.param($('#form').serializeArray());
+        function create_Team(){
+            var result=checkNull("team_id")&&checkNull("team_name");
+            if(result){
+                var data= $.param($('#form').serializeArray());
                 $.ajax({
-                    url: "createTeam.do",
-                    type: "POST",
-                    data: data,
-                    dataType: "json",
-                    success: function (result) {
-                        if(result.code==0)
-                            result.msg = "提交成功"
-                        layer.alert();
+                    url:"createTeamAction.do",
+                    type:"POST",
+                    data:data,
+                    dataType:"json",
+                    success:function(result){
+                        if(result=="success"){
+                            result.msg = "提交成功";
+                        }else {
+                            result.msg = "提交失败";
+                        }
+                        layer.alert(result.msg);
+
                     }
                 });
             }
         }
-    </script>
+     </script>
 </div>
 </body>
 </html>
