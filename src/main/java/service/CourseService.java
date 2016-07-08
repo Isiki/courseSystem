@@ -11,15 +11,15 @@ import java.util.List;
  */
 public interface CourseService {
 
-    public List<Course> getAllCourses();
+    List<Course> getAllCourses();
 
-    public Course searchCourseByName(String name);
+    Course searchCourseByName(String name);
 
-    public Course searchCourseByTeacherName(String teacher);
+    Course searchCourseByTeacherName(String teacher);
 
-    public Course searchCourseById(String id);
+    Course searchCourseById(String id);
 
-    public List<Teacher> getTeachers(String id);
+    List<Teacher> getTeachers(String id);
 
-    public List<Student> getStudents(String id);
+    List<Student> getStudents(String id);
 }

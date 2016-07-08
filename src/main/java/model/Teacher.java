@@ -13,6 +13,18 @@ public class Teacher {
     private String id;
     private String realName;
     private String password;
+    private String description;
+
+
+    @Basic
+    @Column(name = "description", nullable = true, length = -1)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Id
     @Column(name = "id", nullable = false, length = 10)

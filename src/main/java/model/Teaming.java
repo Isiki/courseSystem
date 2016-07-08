@@ -1,21 +1,12 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-
 /**
  * Created by Admin on 2016/7/4.
  */
-@Entity
-@IdClass(TeamingPK.class)
 public class Teaming {
     private String studentId;
     private String teamId;
 
-    @Id
-    @Column(name = "student_id", nullable = false, length = 50)
     public String getStudentId() {
         return studentId;
     }
@@ -24,8 +15,6 @@ public class Teaming {
         this.studentId = studentId;
     }
 
-    @Id
-    @Column(name = "team_id", nullable = false, length = 50)
     public String getTeamId() {
         return teamId;
     }

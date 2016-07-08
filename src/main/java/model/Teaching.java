@@ -1,21 +1,13 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-
 /**
  * Created by Admin on 2016/7/4.
  */
-@Entity
-@IdClass(TeachingPK.class)
+
 public class Teaching {
     private String teacherId;
     private String courseId;
 
-    @Id
-    @Column(name = "teacher_id", nullable = false, length = 10)
     public String getTeacherId() {
         return teacherId;
     }
@@ -24,8 +16,6 @@ public class Teaching {
         this.teacherId = teacherId;
     }
 
-    @Id
-    @Column(name = "course_id", nullable = false, length = 10)
     public String getCourseId() {
         return courseId;
     }
