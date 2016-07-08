@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Metronic | Page Layouts - Blank Page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <!-- 开发智能提示需要，真正发布的时候需要删除-->
+    <link href="../resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="../resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="../resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/course_custom.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+
+<body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
+
+<!--常用的公用的css-->
+<div th:include="common::css"></div>
+<!-- header -->
+<div th:replace="header :: header"></div>
+<!-- header结束 -->
+
+<div class="clearfix"></div>
+
+
+<!-- CONTENT START -->
+<div class="page-container">
+
+    <!-- 侧边导航栏 -->
+    <div th:replace="sidebar::sidebar"></div>
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+            <!-- BEGIN PAGE HEADER-->
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <!-- important 在这里开始正文的内容-->
+
+            <!-- BEGIN SAMPLE TABLE -->
+            <div class="col-md-12">
+                <p class="h1">用户故事-第二次迭代</p>
+                <div class="fixed-margin">
+                    <p class="h4">
+                        作业描述
+                        <!-- if teacher -->
+                        <a href="#edit"><span class="glyphicon glyphicon-edit"></span></a>
+                    </p>
+                    <p>经过第一次迭代的回顾会议后，用户故事可能有所更改。请将第二次迭代的用户故事上交。</p>
+                    <p>命名格式：group_(小组号)_story_iter2.xls</p>
+                </div>
+                <div class="fixed-margin">
+                    <p class="h5">开始时间：<time class="datetime">2016-07-08 16:00</time></p>
+                    <p class="h5">结束时间：<time class="datetime">2016-07-08 20:00</time></p>
+                </div>
+                <div class="fixed-margin">
+                    <p class="h5">总分：5.0
+                        <!-- if TEACHER -->
+                    <span class="glyphicon glyphicon-edit"></span>
+                        <!-- end if -->
+                    </p>
+                </div>
+                <!-- if STUDENT -->
+                <!-- if SUBMIT_AS_FILE -->
+                <div class="fixed-margin">
+                    <span class="h5 bold">提交状态：</span>
+                    <span class="h5 text-muted">已提交</span>
+                    <span class="h5 bold text-danger">未提交</span>
+                    <!-- CALLING FOR REPLACEMENT -->
+                    <div>
+                        <p class="h5">上次提交：group_02_story_iter2.xls
+                        <span class="text-muted">at 2016-07-08 16:19</span></p>
+                        <p class="h5">准备上传：group_02_story_iter2.xls</p>
+                    </div>
+                    <div class="form-group">
+                        <span class="glyphicon glyphicon-file"></span>
+                        <input class="fileinput dropdown">
+                        <button class="btn btn-primary">上传</button>
+                    </div>
+                    <!-- END REPLACEMENT -->
+                </div>
+                <!-- end if -->
+                <!-- else if SUBMIT_AS_RICHTEXT -->
+                <div class="fixed-margin">
+                    <p class="h5">作业内容</p>
+                    <div class="container-fluid">
+                        <textarea class="auto-adapt" placeholder="在这里添加内容..."></textarea>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row pull-right">
+                            <button class="btn btn-default">保存</button>
+                            <button class="btn btn-primary">提交</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- end if -->
+            </div>
+            <!-- END SAMPLE TABLE -->
+
+        </div>
+        <!-- END CONTENT -->
+
+    </div>
+    <!-- CONTENT END -->
+
+
+
+</div>
+<!-- END CONTENT BODY -->
+
+
+
+<!-- footer-->
+<div th:replace="footer::footer"></div>
+<!-- 把公用的js包含进来,包含一些初始化的工作 -->
+<div th:include="common::js"></div>
+<!-- footer end -->
+
+
+
+</div>
+
+
+
+</body>
+
+
+
+</html>

@@ -62,3 +62,13 @@
     background-color: transparent;
     border: 0px;
 }
+
+.fixed-margin{
+    margin-top: 48px;
+}
+
+textarea.auto-adapt{
+    minwidth: 50%;
+    width: 100%;
+    overflow-y: visible;
+}

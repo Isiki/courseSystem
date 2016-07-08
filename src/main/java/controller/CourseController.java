@@ -59,7 +59,7 @@ public class CourseController {
         return "course_front";
     }
 
-    @RequestMapping(value="testxx")
+    @RequestMapping(value="course")
     public String showAll(Model model){
         List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
