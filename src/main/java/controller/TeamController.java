@@ -101,4 +101,28 @@ public class TeamController {
         return "team_front";
     }
 
+    @RequestMapping(value = "searchTeam", method = RequestMethod.GET)
+    public String searchCourse(@RequestParam("value") String val,
+                               @RequestParam("method") String meth,
+                               Model model) {
+        Team team = null;
+        if (meth.equals("ById"))
+            team = teamService.searchTeamById(val);
+        else if (meth.equals("ByName"))
+            team = teamService.searchTeamByName(val);
+
+        List<Team> teams = new ArrayList<Team>();
+        teams.add(team);
+        model.addAttribute("team", teams);
+        return "team_front";
+    }
+
+    @RequestMapping(value="course_team")
+    public String getTeamsInCourse(@RequestParam("course_id") String c_id,Model model){
+        List<Team> teams = teamService.getTeamsInCourse(c_id);
+        model.addAttribute("teams", teams);
+        return "team_front";
+    }
+
+
 }

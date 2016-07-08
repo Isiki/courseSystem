@@ -1,14 +1,9 @@
 package model;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Created by Admin on 2016/7/4.
  */
-@Entity
-@Table
+
 public class Course {
     private String id;
     private String courseName;
@@ -61,8 +56,6 @@ public class Course {
     public void setTeamMaxNumber(String teamMaxNumber) {
         this.teamMaxNumber = teamMaxNumber;
     }
-
-
 
 
     @Override

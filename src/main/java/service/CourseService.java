@@ -1,6 +1,8 @@
 package service;
 
 import model.Course;
+import model.Student;
+import model.Teacher;
 
 import java.util.List;
 
@@ -8,8 +10,6 @@ import java.util.List;
  * Created by ElaineC on 2016/7/4.
  */
 public interface CourseService {
-
-    public String editCourseName(String id, String name);
 
     public List<Course> getAllCourses();
 
@@ -19,15 +19,7 @@ public interface CourseService {
 
     public Course searchCourseById(String id);
 
-    /*
-    public String addCourse(String name, boolean team_allowed, String team_min_member, String team_max_member);
+    public List<Teacher> getTeachers(String id);
 
-    public String editCourseTeacher(int id, int teacherId);
-
-    public String editCourseDescription(int id, String info);
-
-    public String deleteCourse(int id);
-
-    ;
-    */
+    public List<Student> getStudents(String id);
 }

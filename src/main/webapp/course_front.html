@@ -43,7 +43,6 @@
 
 
 
-
 <!-- CONTENT START -->
 <div class="page-container">
 
@@ -53,6 +52,7 @@
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
+
             <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
             <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -77,50 +77,84 @@
             <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
             <!-- BEGIN PAGE HEADER-->
-            <h3 class="page-title">
-                Blank Page <small>blank page</small>
-            </h3>
-            <div class="page-bar">
-                <ul class="page-breadcrumb">
-                    <li>
-                        <i class="fa fa-home"></i>
-                        <a href="#">教务后台</a>
-                        <i class="fa fa-angle-right"></i>
-                    </li>
-                    <li>
-                        <a href="#">课程管理</a>
-                        <i class="fa fa-angle-right"></i>
-                    </li>
-                    <li>
-                        <a href="#">课程详情</a>
-                    </li>
-                </ul>
-            </div>
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
             <!-- important 在这里开始正文的内容-->
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="course-table" border="1">
-                        <tr>
-                            <td>课程编号</td>
-                            <td>课程名</td>
-                            <td>组队要求</td>
-                            <td>人数下限</td>
-                            <td>人数上限</td>
-                        </tr>
-                        <tr th:each="cs:${courses}">
-                            <td th:text="${cs.id}"></td>
-                            <td th:text="${cs.courseName}"></td>
-                            <td th:text="none"></td>
-                            <td th:text="none"></td>
-                            <td th:text="none"></td>
-                        </tr>
-                    </table>
-                    </tr>
+
+            <!-- BEGIN SAMPLE TABLE -->
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-social-dribbble font-dark hide"></i>
+                            <span class="caption-subject font-dark bold uppercase">课程列表</span>
+                        </div>
+                        <div class="actions">
+                            <!-- BEGIN SEARCH BAR -->
+                            <div class="input-group">
+                                <form action="/searchcourse.do" method="GET">
+                                    <select id="search_by" name="method">
+                                        <option value="ById">按课程编号</option>
+                                        <option value="ByName">按课程名称</option>
+                                        <option value="ByTeacherName">按教师姓名</option>
+                                    </select>
+                                    <input id="search_value" name="value" class="search-form" type="text">
+                                    <button id="search_btn" type="submit" class="submit-transparent"><p class="glyphicon glyphicon-search"></p></button>
+                                    <a href="/course.do">Show all</a>
+                                </form>
+                            </div>
+                            <!-- END SEARCH BAR -->
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="bootstrap-table">
+                            <div class="fixed-table-toolbar"></div>
+                            <div class="fixed-table-body">
+                                <div class="fixed-table-loading" style="top: 41px; display: none;">Loading, please wait...</div>
+                                    <table data-toggle="table" data-url="" data-height="299" class="table table-hover" style="margin-top: -16px;">
+                                        <thead>
+                                        <tr>
+                                            <th style="" data-field="id" tabindex="0">
+                                                <div class="th-inner ">课程ID</div>
+                                                <div class="fht-cell"></div>
+                                            </th>
+                                            <th style="" data-field="course_name" tabindex="0">
+                                                <div class="th-inner ">课程名称</div>
+                                                <div class="fht-cell"></div>
+                                            </th>
+                                            <th style="" data-field="teacher_name" tabindex="0">
+                                                <div class="th-inner ">授课教师</div>
+                                                <div class="fht-cell"></div>
+                                            </th>
+                                            <th style="" data-field="allow_team" tabindex="0">
+                                                <div class="th-inner">组队要求</div>
+                                                <div class="fht-cell"></div>
+                                            </th>
+                                            <th style="" data-field="" tabindex="0">
+                                                <div class="th-inner"></div>
+                                                <div class="fht-cell"></div>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="course_show_case">
+                                        <tr th:unless="${courses.isEmpty()}" th:each="cs:${courses}">
+                                                <td th:text="${cs.id}"></td>
+                                                <td th:text="${cs.courseName}"></td>
+                                                <td>TEACHER NAME</td>
+                                                <td>ALLOW TEAM</td>
+                                                <td>
+                                                    <a th:href="@{showdetail.do(id=${cs.id})}" class="glyphicon glyphicon-edit"></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- END PAGE CONTENT-->
-            </div>
+            <!-- END SAMPLE TABLE -->
+
         </div>
         <!-- END CONTENT -->
 
@@ -129,6 +163,8 @@
 
 
 
+</div>
+<!-- END CONTENT BODY -->
 
 
 
@@ -143,9 +179,8 @@
 </div>
 
 
+
 </body>
-
-
 
 
 

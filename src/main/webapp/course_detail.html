@@ -99,27 +99,16 @@
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
             <!-- important 在这里开始正文的内容-->
-            <div class="row">
-                <div class="col-md-12">
-                    <p th:text="${plaintext}"></p>
-                    <table class="course-table" border="1">
-                        <tr>
-                            <td>课程编号</td>
-                            <td>课程名</td>
-                            <td>组队/个人</td>
-                            <td>人数下限</td>
-                            <td>人数上限</td>
-                        </tr>
-                        <tr th:each="cs:${courses}">
-                            <td th:text="${cs.id}" class="fixed-width"></td>
-                            <td th:text="${cs.name}"></td>
-                            <td th:text="${cs.team_allowed?'组队':'个人'}"></td>
-                            <td th:text="${cs.team_min_member}"></td>
-                            <td th:text="${cs.team_max_member}"></td>
-                        </tr>
-                    </table>
-                </tr>
-            </div>
+            <h2 th:text="${course.courseName}">
+                <h4>授课教师</h4>
+                <div th:unless="${teachers.isEmpty()}" th:each="t:${teachers}">
+                    <a href="#" th:text="${t.realName}"></a>
+                </div>
+                <h4>学生名单</h4>
+                <div th:unless="${students.isEmpty()}" th:each="s:${students}">
+                    <a href="#" th:text="${s.realName}"></a>
+                </div>
+            </h2>
             <!-- END PAGE CONTENT-->
         </div>
     </div>

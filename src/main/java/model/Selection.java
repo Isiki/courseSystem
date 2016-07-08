@@ -8,14 +8,13 @@ import javax.persistence.IdClass;
 /**
  * Created by Admin on 2016/7/4.
  */
-@Entity
+
 @IdClass(SelectionPK.class)
 public class Selection {
     private String studentId;
     private String courseId;
 
-    @Id
-    @Column(name = "student_id", nullable = false, length = 10)
+
     public String getStudentId() {
         return studentId;
     }
@@ -24,8 +23,7 @@ public class Selection {
         this.studentId = studentId;
     }
 
-    @Id
-    @Column(name = "course_id", nullable = false, length = 10)
+
     public String getCourseId() {
         return courseId;
     }
