@@ -11,17 +11,17 @@ import java.util.List;
  */
 public interface CourseDao {
 
-    public void updateCourse(Course course);
-    public Course getCourseById(String id);
-    public Course getCourseByName(String name);
-    public Course getCourseByTeacherId(int id);
+    void updateCourse(Course course);
+    Course getCourseById(String id);
+    Course getCourseByName(String name);
+    Course getCourseByTeacherId(int id);
 
-    public List<Course> getCoursesByName(String name);
-    public List<Course> getCoursesByTeacherId(int id);
-    public List<Course> getCoursesByTeacherNameBad(String tname);
-    public List<Course> getAll();
+    List<Course> getCoursesByName(String name);
+    List<Course> getCoursesByTeacherId(int id);
+    List<Course> getCoursesByTeacherNameBad(String tname);
+    List<Course> getAll();
 
-    public List<Teacher> getTeachersByCourseId(String id);
-    public List<Student> getStudentsByCourseId(String id);
+    List<Teacher> getTeachersByCourseId(String id);
+    List<Student> getStudentsByCourseId(String id);
 
 }

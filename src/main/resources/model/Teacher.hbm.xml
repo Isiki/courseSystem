@@ -14,5 +14,9 @@
         <property name="password">
             <column name="password" sql-type="varchar(50)" length="50"/>
         </property>
+        <property name="description">
+            <column name="description" sql-type="text" />
+        </property>
+
     </class>
 </hibernate-mapping>
