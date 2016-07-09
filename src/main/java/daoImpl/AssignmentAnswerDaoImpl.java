@@ -77,4 +77,6 @@ public class AssignmentAnswerDaoImpl implements AssignmentAnswerDao{
         return query.list();
 
     }
+
+
 }
