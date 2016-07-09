@@ -6,6 +6,7 @@ import model.PersonalAssignmentAnswer;
 import model.TeamAssignmentAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import service.AssignmentAnswerService;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by ElaineC on 2016/7/8.
  */
 @Service
-public class AssignmentAnswerServiceImpl {
+public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
     @Autowired
     private AssignmentAnswerDao assignmentAnswerDao;
     public List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id){
@@ -32,12 +33,12 @@ public class AssignmentAnswerServiceImpl {
         return assignmentAnswerDao.getPersonalAssignmentToBeSubmittedByStudent(studentId);
     }
     public List<PersonalAssignmentAnswer> getPersonalAssignmenToBeSubmittedByCourse(String course){
-        return assignmentAnswerDao.getPersonalAssignmenToBeSubmittedByCourse(course);
+        return assignmentAnswerDao.getPersonalAssignmentToBeSubmittedByCourseId(course);
     }
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByTeam(String teamId){
-        return assignmentAnswerDao.getTeamAssignmentNotSubmittedByTeam(teamId);
+        return assignmentAnswerDao.getTeamAssignmentToBeSubmittedByTeam(teamId);
     }
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByCourse(String courseId){
-        return  assignmentAnswerDao.getTeamAssignmentNotSubmittedByCourse(courseId);
+        return  assignmentAnswerDao.getTeamAssignmentToBeSubmittedByCourseId(courseId);
     }
 }
