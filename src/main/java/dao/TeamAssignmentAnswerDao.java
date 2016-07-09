@@ -9,4 +9,10 @@ import java.util.List;
  */
 public interface TeamAssignmentAnswerDao extends Dao<TeamAssignmentAnswer,String> {
     List<TeamAssignmentAnswer> getAnswerByAssignmentId(String assignmentId);
+    public List<TeamAssignmentAnswer> getTeamAnswerByTeamId(String id);
+    public List<TeamAssignmentAnswer> getTeamAnswerByCourseId(String id);
+
+    public List<TeamAssignmentAnswer> getTeamAssignmentToBeSubmittedByTeam(String teamId);
+    public List<TeamAssignmentAnswer> getTeamAssignmentToBeSubmittedByCourseId(String courseId);
+
 }

@@ -1,6 +1,5 @@
 package controller;
 
-import dao.AssignmentAnswerDao;
 import model.PersonalAssignmentAnswer;
 import model.TeamAssignmentAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
