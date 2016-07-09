@@ -90,33 +90,46 @@
             <!-- important 在这里开始正文的内容-->
             <div class="row">
                 <div class="col-md-12">
-                    <table id="example-advanced">
-                        <caption>
-                            <a href="#" onclick="jQuery('#example-advanced').treetable('expandAll'); return false;">全部展开</a>
-                            <a href="#" onclick="jQuery('#example-advanced').treetable('collapseAll'); return false;">全部折叠</a>
-                        </caption>
+                    <table id="resTable" class="display table table-striped" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th>名称</th>
-                            <th>种类</th>
+                            <th>文件</th>
+                            <th>修改时间</th>
                             <th>大小</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        </tbody>
                     </table>
                 </div>
 
-                <div class="col-md-12">
-                    <label class="control-label">Select File</label>
-                    <input id="input-file" name="resource" type="file" class="file" data-show-preview="false">
-                </div>
+
             </div>
             <!-- END PAGE CONTENT-->
         </div>
     </div>
     <!-- END CONTENT -->
 </div>
+
+<!-- Modal-->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalHead">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="uploadModalHead">上传文件</h4>
+            </div>
+            <div class="modal-body">
+                <label class="control-label">Select File</label>
+                <input id="input-file" name="resource" type="file" class="file" data-show-preview="false">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- footer-->
 <div th:replace="footer::footer"></div>
 <!-- 把公用的js包含进来,包含一些初始化的工作 -->
@@ -126,74 +139,78 @@
 
 <script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/fileinput.js}"></script>
 <script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>
-<script th:src="@{/resources/treetable/js/jquery.treetable.js}"></script>
+<script th:src="@{/resources/DataTables/datatables.js}"></script>
+
 <script type="text/javascript">
-
-    var refreshTable = function refreshTable(data){
-        var table = $("#example-advanced");
-        table.treetable({expandable: true});
-
-        var tbody = table.find("tbody");
-        tbody.empty();
-
-        for(var i=1; i<=data.length; i++)
-        {
-            var row = data[i-1];
-            var span = $('<span></span>', {
-                class: row[1],
-                text: row[0],
-            });
-            var td1 = $('<td></td>').append(span);
-            var td2 = $('<td></td>', {
-                text: row[1]=='folder'?'文件夹':'文件'
-            });
-            var td3 = $('<td></td>', {
-                text: row[2]
-            });
-
-            var tr = $('<tr></tr>');
-            tr.attr("data-tt-id",i);
-
-            tr.append(td1);
-            tr.append(td2);
-            tr.append(td3);
-
-
-            tbody.append(tr);
-        }
-    }
-
 
     $("#input-file").fileinput({
         language: "zh",
         uploadUrl: "/saveResource_action.do",
         uploadAsync: true,
-        maxFileCount: 1,
+        maxFileCount: 5,
         autoReplace: true
-    }).on("fileuploaded", function(e, data){
-        var resp = data.response;
-        refreshTable(resp);
-        alert("上传成功！");
+    }).on("fileuploaded", function (e, data) {
+        if (data['response']['action'] == 'add') {
+            var datalist = data['response']['data'];
+            for (var i=0; i<datalist.length; i++) {
+                table.row.add(
+                    datalist[i]
+                ).draw()
+            }
+        }
     })
 
-    $.ajax({
-        type:"post",
-        url:"show_resource.do",
-        data:"",
-        async:false,
-        success: refreshTable
-    })
+    var table;
+    var fileType = ['aac','ace','ai','ain','amr','app','arj',
+        'asf','asp','aspx','av','avi','bin','bmp','cab','cad',
+        'cat','cdr','chm','com','css','cur','dat','db','dll',
+        'dmv','docx','dot','dps','dpt','dwg','dxf','emf','eps',
+        'et','ett','exe','fla','gif','hlp','htm','html','icl',
+        'ico','img','inf','ini','iso','jpeg','jpg','js','m3u',
+        'max','mdb','mde','mht','mid','midi','mox','mp3','mp4',
+        'mpeg','mpg','msi','nrg','ocx','ogg','ogm','pdf','png',
+        'pot','ppt','pptx','psd','pub','qt','ra','ram','rar',
+        'rm','rmvb','rtf','swf','tar','tif','tiff','txt','url',
+        'vbs','vsd','vss','vst','wav','wave','wm','wma','wmd',
+        'wmf','wmv','wps','wpt','xls','xlsx','xlt','xml','zip'];
 
-
-
-
-    // Highlight selected row
-    $("#example-advanced tbody").on("click", "tr", function() {
-        $(".selected").not(this).removeClass("selected");
-        $(this).toggleClass("selected");
+    $(document).ready(function () {
+        table = $('#resTable').DataTable({
+            dom: "Bfrtip",
+            ajax: "/show_resource.do",
+            paging: false,
+            info: false,
+            searching: false,
+            columns:[
+                {
+                    data: "fileName",
+                    render: function(data, type, row) {
+                        var ext = data.match('\\.([^\\.]*)$');
+                        if (ext==null)
+                                ext = 'folder';
+                        else if (fileType.indexOf(ext)==-1)
+                                ext = 'unknown';
+                        else ext = ext[1];
+                        return '<img src="resources/image/filetype/'+ext+'.gif" />'+data;
+                    }
+                },
+                {
+                    data: "fileCTime"
+                },
+                {
+                    data: "fileSize"
+                }],
+            select: true,
+            buttons: [
+                {
+                    text:"上传文件",
+                    action: function(e, dt, node, config) {
+                        $('#uploadModal').modal();
+                    }
+                }
+            ]
+        });
     });
-
 
 </script>
 </html>
-

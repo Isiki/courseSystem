@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import service.StudentService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by isiki on 2016/7/3.
@@ -37,4 +38,13 @@ public class StudentServiceImpl implements StudentService {
         }
         return courses;
     }
+
+    public List<Student> getAllStudents(){
+        return studentDao.getAllStudents();
+    }
+
+    public Student getStudentByName(String name){
+        return studentDao.getStudentByName(name);
+    }
+
 }
