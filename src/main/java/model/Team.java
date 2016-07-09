@@ -1,14 +1,8 @@
 package model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 /**
  * Created by Admin on 2016/7/4.
  */
-@Entity
 public class Team {
     private String id;
     private String courseId;
@@ -17,8 +11,6 @@ public class Team {
     private boolean isFull;
     private String teamleaderId;
 
-    @Id
-    @Column(name = "id", nullable = false, length = 10)
     public String getId() {
         return id;
     }
@@ -27,8 +19,6 @@ public class Team {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "course_id", nullable = false, length = 10)
     public String getCourseId() {
         return courseId;
     }
@@ -37,8 +27,6 @@ public class Team {
         this.courseId = courseId;
     }
 
-    @Basic
-    @Column(name = "team_name", nullable = true, length = 50)
     public String getTeamName() {
         return teamName;
     }
@@ -47,8 +35,6 @@ public class Team {
         this.teamName = teamName;
     }
 
-    @Basic
-    @Column(name = "team_description", nullable = true, length = 50)
     public String getTeamDescription() {
         return teamDescription;
     }
@@ -57,8 +43,6 @@ public class Team {
         this.teamDescription = teamDescription;
     }
 
-    @Basic
-    @Column(name = "is_full", nullable = false)
     public boolean getIsFull() {
         return isFull;
     }
@@ -67,8 +51,6 @@ public class Team {
         isFull = full;
     }
 
-    @Basic
-    @Column(name = "teamleader_id", nullable = true, length = 10)
     public String getTeamleaderId() {
         return teamleaderId;
     }

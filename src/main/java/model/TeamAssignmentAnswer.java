@@ -1,13 +1,10 @@
 package model;
 
-import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by Admin on 2016/7/4.
  */
-@Entity
-@IdClass(TeamAssignmentAnswerPK.class)
 public class TeamAssignmentAnswer {
     private String teamId;
     private String assignmentId;
@@ -16,8 +13,6 @@ public class TeamAssignmentAnswer {
     private String text;
     private String attachmentUrl;
 
-    @Id
-    @Column(name = "team_id", nullable = false, length = 50)
     public String getTeamId() {
         return teamId;
     }
@@ -26,8 +21,6 @@ public class TeamAssignmentAnswer {
         this.teamId = teamId;
     }
 
-    @Id
-    @Column(name = "assignment_id", nullable = false, length = 50)
     public String getAssignmentId() {
         return assignmentId;
     }
@@ -36,8 +29,6 @@ public class TeamAssignmentAnswer {
         this.assignmentId = assignmentId;
     }
 
-    @Basic
-    @Column(name = "is_submitted", nullable = false)
     public boolean getIsSubmitted() {
         return isSubmitted;
     }
@@ -46,8 +37,6 @@ public class TeamAssignmentAnswer {
         isSubmitted = submitted;
     }
 
-    @Basic
-    @Column(name = "submit_time", nullable = true)
     public Date getSubmitTime() {
         return submitTime;
     }
@@ -56,8 +45,6 @@ public class TeamAssignmentAnswer {
         this.submitTime = submitTime;
     }
 
-    @Basic
-    @Column(name = "text", nullable = true, length = -1)
     public String getText() {
         return text;
     }
@@ -66,8 +53,6 @@ public class TeamAssignmentAnswer {
         this.text = text;
     }
 
-    @Basic
-    @Column(name = "attachment_url", nullable = true, length = 50)
     public String getAttachmentUrl() {
         return attachmentUrl;
     }

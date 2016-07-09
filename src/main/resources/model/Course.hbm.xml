@@ -20,6 +20,8 @@
         <property name="teamMaxNumber">
             <column name="team_max_number" sql-type="varchar(50)" length="50"/>
         </property>
-
+        <property name="description">
+            <column name="description" sql-type="text"/>
+        </property>
     </class>
 </hibernate-mapping>

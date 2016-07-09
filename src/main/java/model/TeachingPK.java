@@ -1,7 +1,5 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -11,8 +9,6 @@ public class TeachingPK implements Serializable {
     private String teacherId;
     private String courseId;
 
-    @Column(name = "teacher_id", nullable = false, length = 10)
-    @Id
     public String getTeacherId() {
         return teacherId;
     }
@@ -21,8 +17,6 @@ public class TeachingPK implements Serializable {
         this.teacherId = teacherId;
     }
 
-    @Column(name = "course_id", nullable = false, length = 10)
-    @Id
     public String getCourseId() {
         return courseId;
     }

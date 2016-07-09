@@ -10,8 +10,11 @@ public class Course {
     private boolean teamAllowed;
     private String teamMinMember;
     private String teamMaxNumber;
+    private String description;
 
+    public void setDescription(String description){this.description =  description;}
 
+    public String getDescription(){return description;}
 
     public String getId() {
         return id;
@@ -21,7 +24,6 @@ public class Course {
         this.id = id;
     }
 
-
     public String getCourseName() {
         return courseName;
     }
@@ -29,7 +31,6 @@ public class Course {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
-
 
     public boolean isTeamAllowed() {
         return teamAllowed;
@@ -39,7 +40,6 @@ public class Course {
         this.teamAllowed = teamAllowed;
     }
 
-
     public String getTeamMinMember() {
         return teamMinMember;
     }
@@ -48,7 +48,6 @@ public class Course {
         this.teamMinMember = teamMinMember;
     }
 
-
     public String getTeamMaxNumber() {
         return teamMaxNumber;
     }
@@ -56,7 +55,6 @@ public class Course {
     public void setTeamMaxNumber(String teamMaxNumber) {
         this.teamMaxNumber = teamMaxNumber;
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -1,21 +1,14 @@
 package model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 /**
  * Created by Admin on 2016/7/4.
  */
-@Entity
+
 public class Student {
     private String id;
     private String realName;
     private String password;
 
-    @Id
-    @Column(name = "id", nullable = false, length = 10)
     public String getId() {
         return id;
     }
@@ -24,8 +17,6 @@ public class Student {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "real_name", nullable = false, length = 10)
     public String getRealName() {
         return realName;
     }
@@ -34,8 +25,6 @@ public class Student {
         this.realName = realName;
     }
 
-    @Basic
-    @Column(name = "password", nullable = false, length = 50)
     public String getPassword() {
         return password;
     }

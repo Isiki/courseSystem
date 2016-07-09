@@ -1,15 +1,9 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-
 /**
  * Created by Admin on 2016/7/4.
  */
 
-@IdClass(SelectionPK.class)
 public class Selection {
     private String studentId;
     private String courseId;
