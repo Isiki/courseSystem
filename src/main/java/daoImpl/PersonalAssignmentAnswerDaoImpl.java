@@ -5,6 +5,7 @@ import model.PersonalAssignmentAnswer;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * Created by andyz_000 on 2016/7/8.
  */
+@Repository("PersonalAssignmentAnswerDao")
 public class PersonalAssignmentAnswerDaoImpl extends DaoImpl<PersonalAssignmentAnswer,String> implements PersonalAssignmentAnswerDao {
     @Autowired
     private SessionFactory sessionFactory;

@@ -16,5 +16,6 @@ public interface AssignmentService {
     int consultAssignmentNumber(String coursId);
     Assignment getAssignmentById(String id);
     ArrayList<Assignment> getAllByCourseId(String id);
-
+    Assignment updateAssignment(Assignment assignment);
+    void removeAssignment(String id);
 }

@@ -8,6 +8,7 @@ import model.TeamAssignmentAnswer;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * Created by andyz_000 on 2016/7/8.
  */
+@Repository("TeamAssignmentAnswerDao")
 public class TeamAssignmentAnswerDaoImpl extends DaoImpl<TeamAssignmentAnswer,String> implements TeamAssignmentAnswerDao{
     @Autowired
     private SessionFactory sessionFactory;

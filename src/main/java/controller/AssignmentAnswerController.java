@@ -35,7 +35,7 @@ public class AssignmentAnswerController {
         }
         return "searchresult";
     }
-    @RequestMapping(value = "searchpersonalassignmentanswer",method = RequestMethod.POST)
+    @RequestMapping(value = "searchteamassignmentanswer",method = RequestMethod.POST)
     public String searchTeamAssignmentAnswer(@RequestParam("method")String meth,@RequestParam("value")String val,Model model)
     {
         if(meth.equals("ById"))

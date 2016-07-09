@@ -53,5 +53,14 @@ public class AssignmentServiceImpl implements AssignmentService {
         return assignmentDao.countByCourseId(coursId);
     }
 
+    @Override
+    public Assignment updateAssignment(Assignment assignment) {
+        assignmentDao.saveOrUpdate(assignment);
+        return assignment;
+    }
 
+    @Override
+    public void removeAssignment(String id) {
+        assignmentDao.deleteByKey(id);
+    }
 }
