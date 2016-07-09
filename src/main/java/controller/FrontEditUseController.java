@@ -63,13 +63,14 @@ public class FrontEditUseController {
         PrintWriter respWriter=null;
         try {
             String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment");
-            String uploadFilesJson = fileService.saveFile(request, resURL);
+            File uploadFilesJson = fileService.saveFile(request, resURL);
 
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
+
             respWriter = response.getWriter();
-            respWriter.append(uploadFilesJson);
+            //respWriter.append();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }finally {
