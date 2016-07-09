@@ -98,43 +98,72 @@
                     <p class="h5">总分：5.0
                         <!-- if TEACHER -->
                     <span class="glyphicon glyphicon-edit"></span>
-                        <!-- end if -->
+                        <!-- end if TEACHER-->
                     </p>
                 </div>
-                <!-- if STUDENT -->
-                <!-- if SUBMIT_AS_FILE -->
                 <div class="fixed-margin">
-                    <span class="h5 bold">提交状态：</span>
-                    <span class="h5 text-muted">已提交</span>
-                    <span class="h5 bold text-danger">未提交</span>
-                    <!-- CALLING FOR REPLACEMENT -->
-                    <div>
-                        <p class="h5">上次提交：group_02_story_iter2.xls
-                        <span class="text-muted">at 2016-07-08 16:19</span></p>
-                        <p class="h5">准备上传：group_02_story_iter2.xls</p>
+                    <!-- 作业提交统计表 -->
+                    <div class="col-md-12">
+                        <table id="resTable" class="display table table-striped" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>提交者</th>
+                                <th>提交时间</th>
+                                <th>文件链接</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <span class="glyphicon glyphicon-file"></span>
-                        <input class="fileinput dropdown">
-                        <button class="btn btn-primary">上传</button>
-                    </div>
-                    <!-- END REPLACEMENT -->
+                    <!-- 作业提交统计表结束 -->
                 </div>
-                <!-- end if -->
-                <!-- else if SUBMIT_AS_RICHTEXT -->
-                <div class="fixed-margin">
-                    <p class="h5">作业内容</p>
-                    <div class="container-fluid">
-                        <textarea class="auto-adapt" placeholder="在这里添加内容..."></textarea>
+
+
+                <!-- if STUDENT -->
+                <div th:if="${'student' == session.userType}" >
+                    <!-- if SUBMIT_AS_FILE -->
+                    <div class="fixed-margin">
+                        <span class="h5 bold">提交状态：</span>
+                        <span class="h5 text-muted">已提交</span>
+                        <span class="h5 bold text-danger">未提交</span>
+                        <!--div>
+                            <p class="h5">上次提交：group_02_story_iter2.xls
+                            <span class="text-muted">at 2016-07-08 16:19</span></p>
+                            <p class="h5">准备上传：group_02_story_iter2.xls</p>
+                        </div-->
+                        <div>
+                            <label class="control-label">Select File</label>
+                            <input id="input-file" name="resource" type="file" class="file" data-show-preview="false">
+                        </div>
+                        <!-- END REPLACEMENT -->
                     </div>
-                    <div class="col-xs-12">
-                        <div class="row pull-right">
-                            <button class="btn btn-default">保存</button>
-                            <button class="btn btn-primary">提交</button>
+                    <!-- end if -->
+
+                    <!-- else if SUBMIT_AS_RICHTEXT -->
+                    <div class="fixed-margin">
+                        <p class="h5">作业内容</p>
+                        <div class="container-fluid">
+                            <div class="portlet-body">
+                                <div>
+                                    <script id="container" name="content" type="text/plain"></script>
+                                    <script type="text/javascript" charset="utf-8" th:src="@{ue/ueditor.config.js}"></script>
+                                    <script type="text/javascript" charset="utf-8" th:src="@{ue/ueditor.all.min.js}"> </script>
+                                    <script>var ue = UE.getEditor('container');</script>
+                                </div>
+                                <div>
+                                    <button id="btn_richtext_submit" class="btn btn-primary">提交</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="row pull-right">
+                                <button class="btn btn-default">保存</button>
+                                <button class="btn btn-primary">提交</button>
+                            </div>
                         </div>
                     </div>
+                    <!-- end if -->
                 </div>
-                <!-- end if -->
+                <!-- end if STUDENT -->
             </div>
             <!-- END SAMPLE TABLE -->
 
@@ -149,8 +178,6 @@
 </div>
 <!-- END CONTENT BODY -->
 
-
-
 <!-- footer-->
 <div th:replace="footer::footer"></div>
 <!-- 把公用的js包含进来,包含一些初始化的工作 -->
@@ -160,11 +187,102 @@
 
 
 </div>
-
-
-
 </body>
 
+<script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/fileinput.js}"></script>
+<script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>
+<script th:src="@{/resources/DataTables/datatables.js}"></script>
+<script>
 
+    // BEGIN RICH TEXT
+    $(document).ready(function () {
+        $("#btn_richtext_submit").click(function() {
+            alert(UE.getEditor('container').getAllHtml());
+            $.post("ue_submit_test.do",
+                    {
+                        content: UE.getEditor('container').getAllHtml()
+                    },
+                    function (data, status) {
+                        alert("Data: " + data + "\nStatus: " + status);
+                    }
+            );
+        });
+    });
+    // END RICH TEXT
+
+    // BEGIN FILE UPLOAD
+    $(document).ready(function() {
+        $("#input-file").fileinput({
+            language: "zh",
+            uploadUrl: "/saveResource_action.do",
+            uploadAsync: true,
+            maxFileCount: 5,
+            autoReplace: true
+        }).on("fileuploaded", function (e, data) {
+            if (data['response']['action'] == 'add') {
+                var datalist = data['response']['data'];
+                for (var i = 0; i < datalist.length; i++) {
+                    table.row.add(
+                            datalist[i]
+                    ).draw()
+                }
+            }
+        })
+
+        var table;
+        var fileType = ['aac', 'ace', 'ai', 'ain', 'amr', 'app', 'arj',
+            'asf', 'asp', 'aspx', 'av', 'avi', 'bin', 'bmp', 'cab', 'cad',
+            'cat', 'cdr', 'chm', 'com', 'css', 'cur', 'dat', 'db', 'dll',
+            'dmv', 'docx', 'dot', 'dps', 'dpt', 'dwg', 'dxf', 'emf', 'eps',
+            'et', 'ett', 'exe', 'fla', 'gif', 'hlp', 'htm', 'html', 'icl',
+            'ico', 'img', 'inf', 'ini', 'iso', 'jpeg', 'jpg', 'js', 'm3u',
+            'max', 'mdb', 'mde', 'mht', 'mid', 'midi', 'mox', 'mp3', 'mp4',
+            'mpeg', 'mpg', 'msi', 'nrg', 'ocx', 'ogg', 'ogm', 'pdf', 'png',
+            'pot', 'ppt', 'pptx', 'psd', 'pub', 'qt', 'ra', 'ram', 'rar',
+            'rm', 'rmvb', 'rtf', 'swf', 'tar', 'tif', 'tiff', 'txt', 'url',
+            'vbs', 'vsd', 'vss', 'vst', 'wav', 'wave', 'wm', 'wma', 'wmd',
+            'wmf', 'wmv', 'wps', 'wpt', 'xls', 'xlsx', 'xlt', 'xml', 'zip'];
+
+        $(document).ready(function () {
+            table = $('#resTable').DataTable({
+                dom: "Bfrtip",
+                ajax: "/show_resource.do",
+                paging: false,
+                info: false,
+                searching: false,
+                columns: [
+                    {
+                        data: "fileName",
+                        render: function (data, type, row) {
+                            var ext = data.match('\\.([^\\.]*)$');
+                            if (ext == null)
+                                ext = 'folder';
+                            else if (fileType.indexOf(ext) == -1)
+                                ext = 'unknown';
+                            else ext = ext[1];
+                            return '<img src="resources/image/filetype/' + ext + '.gif" />' + data;
+                        }
+                    },
+                    {
+                        data: "fileCTime"
+                    },
+                    {
+                        data: "fileSize"
+                    }],
+                select: true,
+                buttons: [
+                    {
+                        text: "上传文件",
+                        action: function (e, dt, node, config) {
+                            $('#uploadModal').modal();
+                        }
+                    }
+                ]
+            });
+        });
+    });
+    // END FILE UPLOAD
+
+</script>
 
 </html>
