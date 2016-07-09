@@ -107,11 +107,6 @@ public class Assignment {
         this.attachmentUrl = attachmentUrl;
     }
 
-    @Basic
-    @Column(name = "grade",length = -1)
-    public int getGrade(){return grade;}
-
-    public void setGrade(int grade){this.grade=grade;}
 
     @Override
     public boolean equals(Object o) {

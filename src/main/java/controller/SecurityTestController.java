@@ -2,6 +2,7 @@ package controller;
 
 
 import model.Course;
+import model.PersonalAssignmentAnswer;
 import model.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,19 +21,15 @@ public class SecurityTestController {
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
-    @Autowired
-    private CourseService courseService;
+
 
 
 
 
     @RequestMapping(value = "test")
     public String testLogin(Model model) {
-        Teacher teacher = teacherService.getTeacherById("06091");
-        model.addAttribute("teacher",teacher);
-
-        Course course = courseService.searchCourseById("1");
-        model.addAttribute("course",course);
+        PersonalAssignmentAnswer answer = studentService.getAnswer("7","13211065");
+        model.addAttribute("teacher",answer);
         return "test";
     }
 

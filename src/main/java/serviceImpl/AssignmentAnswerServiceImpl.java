@@ -42,16 +42,14 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
         return assignmentAnswerDao.getPersonalAssignmentToBeSubmittedByStudent(studentId);
     }
     public List<PersonalAssignmentAnswer> getPersonalAssignmenToBeSubmittedByCourse(String course){
-        return assignmentAnswerDao.getPersonalAssignmenToBeSubmittedByCourse(course);
+        return assignmentAnswerDao.getPersonalAssignmentToBeSubmittedByCourseId(course);
     }
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByTeam(String teamId){
-        return assignmentAnswerDao.getTeamAssignmentNotSubmittedByTeam(teamId);
+        return assignmentAnswerDao.getTeamAssignmentToBeSubmittedByTeam(teamId);
     }
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByCourse(String courseId){
-        return  assignmentAnswerDao.getTeamAssignmentNotSubmittedByCourse(courseId);
+        return  assignmentAnswerDao.getTeamAssignmentToBeSubmittedByCourseId(courseId);
     }
-
-
 
     @Override
     public void commentAssignment(PersonalAssignmentAnswer assignmentAnswer) {
@@ -71,8 +69,4 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
             return;
         }
     }
-
-
-
 }
-
