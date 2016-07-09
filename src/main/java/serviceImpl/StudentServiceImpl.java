@@ -4,7 +4,9 @@ import dao.CourseDao;
 import dao.SelectionDao;
 import dao.StudentDao;
 import model.Course;
+import model.PersonalAssignmentAnswer;
 import model.Student;
+import model.TeamAssignmentAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.StudentService;
@@ -36,5 +38,14 @@ public class StudentServiceImpl implements StudentService {
             courses.add(courseDao.getCourseById(cid));
         }
         return courses;
+    }
+
+
+    public PersonalAssignmentAnswer getAnswer(String aid, String sid) {
+        ArrayList<PersonalAssignmentAnswer> p = studentDao.getAnswer(aid,sid);
+        PersonalAssignmentAnswer answer = new PersonalAssignmentAnswer();
+        if (p.size()!=0)
+            answer = p.get(0);
+        return answer;
     }
 }

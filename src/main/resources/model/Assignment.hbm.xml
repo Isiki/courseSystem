@@ -33,8 +33,6 @@
         <property name="attachmentUrl">
             <column name="attachment_url" sql-type="varchar(50)" length="50" not-null="true"/>
         </property>
-        <property name="grade">
-            <column name="grade" sql-type="int(11)" />
-        </property>
+
     </class>
 </hibernate-mapping>

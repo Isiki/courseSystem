@@ -16,7 +16,7 @@ public class UserSession {
 
 
     public void setCurrentUser(Teacher user){
-        session.setAttribute("userSession", user);
+        session.setAttribute("userSession", user);;
         session.setMaxInactiveInterval(60*40);
     }
 

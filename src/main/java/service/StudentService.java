@@ -1,6 +1,7 @@
 package service;
 
 import model.Course;
+import model.PersonalAssignmentAnswer;
 import model.Student;
 
 import java.util.ArrayList;
@@ -11,5 +12,5 @@ import java.util.ArrayList;
 public interface StudentService {
     Student getStudentById(String id);
     ArrayList<Course> getAllCourseById(String id);
-
+    PersonalAssignmentAnswer getAnswer(String aid, String sid);
 }

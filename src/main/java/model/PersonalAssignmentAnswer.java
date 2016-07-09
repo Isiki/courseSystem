@@ -12,6 +12,8 @@ public class PersonalAssignmentAnswer {
     private Date submitTime;
     private String text;
     private String attachmentUrl;
+    private int grade;
+    private String comment;
 
     public String getStudentId() {
         return studentId;
@@ -60,6 +62,14 @@ public class PersonalAssignmentAnswer {
     public void setAttachmentUrl(String attachmentUrl) {
         this.attachmentUrl = attachmentUrl;
     }
+
+    public int getGrade(){return grade;}
+
+    public void setGrade(int grade){this.grade=grade;}
+
+    public String getComment(){return comment;}
+
+    public void setComment(String comment){this.comment=comment;}
 
     @Override
     public boolean equals(Object o) {
