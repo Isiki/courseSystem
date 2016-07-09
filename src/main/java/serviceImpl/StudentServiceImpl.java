@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import service.StudentService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by isiki on 2016/7/3.
@@ -40,7 +41,6 @@ public class StudentServiceImpl implements StudentService {
         return courses;
     }
 
-
     public PersonalAssignmentAnswer getAnswer(String aid, String sid) {
         ArrayList<PersonalAssignmentAnswer> p = studentDao.getAnswer(aid,sid);
         PersonalAssignmentAnswer answer = new PersonalAssignmentAnswer();
@@ -48,4 +48,13 @@ public class StudentServiceImpl implements StudentService {
             answer = p.get(0);
         return answer;
     }
+
+    public List<Student> getAllStudents(){
+        return studentDao.getAllStudents();
+    }
+
+    public Student getStudentByName(String name){
+        return studentDao.getStudentByName(name);
+    }
+
 }

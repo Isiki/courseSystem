@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import service.AssignmentService;
 import service.StudentService;
 import util.PageResultSet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Admin on 2016/7/5.
@@ -47,6 +50,27 @@ public class StudentController {
         assignments.setList(assignment);
         model.addAttribute("assignments",assignments);
         return "assignmentlist";
+    }
+
+    @RequestMapping(value="searchAllstudent",method = RequestMethod.GET)
+    public String searchAllStudents(Model model){
+        List<Student> student=studentService.getAllStudents();
+        model.addAttribute(student);
+        return "searchresult";
+    }
+    @RequestMapping(value="searchstudent",method = RequestMethod.GET)
+    public String searchStudents(@RequestParam("method")String meth, @RequestParam("value")String val, Model model){
+        if(meth.equals("ById"))
+        {
+            Student student=studentService.getStudentById(val);
+            model.addAttribute("student",student);
+        }
+        else if(meth.equals("ByName"))
+        {
+            Student student=studentService.getStudentByName(val);
+            model.addAttribute("student",student);
+        }
+        return "searchresult";
     }
 
 }

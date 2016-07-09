@@ -1,5 +1,7 @@
 package util;
 
+import model.Admin;
+import model.Student;
 import model.Teacher;
 
 import javax.servlet.http.HttpSession;
@@ -16,16 +18,47 @@ public class UserSession {
 
 
     public void setCurrentUser(Teacher user){
-        session.setAttribute("userSession", user);;
-        session.setMaxInactiveInterval(60*40);
+        session.setAttribute("userId", user.getId());
+        session.setAttribute("userName",user.getRealName());
+        session.setAttribute("userType","teacher");
     }
 
-    public Teacher getCurrentUser(){
-        Teacher user = (Teacher)session.getAttribute("userSession");
-        if(user == null){
-            System.out.println("Session is null!");
-            return null;
+    public void setCurrentUser(Student user){
+        session.setAttribute("userId", user.getId());
+        session.setAttribute("userName",user.getRealName());
+        session.setAttribute("userType","student");
+    }
+
+    public void setCurrentUser(Admin user){
+        session.setAttribute("userId", user.getId());
+        session.setAttribute("userName",user.getRealName());
+        session.setAttribute("userType","admin");
+    }
+
+    public String getUserId(){
+        String userid=(String)session.getAttribute("userId");
+        if(null==userid){
+            System.out.println("userId not set!");
+            return "";
         }
-        return user;
+        return userid;
+    }
+
+    public String getUserName(){
+        String username=(String)session.getAttribute("userName");
+        if(null==username){
+            System.out.println("userId not set!");
+            return "";
+        }
+        return username;
+    }
+
+    public String getUserType(){
+        String usertype=(String)session.getAttribute("userType");
+        if(null==usertype){
+            System.out.println("usertype not set!");
+            return "";
+        }
+        return usertype;
     }
 }
