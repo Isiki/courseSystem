@@ -32,12 +32,12 @@ public class AssignmentController {
     private AssignmentService assignmentService;
     @Autowired
     private CourseService courseService;
-    @RequestMapping("t/add_assignment")
+    @RequestMapping(value = "t/add_assignment",method = RequestMethod.GET)
     public String addAssignment() {
         return "assignment/add_assignment";
     }
 
-    @RequestMapping(value = "t/assignment",method = RequestMethod.POST)
+    @RequestMapping(value = "t/add_assignment",method = RequestMethod.POST)
     @ResponseBody
     public String saveAssignment(Assignment assignment, @ModelAttribute("startDate") String startDate , @ModelAttribute("endDate")String endDate, HttpSession session) {
         assignment.setIdInCourse(assignmentService.consultAssignmentNumber(assignment.getCourseId()));
@@ -55,7 +55,7 @@ public class AssignmentController {
 
     }
 
-    @RequestMapping("t/assignment")
+    @RequestMapping(value = "t/assignment",method = RequestMethod.GET)
     public String listAssignment(Model model, HttpSession session){
         UserSession user =new UserSession(session);
         List<Assignment> assignment = assignmentService.getAllByCourseId(user.getCourse().getId());
@@ -65,7 +65,7 @@ public class AssignmentController {
         return "assignmentlist";
     }
 
-    @RequestMapping("t/assignment_detail")
+    @RequestMapping(value = "t/assignment_detail",method = RequestMethod.GET)
     public String consultAssignment(String assignment_id ,Model model){
         model.addAttribute("assignment",assignmentService.getAssignmentById(assignment_id));
         return "assignment_detail";
