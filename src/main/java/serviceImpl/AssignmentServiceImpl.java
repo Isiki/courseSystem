@@ -53,23 +53,5 @@ public class AssignmentServiceImpl implements AssignmentService {
         return assignmentDao.countByCourseId(coursId);
     }
 
-    @Override
-    public void commentAssignment(PersonalAssignmentAnswer assignmentAnswer) {
-        PassignmentAnswerDao.saveOrUpdate(assignmentAnswer);
-    }
 
-    @Override
-    public void commentAssignment(TeamAssignmentAnswer assignmentAnswer) {
-        TassignmentAnswerDao.saveOrUpdate(assignmentAnswer);
-    }
-
-    @Override
-    public List<PersonalAssignmentAnswer> getPAssignmentAnswer(String courseId) {
-        return null;
-    }
-
-    @Override
-    public List<TeamAssignmentAnswer> getTAssignmentAnswer(String courseId) {
-        return null;
-    }
 }

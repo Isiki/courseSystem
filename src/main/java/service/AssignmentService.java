@@ -16,8 +16,5 @@ public interface AssignmentService {
     int consultAssignmentNumber(String coursId);
     Assignment getAssignmentById(String id);
     ArrayList<Assignment> getAllByCourseId(String id);
-    void commentAssignment(PersonalAssignmentAnswer assignmentAnswer);
-    void commentAssignment(TeamAssignmentAnswer assignmentAnswer);
-    List<PersonalAssignmentAnswer> getPAssignmentAnswer(String courseId);
-    List<TeamAssignmentAnswer> getTAssignmentAnswer(String courseId);
+
 }

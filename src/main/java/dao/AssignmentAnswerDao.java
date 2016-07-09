@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by ElaineC on 2016/7/8.
  */
-public interface AssignmentAnswerDao {
+public interface AssignmentAnswerDao extends Dao<PersonalAssignmentAnswer,String>{
     public List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id);
     public List<PersonalAssignmentAnswer> getPersonalAnswerByCourseId(String id);
     public List<TeamAssignmentAnswer> getTeamAnswerByTeamId(String id);
@@ -17,6 +17,6 @@ public interface AssignmentAnswerDao {
     public List<PersonalAssignmentAnswer> getPersonalAssignmenToBeSubmittedByCourse(String course);
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByTeam(String teamId);
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByCourse(String courseId);
-
+    List<PersonalAssignmentAnswer> getAnswerByAssignmentId(String assignmentId);
 
 }
