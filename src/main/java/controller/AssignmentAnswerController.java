@@ -1,5 +1,6 @@
 package controller;
 
+import dao.AssignmentAnswerDao;
 import model.PersonalAssignmentAnswer;
 import model.TeamAssignmentAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class AssignmentAnswerController {
         }
         return "searchresult";
     }
-    @RequestMapping(value = "searchteamassignmentanswer",method = RequestMethod.POST)
+    @RequestMapping(value = "searchpersonalassignmentanswer",method = RequestMethod.POST)
     public String searchTeamAssignmentAnswer(@RequestParam("method")String meth,@RequestParam("value")String val,Model model)
     {
         if(meth.equals("ById"))

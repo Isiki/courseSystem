@@ -11,5 +11,4 @@ public interface AssignmentDao extends Dao<Assignment,String>{
     void insertAssignment(Assignment assignment);
     int countByCourseId(String courseId);
     ArrayList<Assignment> getAllByCourseId(String id);
-
 }

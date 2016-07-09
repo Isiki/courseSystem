@@ -1,19 +1,14 @@
 package serviceImpl;
 
 import dao.AssignmentDao;
-import dao.PersonalAssignmentAnswerDao;
-import dao.TeamAssignmentAnswerDao;
 import entity.BaseException;
 import entity.ERROR;
 import model.Assignment;
-import model.PersonalAssignmentAnswer;
-import model.TeamAssignmentAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.AssignmentService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by isiki on 2016/7/4.
@@ -23,11 +18,6 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Autowired
     AssignmentDao assignmentDao;
 
-    @Autowired
-    PersonalAssignmentAnswerDao PassignmentAnswerDao;
-
-    @Autowired
-    TeamAssignmentAnswerDao TassignmentAnswerDao;
     @Override
     public void insertAssignment(Assignment assignment) {
         assignmentDao.save(assignment);
@@ -51,16 +41,5 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public int consultAssignmentNumber(String coursId) {
         return assignmentDao.countByCourseId(coursId);
-    }
-
-    @Override
-    public Assignment updateAssignment(Assignment assignment) {
-        assignmentDao.saveOrUpdate(assignment);
-        return assignment;
-    }
-
-    @Override
-    public void removeAssignment(String id) {
-        assignmentDao.deleteByKey(id);
     }
 }

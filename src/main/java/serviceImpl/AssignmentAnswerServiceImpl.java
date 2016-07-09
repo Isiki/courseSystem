@@ -1,7 +1,7 @@
 package serviceImpl;
 
-import dao.PersonalAssignmentAnswerDao;
-import dao.TeamAssignmentAnswerDao;
+import dao.AssignmentAnswerDao;
+import dao.AssignmentDao;
 import model.PersonalAssignmentAnswer;
 import model.TeamAssignmentAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,52 +15,30 @@ import java.util.List;
  */
 @Service
 public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
-
     @Autowired
-    private PersonalAssignmentAnswerDao personalAssignmentAnswerDao;
-    @Autowired
-    private TeamAssignmentAnswerDao teamAssignmentAnswerDao;
+    private AssignmentAnswerDao assignmentAnswerDao;
     public List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id){
-        return personalAssignmentAnswerDao.getPersonalAnswerByStudentId(id);
+        return assignmentAnswerDao.getPersonalAnswerByStudentId(id);
     }
     public List<PersonalAssignmentAnswer> getPersonalAnswerByCourseId(String id){
-        return personalAssignmentAnswerDao.getPersonalAnswerByCourseId(id);
+        return assignmentAnswerDao.getPersonalAnswerByCourseId(id);
     }
     public List<TeamAssignmentAnswer> getTeamAnswerByTeamId(String id){
-        return teamAssignmentAnswerDao.getTeamAnswerByTeamId(id);
+        return assignmentAnswerDao.getTeamAnswerByTeamId(id);
     }
     public List<TeamAssignmentAnswer> getTeamAnswerByCourseId(String id){
-        return  teamAssignmentAnswerDao.getTeamAnswerByCourseId(id);
+        return  assignmentAnswerDao.getTeamAnswerByCourseId(id);
     }
     public List<PersonalAssignmentAnswer> getPersonalAssignmentToBeSubmittedByStudent(String studentId){
-        return personalAssignmentAnswerDao.getPersonalAssignmentToBeSubmittedByStudent(studentId);
+        return assignmentAnswerDao.getPersonalAssignmentToBeSubmittedByStudent(studentId);
     }
     public List<PersonalAssignmentAnswer> getPersonalAssignmenToBeSubmittedByCourse(String course){
-        return personalAssignmentAnswerDao.getPersonalAssignmentToBeSubmittedByCourseId(course);
+        return assignmentAnswerDao.getPersonalAssignmentToBeSubmittedByCourseId(course);
     }
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByTeam(String teamId){
-        return teamAssignmentAnswerDao.getTeamAssignmentToBeSubmittedByTeam(teamId);
+        return assignmentAnswerDao.getTeamAssignmentToBeSubmittedByTeam(teamId);
     }
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByCourse(String courseId){
-        return  teamAssignmentAnswerDao.getTeamAssignmentToBeSubmittedByCourseId(courseId);
-    }
-
-    @Override
-    public void commentAssignment(PersonalAssignmentAnswer assignmentAnswer) {
-        if(null!=personalAssignmentAnswerDao.get(assignmentAnswer.getAssignmentId())) {
-            personalAssignmentAnswerDao.saveOrUpdate(assignmentAnswer);
-        }else{
-            return;
-        }
-
-    }
-
-    @Override
-    public void commentAssignment(TeamAssignmentAnswer assignmentAnswer) {
-        if (null != teamAssignmentAnswerDao.get(assignmentAnswer.getAssignmentId())) {
-            teamAssignmentAnswerDao.saveOrUpdate(assignmentAnswer);
-        } else {
-            return;
-        }
+        return  assignmentAnswerDao.getTeamAssignmentToBeSubmittedByCourseId(courseId);
     }
 }

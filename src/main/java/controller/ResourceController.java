@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.io.PrintWriter;
+import java.util.List;
 
 
 /**
@@ -32,7 +33,7 @@ public class ResourceController {
     @RequestMapping(value = "show_resource")
     public void showResource(HttpServletRequest request, HttpServletResponse response){
         String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/resource");
-        File[] files = fileService.getAllFiles(resURL);
+        List<File> files = fileService.getAllFiles(resURL);
         String json = fileService.filesToJson(files);
 
         response.setCharacterEncoding("UTF-8");
@@ -58,18 +59,13 @@ public class ResourceController {
         PrintWriter respWriter=null;
         try {
             String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/resource");
-            File uploadFiles = fileService.saveFile(request, resURL);
-
-            File[] files = fileService.getAllFiles(resURL);
-            String json = fileService.filesToJson(files);
+            String uploadFilesJson = fileService.saveFile(request, resURL);
 
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
-
             respWriter = response.getWriter();
-            respWriter.append(json);
-
+            respWriter.append(uploadFilesJson);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }finally {
