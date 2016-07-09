@@ -17,4 +17,6 @@ public interface AssignmentAnswerService {
     public List<PersonalAssignmentAnswer> getPersonalAssignmenToBeSubmittedByCourse(String course);
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByTeam(String teamId);
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByCourse(String courseId);
+    void commentAssignment(PersonalAssignmentAnswer assignmentAnswer);
+    void commentAssignment(TeamAssignmentAnswer assignmentAnswer);
 }

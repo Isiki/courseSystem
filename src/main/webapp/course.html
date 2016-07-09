@@ -104,12 +104,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="cs:${courses.list}">
+                                    <tr th:each="cs:${courses.list}" >
+
                                         <td th:text="${cs.id}" class="fixed-width"></td>
                                         <td th:text="${cs.courseName}"></td>
                                         <td th:text="${cs.teamAllowed?'组队':'个人'}"></td>
                                         <td th:text="${cs.teamMinNumber}"></td>
                                         <td th:text="${cs.teamMaxNumber}"></td>
+
                                     </tr>
                                     </tbody>
                                 </table>
@@ -136,6 +138,10 @@
         }
         function openUrl(id){
             openUrlUtil('POST','student/assignmentList.do',{id:cs.id},'_blank');
+        }
+
+        function enterCourse(id){
+            window.navigate("admin/course_detail.do?id="+id);
         }
     </script>
 </div>

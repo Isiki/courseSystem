@@ -20,7 +20,7 @@ import java.util.*;
  */
 @Service
 public class FileServiceImpl implements FileService {
-    public String saveFile(HttpServletRequest request, String filepath) throws IOException {
+    public File saveFile(HttpServletRequest request, String filepath) throws IOException {
 
         // 转换为文件类型的request
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -28,9 +28,6 @@ public class FileServiceImpl implements FileService {
         // 获取对应file对象
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         Iterator<String> fileIterator = multipartRequest.getFileNames();
-
-
-        List<File> uploadFiles = new ArrayList<>();
 
         while (fileIterator.hasNext()) {
             String fileKey = fileIterator.next();
@@ -43,16 +40,24 @@ public class FileServiceImpl implements FileService {
                 //to-do: validate file
 
                 // 调用saveFile方法保存
-                uploadFiles.add(saveEveryFile(theFile, filepath));
+                File finalFile = saveEveryFile(theFile, filepath);
+
+                return finalFile;
             }
         }
 
-
-        return filesToJson(uploadFiles, "add");
+        return null;
     }
 
     private File saveEveryFile(MultipartFile file, String filepath) throws IOException {
         String fileName = file.getOriginalFilename();
+
+        // 封装了一个简单的file对象，增加了几个属性
+        //UploadFile upfile = new UploadFile(filepath, fileName);
+        //upfile.setContentType(file.getContentType());
+
+        // 通过org.apache.commons.io.FileUtils的writeByteArrayToFile进行保存
+        //FileUtils.writeByteArrayToFile(upfile.getFile(), file.getBytes());
 
         File targetFile = new File(filepath, fileName);
         file.transferTo(targetFile);
@@ -60,36 +65,27 @@ public class FileServiceImpl implements FileService {
         return targetFile;
     }
 
-    public List<File> getAllFiles(String dir)
+    public File[] getAllFiles(String dir)
     {
         File dirFile = new File(dir);
         File[] files = dirFile.listFiles();
-        return Arrays.asList(files);
+        return files;
     }
 
-    public String filesToJson(List<File> files, String action)
+    public String filesToJson(File[] files)
     {
         if (files == null)
             return "";
         JSONArray arr = new JSONArray();
         for(File file : files)
         {
-            Map<String,String> list = new HashMap<>();
-
-            list.put("fileName",file.getName());
-            list.put("fileCTime",new Date(file.lastModified()).toString());
-            list.put("fileSize",getFormatSize(file.length()));
+            List<String> list = new ArrayList<String>();
+            list.add(file.getName());
+            list.add(file.isDirectory()?"folder":"file");
+            list.add(getFormatSize(file.length()));
             arr.add(list);
         }
-        JSONObject obj = new JSONObject();
-        obj.put("action", action);
-        obj.put("data",arr);
-        return obj.toString();
-    }
-
-    public String filesToJson(List<File> files)
-    {
-        return filesToJson(files,"show");
+        return arr.toString();
     }
 
     private String getFormatSize(long size) {

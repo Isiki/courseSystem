@@ -52,7 +52,7 @@ public class StudentController {
         return "assignmentlist";
     }
 
-    @RequestMapping(value="searchAllstudent",method = RequestMethod.GET)
+    @RequestMapping(value="searchallstudent",method = RequestMethod.GET)
     public String searchAllStudents(Model model){
         List<Student> student=studentService.getAllStudents();
         model.addAttribute(student);
