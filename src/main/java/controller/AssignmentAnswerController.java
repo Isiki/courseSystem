@@ -22,9 +22,9 @@ public class AssignmentAnswerController {
     private AssignmentAnswerService assignmentAnswerService;
 
     @RequestMapping(value = "assignmentanswer",method = RequestMethod.POST)
-    public String showAssignmentsWithSubmitStatus(@RequestParam("studentId")String id, Model model)
+    public void showAssignmentsWithSubmitStatus(@RequestParam("studentId")String id, Model model)
     {
-        List
+
     }
 
 }

@@ -19,11 +19,11 @@ public class PersonalAssignmentAnswerDaoImpl extends DaoImpl<PersonalAssignmentA
     private SessionFactory sessionFactory;
 
 
-    public List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id){
+    public PersonalAssignmentAnswer getPersonalAnswerByStudentId(String assgnment_id,String id){
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT * FROM personalassignmentanswer WHERE student_id = \'"+id+"\'")
+                .createSQLQuery("SELECT * FROM personalassignmentanswer WHERE student_id = \'"+id+"\'AND assignment_id=\'"+assgnment_id+"\'")
                 .addEntity(PersonalAssignmentAnswer.class);
-        return query.list();
+        return (PersonalAssignmentAnswer)query.list();
     }
 
     public List<PersonalAssignmentAnswer> getPersonalAnswerByCourseId(String id){

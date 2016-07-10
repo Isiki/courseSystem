@@ -16,4 +16,5 @@ public interface StudentAssignmentService {
     List<Map<String, Object>>   getAllAssignmentsWithSubmissionStatusMP(String course_id, String student_id);
     PersonalAssignmentAnswer    getMySubmission(String assignment_id, String student_id);
     TeamAssignmentAnswer        getTeamSubmission(String assignment_id, String student_id);
+    List<Map<String,Object>>    getAssignmentsWithCourseAndSubmission(String student_id);
 }

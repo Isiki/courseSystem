@@ -59,4 +59,10 @@ public class TeamAssignmentAnswerDaoImpl extends DaoImpl<TeamAssignmentAnswer,St
         return query.list();
 
     }
+    public TeamAssignmentAnswer getTeamAnswerByStudentId(String assignment_id,String student_id){
+        Query query=sessionFactory.getCurrentSession()
+                .createSQLQuery("select teamassignmentanswer.* from teamassignmentanswer inner join teaming on teaming.team_id=teamassignmentanswe.team_id inner join assignment on teamassignmentanswer.assignment_id=assignment.id where assignment_id=\'"+assignment_id+"\'and student_id=\'"+student_id+"\'" )
+                .addEntity(TeamAssignmentAnswer.class);
+        return (TeamAssignmentAnswer)query.list();
+    }
 }
