@@ -7,9 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import service.FileService;
-import service.StudentAssignmentService;
-import service.StudentTeamService;
+import service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +31,10 @@ public class TeacherViewController {
     private TeacherAssignmentService taService;
 
     @Autowired
-    private TeacherTeamService ttService;
+    private TeamService teamService;
+
+    @Autowired
+    private AssignmentService assignmentService;
 
 
     /* 学生工作空间
@@ -85,7 +86,7 @@ public class TeacherViewController {
         String course_id = getCourseIdInSession(request.getSession());
         String teacher_id = getTeacherIdInSession(request.getSession());
 
-        List<Assignment> assignments = assignmentService.getAssignmentsByCourseId(course_id);
+        List<Assignment> assignments = assignmentService.getAllByCourseId(course_id);
         model.addAttribute("assignments", assignments);
 
         return "assignment";
@@ -113,12 +114,12 @@ public class TeacherViewController {
         int atype = assignmentService.getAssignmentTeamType(assignment_id);
 
         if(StudentViewController.AssignmentTeamType.PERSONAL == atype) {
-            List<PersonalAssignmentAnswer> paas = taService.getAllPersonalSubmissions(assignment_id, student_id);
+            List<PersonalAssignmentAnswer> paas = taService.getAllPersonalSubmissions(assignment_id);
             model.addAttribute("assignmentAnswers", paas);
             model.addAttribute("teamType", "personal");
         }
         else if(StudentViewController.AssignmentTeamType.TEAM == atype) {
-            List<TeamAssignmentAnswer> taas = taService.getAllTeamSubmissions(assignment_id, student_id);
+            List<TeamAssignmentAnswer> taas = taService.getAllTeamSubmissions(assignment_id);
             model.addAttribute("assignmentAnswers", taas);
             model.addAttribute("teamType", "team");
         }

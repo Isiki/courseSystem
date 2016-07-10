@@ -33,6 +33,9 @@ import java.util.Map;
 public class StudentViewController {
 
     @Autowired
+    private AssignmentService assignmentService;
+
+    @Autowired
     private StudentAssignmentService saService;
 
     @Autowired
@@ -126,7 +129,7 @@ public class StudentViewController {
         String assignment_id = request.getParameter("assignment_id");
         String student_id = getStudentIdInSession(request.getSession());
 
-        int atype = saService.getAssignmentTeamType(assignment_id);
+        int atype = assignmentService.getAssignmentTeamType(assignment_id);
 
         if(AssignmentTeamType.PERSONAL == atype) {
             PersonalAssignmentAnswer paa = saService.getMySubmission(assignment_id, student_id);

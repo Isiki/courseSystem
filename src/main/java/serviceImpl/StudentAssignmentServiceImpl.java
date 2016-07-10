@@ -24,11 +24,6 @@ public class StudentAssignmentServiceImpl implements StudentAssignmentService{
     @Autowired
     private TeamAssignmentAnswerDao teamAssignmentAnswerDao;
 
-    @Override
-    public int getAssignmentTeamType(String assignment_id) {
-        Assignment as = assignmentDao.get(assignment_id);
-        return as.getIsTeamwork()?1:0;
-    }
 
     @Override
     public List<Map<String, Object>> getAllAssignmentsWithSubmissionStatusMP(String course_id, String student_id) {
@@ -47,6 +42,7 @@ public class StudentAssignmentServiceImpl implements StudentAssignmentService{
         TeamAssignmentAnswer taa=teamAssignmentAnswerDao.getTeamAnswerByStudentId(assignment_id,student_id);
         return taa;
     }
+
     public List<Map<String,Object>>    getAssignmentsWithCourseAndSubmission(String student_id){
         List<Map<String,Object>> list=assignmentDao.allAssimentsWithCourseAndSubmission(student_id);
         return list;

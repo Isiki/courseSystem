@@ -28,6 +28,16 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Autowired
     TeamAssignmentAnswerDao TassignmentAnswerDao;
+
+
+
+    @Override
+    public int getAssignmentTeamType(String assignment_id) {
+        Assignment as = assignmentDao.get(assignment_id);
+        return as.getIsTeamwork()?1:0;
+    }
+
+
     @Override
     public void insertAssignment(Assignment assignment) {
         assignmentDao.save(assignment);
