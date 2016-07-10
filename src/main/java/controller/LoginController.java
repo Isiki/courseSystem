@@ -2,8 +2,6 @@ package controller;
 
 import dao.StudentDao;
 import entity.BaseException;
-import model.Admin;
-import model.Teacher;
 import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import service.TeacherService;
 import util.UserSession;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -36,13 +33,12 @@ public class LoginController {
     @Autowired
     private StudentService studentService;
 
-
+    // TODO: UserSession as parameter
     @RequestMapping(value = "login")
     public String userLogin(@ModelAttribute("user") String user, @ModelAttribute("errorInfo") String errorInfo,
                             @ModelAttribute("isAdmin") String isAdmin, Model model) throws BaseException {
         return "login";
     }
-
 
     @RequestMapping(value = "find_password")
     public String findPassword(Model model)  {
@@ -68,8 +64,9 @@ public class LoginController {
     @Autowired
     private LoginService service;
 
+    /*
     @RequestMapping(value = "login_action", method = RequestMethod.POST)
-    public String loginAction(HttpServletRequest request, HttpSession session,
+    public String loginAction(HttpServletRequest request,
                               Model model)
     {
         boolean success = false;
@@ -93,45 +90,43 @@ public class LoginController {
 
         byte[] bts = md.digest();
         String password = new String(encodeHex(bts));
-        UserSession user=new UserSession(session);
+
 
         System.out.equals("Login username " + username + " authtype " + authtype);
 
         if("admin".equals(authtype))
         {
-            Admin admin =service.LoginAsAdmin(username, password);
-            if(null!=admin)
+            success = service.LoginAsAdmin(username, password);
+            if(success)
             {
-                user.setCurrentUser(admin);
                 redirect = "admin/course.do";
             }
         }
 
         if("student".equals(authtype))
         {
-            Student student = service.LoginAsStudent(username, password);
-            if(null!=student){
-                user.setCurrentUser(student);
-                redirect = "student/course.do";
-            }
+            success = service.LoginAsStudent(username, password);
+            if(success) redirect = "student/course.do";
         }
 
         if("teacher".equals(authtype))
         {
-            Teacher teacher = service.LoginAsTeacher(username, password);
-            if(null!=teacher){
-                user.setCurrentUser(teacher);
-                redirect = "teacher/add_assignment.do?courseId=1";
-            }
+            success = service.LoginAsTeacher(username, password);
+            if(success) redirect = "teacher/add_assignment.do?courseId=1";
         }
 
-        if(null!=user.getUserId())
+        if(success)
         {
-            /*request.getSession().setAttribute("id", username);*/
+            // TODO: UserSession as parameter
+            //UserSession us = new UserSession();
+
+            request.getSession().setAttribute("id", username);
+            request.getSession().setAttribute("auth", authtype);
         }
 
         return "redirect:"+redirect;
     }
+    */
 
     private static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6',
             '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
@@ -148,7 +143,6 @@ public class LoginController {
 
         return out;
     }
-
 
 
 }
