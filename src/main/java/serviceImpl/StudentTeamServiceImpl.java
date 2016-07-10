@@ -27,20 +27,7 @@ public class StudentTeamServiceImpl implements StudentTeamService {
     private TeamDao teamDao;
     @Autowired
     private TeamingDao teamingDao;
-    @Override
-    public List<Student> getStudentsInTeam(String team_id) {
-        return null;
-    }
 
-    @Override
-    public Team getStudentTeamInCourse(String course_id, String student_id) {
-        return null;
-    }
-
-    @Override
-    public List<Team> getAllTeamsUnderCourse(String course_id) {
-        return null;
-    }
 
     @Override
     public boolean canStudentCreateTeamInCourse(String course_id, String student_id) {

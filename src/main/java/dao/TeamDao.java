@@ -1,5 +1,8 @@
 package dao;
+import model.Student;
 import model.Team;
+
+import java.util.List;
 
 /**
  * Created by 陌上花开 on 2016/7/5.
@@ -17,7 +20,7 @@ public interface TeamDao extends Dao<Team,String>{
     */
 
     public Team getStudentTeamInCourse(String course_id,String student_id);
-    public List<Team> getStudentTeamsInCourse(String course_id,String student_id);
+    public List<Team> getStudentTeamsInCourse(String course_id, String student_id);
     public List<Student> getStudentsInTeam(String team_id);
     public List<Team> getAllTeamsUnderCourse(String course_id);
     public boolean canStudentCreateTeamInCourse(String course_id,String student_id);

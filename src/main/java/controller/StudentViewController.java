@@ -277,7 +277,7 @@ public class StudentViewController {
     public String consultTeamApplication(Model model,HttpSession session){
         // 学生类型
         UserSession user = new UserSession(session);
-        Team team=stService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
+        Team team=teamService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
         if(team.getTeamleaderId()==user.getUserId()) {
             model.addAttribute("isTeamLeader","true");
             model.addAttribute("applications",stService.consultapply(team.getId()));
@@ -292,7 +292,7 @@ public class StudentViewController {
     public String commitTeamApplication(String id, HttpSession session){
         // 学生类型
         UserSession user = new UserSession(session);
-        Team team=stService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
+        Team team=teamService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
         if(team.getTeamleaderId()==user.getUserId()) {
             if(stService.permitapply(id)) {
                 return "success";
@@ -309,7 +309,7 @@ public class StudentViewController {
     public String denyTeamApplication(String id, HttpSession session){
         // 学生类型
         UserSession user = new UserSession(session);
-        Team team=stService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
+        Team team=teamService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
         if(team.getTeamleaderId()==user.getUserId()) {
             if(stService.denyapply(id)) {
                 return "success";
