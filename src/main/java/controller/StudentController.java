@@ -14,6 +14,7 @@ import util.UserSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,8 +56,14 @@ public class StudentController {
     @RequestMapping(value = "/student/savePAttach_action")
     public void savePAttach(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String aid = request.getParameter("id");
-        String uid = new UserSession(session).getUserId();
+        String uid = (String) session.getAttribute("id");
         String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment/"+aid+"/"+uid);
+        File f = new File(resURL);
+        if(!f.exists())
+            f.mkdirs();
+        else for (File df:f.listFiles()) {
+            df.delete();
+        }
         try {
             fileService.saveFile(request, resURL);
         }catch (Exception e){
