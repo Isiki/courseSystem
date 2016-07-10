@@ -9,9 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import service.FileService;
 import service.StudentAssignmentService;
 import service.StudentTeamService;
+import service.TeamService;
+import util.UserSession;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -234,9 +237,65 @@ public class StudentViewController {
     /* 处理加入团队请求
      * 具体实现方式未讨论
      */
-    @RequestMapping(value = "team_join", method = RequestMethod.POST)
-    public void joinTeam(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = "apply_team", method = RequestMethod.POST)
+    @ResponseBody
+    public String joinTeam(String team_id, HttpSession session){
         // 学生类型
+        UserSession user = new UserSession(session);
+        if(stService.applyForTeam(user.getUserId(),team_id)) {
+            return "success";
+        }
+        else{
+            return "failed";
+        }
+    }
+
+    @RequestMapping(value = "team_app", method = RequestMethod.GET)
+    public String consultTeamApplication(Model model,HttpSession session){
+        // 学生类型
+        UserSession user = new UserSession(session);
+        Team team=stService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
+        if(team.getTeamleaderId()==user.getUserId()) {
+            model.addAttribute("isTeamLeader","true");
+            model.addAttribute("applications",stService.consultapply(team.getId()));
+        }else{
+            model.addAttribute("isTeamLeader","false");
+        }
+        return "team_application";
+    }
+
+    @RequestMapping(value = "commit_team_app", method = RequestMethod.POST)
+    @ResponseBody
+    public String commitTeamApplication(String id, HttpSession session){
+        // 学生类型
+        UserSession user = new UserSession(session);
+        Team team=stService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
+        if(team.getTeamleaderId()==user.getUserId()) {
+            if(stService.permitapply(id)) {
+                return "success";
+            }else{
+                return "failed";
+            }
+        }else{
+            return "no authority";
+        }
+    }
+
+    @RequestMapping(value = "deny_team_app", method = RequestMethod.POST)
+    @ResponseBody
+    public String denyTeamApplication(String id, HttpSession session){
+        // 学生类型
+        UserSession user = new UserSession(session);
+        Team team=stService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
+        if(team.getTeamleaderId()==user.getUserId()) {
+            if(stService.denyapply(id)) {
+                return "success";
+            }else{
+                return "failed";
+            }
+        }else{
+            return "no authority";
+        }
     }
 
 /* ------------------------ Util functions below ------------------------------ */
