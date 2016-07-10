@@ -9,7 +9,6 @@ import java.util.List;
  * Created by ElaineC on 2016/7/8.
  */
 public interface AssignmentAnswerService {
-    public List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id);
     public List<PersonalAssignmentAnswer> getPersonalAnswerByCourseId(String id);
     public List<TeamAssignmentAnswer> getTeamAnswerByTeamId(String id);
     public List<TeamAssignmentAnswer> getTeamAnswerByCourseId(String id);

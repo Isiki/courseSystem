@@ -20,11 +20,9 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
     private PersonalAssignmentAnswerDao personalAssignmentAnswerDao;
     @Autowired
     private TeamAssignmentAnswerDao teamAssignmentAnswerDao;
-    public List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id){
-        return personalAssignmentAnswerDao.getPersonalAnswerByStudentId(id);
-    }
+
     public List<PersonalAssignmentAnswer> getPersonalAnswerByCourseId(String id){
-        return personalAssignmentAnswerDao.getPersonalAnswerByCourseId(id);
+        return personalAssignmentAnswerDao.getPersonalAnswersByCourseId(id);
     }
     public List<TeamAssignmentAnswer> getTeamAnswerByTeamId(String id){
         return teamAssignmentAnswerDao.getTeamAnswerByTeamId(id);
@@ -33,10 +31,10 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
         return  teamAssignmentAnswerDao.getTeamAnswerByCourseId(id);
     }
     public List<PersonalAssignmentAnswer> getPersonalAssignmentToBeSubmittedByStudent(String studentId){
-        return personalAssignmentAnswerDao.getPersonalAssignmentToBeSubmittedByStudent(studentId);
+        return personalAssignmentAnswerDao.getPersonalAssignmentsToBeSubmittedByStudent(studentId);
     }
     public List<PersonalAssignmentAnswer> getPersonalAssignmenToBeSubmittedByCourse(String course){
-        return personalAssignmentAnswerDao.getPersonalAssignmentToBeSubmittedByCourseId(course);
+        return personalAssignmentAnswerDao.getPersonalAssignmentsToBeSubmittedByCourseId(course);
     }
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByTeam(String teamId){
         return teamAssignmentAnswerDao.getTeamAssignmentToBeSubmittedByTeam(teamId);
