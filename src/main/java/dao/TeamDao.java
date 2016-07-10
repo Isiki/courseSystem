@@ -25,5 +25,6 @@ public interface TeamDao {
     public List<Team> getAllTeamsUnderCourse(String course_id);
     public boolean canStudentCreateTeamInCourse(String course_id,String student_id);
     public boolean createTeamInCourse(Team team, String course_id);
+    public String getTeamIdByStudent(String student_id);
 
 }

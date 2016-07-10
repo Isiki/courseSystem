@@ -1,19 +1,13 @@
 package controller;
 
-import model.Assignment;
-import model.Course;
-import model.PersonalAssignmentAnswer;
-import model.Student;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import service.AssignmentAnswerService;
-import service.AssignmentService;
-import service.FileService;
-import service.StudentService;
+import service.*;
 import util.PageResultSet;
 import util.UserSession;
 
@@ -37,6 +31,8 @@ public class StudentController {
     private FileService fileService;
     @Autowired
     private AssignmentAnswerService answerService;
+    @Autowired
+    private TeamService teamService;
 
 
 
@@ -75,6 +71,18 @@ public class StudentController {
         }
     }
 
+    @RequestMapping(value = "/student/saveTAttach_action")
+    public void saveTAttach(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        String aid = request.getParameter("id");
+        String tid = teamService.getTeamIdByStudent(new UserSession(session).getUserId());
+        String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment/"+aid+"/"+tid);
+        try {
+            fileService.saveFile(request, resURL);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     @RequestMapping(value = "/student/savePAnswer_action")
     public void savePAnswer(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         PersonalAssignmentAnswer answer = new PersonalAssignmentAnswer();
@@ -91,6 +99,21 @@ public class StudentController {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 
+    @RequestMapping(value = "/student/saveTAnswer_action")
+    public void saveTAnswer(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        TeamAssignmentAnswer answer = new TeamAssignmentAnswer();
+        String aid = request.getParameter("id");
+        String tid = teamService.getTeamIdByStudent(new UserSession(session).getUserId());
+        String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment/"+aid+"/"+tid);
+        answer.setAssignmentId(aid);
+        answer.setTeamId(tid);
+        answer.setText(request.getParameter("text"));
+        answer.setAttachmentUrl(resURL);
+        if (answerService.insertTAnswer(answer))
+            response.setStatus(HttpServletResponse.SC_OK);
+        else
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    }
 
 
     @RequestMapping(value = "/student/assignmentlist")
