@@ -10,25 +10,25 @@
     <meta content="" name="description"/>
     <meta content="" name="author"/>
 
-    <link href="/resources/css/my_dataTable.css" rel="stylesheet" type="text/css" />
+    <link href="resources/css/my_dataTable.css" rel="stylesheet" type="text/css" />
 
     <!-- 开发智能提示需要，真正发布的时候需要删除-->
-    <link href="/resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-    <link href="/resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN THEME STYLES -->
-    <link href="/resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
-    <link href="/resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
-    <link href="/resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
-    <link id="style_color" href="/resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
-    <link href="/resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
-    <link href="/resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
-    <link href="/resources/treetable/css/jquery.treetable.css" rel="stylesheet" type="text/css"/>
-    <link href="/resources/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css"/>
-    <link href="/resources/assets/global/plugins/jstree/dist/themes/default/style.css" rel="stylesheet" type="text/css" />
+    <link href="resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/treetable/css/jquery.treetable.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/jstree/dist/themes/default/style.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
@@ -178,7 +178,7 @@
 <script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/fileinput.js}"></script>
 <script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>
 <script th:src="@{/resources/DataTables/datatables.js}"></script>
-<script th:src="@{/resources/assets/global/plugins/jstree/dist/jstree.js}"></script>
+<script th:src="@{resources/assets/global/plugins/jstree/dist/jstree.js}"></script>
 
 <script type="text/javascript">
 
@@ -221,7 +221,7 @@
         table = $('#resTable').DataTable({
             dom: "Bfrtip",
             ajax: {
-                url: "/show_resource.do",
+                url: "show_resource.do",
                 method: "get",
                 data: {path: dirPath}
             },
@@ -313,7 +313,7 @@
                 $(document).on("click", ".nextPathLevel", function () {
                     var dirName = $(this).children("span").text();
                     dirPath = dirPath + dirName +'/';
-                    table.ajax.url("/show_resource.do?path="+dirPath).load(function() {
+                    table.ajax.url("show_resource.do?path="+dirPath).load(function() {
                         Metronic.init();
                     });
                     $("#respath-bar").children().last().append('<i class="fa fa-angle-right"></i>');
@@ -362,14 +362,14 @@
         }).on("click", ".btn-download", function(event) {
             //点击下载按钮
             item = table.row($(this).closest('tr')).data();
-            openUrlUtil('POST','/downloadResource.do',{path: dirPath, filename: item['fileName']},'_self');
+            openUrlUtil('POST','downloadResource.do',{path: dirPath, filename: item['fileName']},'_self');
         }).on("click", ".btn-moveTo", function(event) {
             //点击移动到按钮
             item = table.row($(this).closest('tr')).data();
             //获取数据
             $.ajax({
                 type: "POST",
-                url: "/show_resTree.do",
+                url: "show_resTree.do",
                 success: function(data) {
                     //刷新jstree
                     var treeRef = $("#ResTree").jstree(true);
@@ -385,7 +385,7 @@
             item = table.row($(this).closest('tr')).data();
             $.ajax({
                 type: "POST",
-                url: "/removeFile.do",
+                url: "removeFile.do",
                 data: {path: dirPath+item['fileName']},
                 success: function(data) {
                     layer.alert("删除成功");
@@ -413,7 +413,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/moveFile.do",
+                url: "moveFile.do",
                 data: {
                     source: sourcePath,
                     destination: destinationPath
@@ -436,7 +436,7 @@
                 dirDesPath = dirDesPath + $(this).text() + '/';
             }
             dirPath = dirDesPath;
-            table.ajax.url("/show_resource.do?path="+dirPath).load(function() {
+            table.ajax.url("show_resource.do?path="+dirPath).load(function() {
                 Metronic.init();
             });
             $(this).parent().nextAll().remove();
@@ -451,7 +451,7 @@
                 return;
             }
             $.ajax({
-                url: "/newFolder.do",
+                url: "newFolder.do",
                 method: "post",
                 data: {
                     path: dirPath,
