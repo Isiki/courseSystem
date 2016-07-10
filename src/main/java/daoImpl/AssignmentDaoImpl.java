@@ -41,9 +41,7 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
 
     @Override
     public int countByCourseId(String courseId) {
-        List<Object> params = new ArrayList<Object>(0);
-        String hql="from Assignment n where n.id is not null and n.courseId = ?";
-        params.add(courseId);
-        return super.hqlFind(hql,params.toArray(),false).size();
+        String hql="select max(n.id) from Assignment as n where n.id is not null and n.courseId = "+courseId;
+        return (int)super.getSession().createQuery(hql).uniqueResult();
     }
 }

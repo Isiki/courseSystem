@@ -3,7 +3,9 @@ package serviceImpl;
 import dao.PersonalAssignmentAnswerDao;
 import dao.TeamAssignmentAnswerDao;
 import model.PersonalAssignmentAnswer;
+import model.PersonalAssignmentAnswerPK;
 import model.TeamAssignmentAnswer;
+import model.TeamAssignmentAnswerPK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.AssignmentAnswerService;
@@ -47,7 +49,10 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
 
     @Override
     public void commentAssignment(PersonalAssignmentAnswer assignmentAnswer) {
-        if(null!=personalAssignmentAnswerDao.get(assignmentAnswer.getAssignmentId())) {
+        PersonalAssignmentAnswerPK pk= new PersonalAssignmentAnswerPK();
+        pk.setStudentId(assignmentAnswer.getStudentId());
+        pk.setAssignmentId(assignmentAnswer.getAssignmentId());
+        if(null!=personalAssignmentAnswerDao.get(pk)) {
             personalAssignmentAnswerDao.saveOrUpdate(assignmentAnswer);
         }else{
             return;
@@ -57,10 +62,33 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
 
     @Override
     public void commentAssignment(TeamAssignmentAnswer assignmentAnswer) {
-        if (null != teamAssignmentAnswerDao.get(assignmentAnswer.getAssignmentId())) {
+        TeamAssignmentAnswerPK pk= new TeamAssignmentAnswerPK();
+        pk.setTeamId(assignmentAnswer.getTeamId());
+        pk.setAssignmentId(assignmentAnswer.getAssignmentId());
+        if (null != teamAssignmentAnswerDao.get(pk)) {
             teamAssignmentAnswerDao.saveOrUpdate(assignmentAnswer);
         } else {
             return;
         }
+    }
+
+    @Override
+    public List<TeamAssignmentAnswer> getTeamAnswerByAssignment(String id) {
+        return teamAssignmentAnswerDao.getAnswerByAssignmentId(id);
+    }
+
+    @Override
+    public List<PersonalAssignmentAnswer> getPersonalAnswerByAssignment(String id) {
+        return personalAssignmentAnswerDao.getAnswerByAssignmentId(id);
+    }
+
+    @Override
+    public TeamAssignmentAnswer getTeamAnswerByPK(TeamAssignmentAnswerPK pk) {
+        return teamAssignmentAnswerDao.get(pk);
+    }
+
+    @Override
+    public PersonalAssignmentAnswer getPersonalAnswerByPK(PersonalAssignmentAnswerPK pk) {
+        return personalAssignmentAnswerDao.get(pk);
     }
 }
