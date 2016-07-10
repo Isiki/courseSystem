@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>测试富文本编辑器</title>
+
+    <!-- 开发智能提示需要，真正发布的时候需要删除-->
+    <link href="../resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="../resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="../resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/course_custom.css" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+<div th:include="common::js"></div>
+<div class="container-fluid">
+    <!-- if STUDENT -->
+    <div th:if="${'student' == session.userType}" >
+        <!-- if USE_RICH_TEXT -->
+        <div class="portlet-body">
+    <div>
+        <script id="container" name="content" type="text/plain"></script>
+        <script type="text/javascript" charset="utf-8" th:src="@{ue/ueditor.config.js}"></script>
+        <script type="text/javascript" charset="utf-8" th:src="@{ue/ueditor.all.min.js}"> </script>
+        <script>var ue = UE.getEditor('container');</script>
+    </div>
+    <div>
+        <button id="btn_richtext_submit" class="btn btn-primary">提交</button>
+    </div>
+</div>
+        <!-- end if -->
+        <!-- if USE_FILE -->
+        <div>
+            <label class="control-label">Select File</label>
+            <input id="input-file" name="resource" type="file" class="file" data-show-preview="false">
+        </div>
+        <!-- end if -->
+    <!-- end if -->
+    </div>
+</div>
+<script>
+
+    // BEGIN RICH TEXT
+    $(document).ready(function () {
+        $("#btn_richtext_submit").click(function() {
+            alert(UE.getEditor('container').getAllHtml());
+            $.post("ue_submit_test.do",
+                    {
+                        content: UE.getEditor('container').getAllHtml()
+                    },
+                    function (data, status) {
+                        alert("Data: " + data + "\nStatus: " + status);
+                    }
+            );
+        });
+    });
+    // END RICH TEXT
+
+    // BEGIN FILE UPLOAD
+    $(document).ready(function() {
+        $("#input-file").fileinput({
+            language: "zh",
+            uploadUrl: "/saveResource_action.do",
+            uploadAsync: true,
+            maxFileCount: 5,
+            autoReplace: true
+        }).on("fileuploaded", function (e, data) {
+            if (data['response']['action'] == 'add') {
+                var datalist = data['response']['data'];
+                for (var i = 0; i < datalist.length; i++) {
+                    table.row.add(
+                            datalist[i]
+                    ).draw()
+                }
+            }
+        })
+
+        var table;
+        var fileType = ['aac', 'ace', 'ai', 'ain', 'amr', 'app', 'arj',
+            'asf', 'asp', 'aspx', 'av', 'avi', 'bin', 'bmp', 'cab', 'cad',
+            'cat', 'cdr', 'chm', 'com', 'css', 'cur', 'dat', 'db', 'dll',
+            'dmv', 'docx', 'dot', 'dps', 'dpt', 'dwg', 'dxf', 'emf', 'eps',
+            'et', 'ett', 'exe', 'fla', 'gif', 'hlp', 'htm', 'html', 'icl',
+            'ico', 'img', 'inf', 'ini', 'iso', 'jpeg', 'jpg', 'js', 'm3u',
+            'max', 'mdb', 'mde', 'mht', 'mid', 'midi', 'mox', 'mp3', 'mp4',
+            'mpeg', 'mpg', 'msi', 'nrg', 'ocx', 'ogg', 'ogm', 'pdf', 'png',
+            'pot', 'ppt', 'pptx', 'psd', 'pub', 'qt', 'ra', 'ram', 'rar',
+            'rm', 'rmvb', 'rtf', 'swf', 'tar', 'tif', 'tiff', 'txt', 'url',
+            'vbs', 'vsd', 'vss', 'vst', 'wav', 'wave', 'wm', 'wma', 'wmd',
+            'wmf', 'wmv', 'wps', 'wpt', 'xls', 'xlsx', 'xlt', 'xml', 'zip'];
+
+        $(document).ready(function () {
+            table = $('#resTable').DataTable({
+                dom: "Bfrtip",
+                ajax: "/show_resource.do",
+                paging: false,
+                info: false,
+                searching: false,
+                columns: [
+                    {
+                        data: "fileName",
+                        render: function (data, type, row) {
+                            var ext = data.match('\\.([^\\.]*)$');
+                            if (ext == null)
+                                ext = 'folder';
+                            else if (fileType.indexOf(ext) == -1)
+                                ext = 'unknown';
+                            else ext = ext[1];
+                            return '<img src="resources/image/filetype/' + ext + '.gif" />' + data;
+                        }
+                    },
+                    {
+                        data: "fileCTime"
+                    },
+                    {
+                        data: "fileSize"
+                    }],
+                select: true,
+                buttons: [
+                    {
+                        text: "上传文件",
+                        action: function (e, dt, node, config) {
+                            $('#uploadModal').modal();
+                        }
+                    }
+                ]
+            });
+        });
+    });
+    // END FILE UPLOAD
+
+</script>
+</body>
+</html>

@@ -28,8 +28,8 @@ public class SecurityTestController {
 
     @RequestMapping(value = "test")
     public String testLogin(Model model) {
-        PersonalAssignmentAnswer answer = studentService.getAnswer("7","13211065");
-        model.addAttribute("teacher",answer);
+        //PersonalAssignmentAnswer answer = studentService.getAnswer("7","13211065");
+        //model.addAttribute("teacher",answer);
         return "test";
     }
 
