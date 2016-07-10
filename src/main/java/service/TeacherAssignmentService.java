@@ -1,6 +1,7 @@
 package service;
 
 import model.PersonalAssignmentAnswer;
+import model.TeamAssignmentAnswer;
 
 import java.util.List;
 
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface TeacherAssignmentService {
     public List<PersonalAssignmentAnswer> getAllPersonalSubmissions(String assignment_id);
+    public List<TeamAssignmentAnswer> getAllTeamSubmissions(String assignment_id);
 }
