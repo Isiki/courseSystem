@@ -1,26 +1,19 @@
 package controller;
 
-import dao.StudentDao;
 import entity.BaseException;
-import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import service.LoginService;
 import service.StudentService;
-import model.Student;
-import service.TeacherService;
-import util.UserSession;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
 
 
 /**
@@ -64,7 +57,7 @@ public class LoginController {
     @Autowired
     private LoginService service;
 
-    /*
+
     @RequestMapping(value = "login_action", method = RequestMethod.POST)
     public String loginAction(HttpServletRequest request,
                               Model model)
@@ -73,7 +66,7 @@ public class LoginController {
         String redirect = "login.do";
         String username = (String)request.getParameter("username");
         String password_raw = (String)request.getParameter("password");
-        String authtype = (String)request.getParameter("authtype");
+        String userType = (String)request.getParameter("usertype");
 
         MessageDigest md = null;
         try {
@@ -92,27 +85,27 @@ public class LoginController {
         String password = new String(encodeHex(bts));
 
 
-        System.out.equals("Login username " + username + " authtype " + authtype);
+        System.out.equals("Login username " + username + " userType " + userType);
 
-        if("admin".equals(authtype))
+        if("admin".equals(userType))
         {
-            success = service.LoginAsAdmin(username, password);
+            success = service.LoginAsAdmin(username, password)!=null;
             if(success)
             {
-                redirect = "admin/course.do";
+                redirect = "a/workspace.do";
             }
         }
 
-        if("student".equals(authtype))
+        if("student".equals(userType))
         {
-            success = service.LoginAsStudent(username, password);
-            if(success) redirect = "student/course.do";
+            success = service.LoginAsStudent(username, password)!=null;
+            if(success) redirect = "s/workspace.do";
         }
 
-        if("teacher".equals(authtype))
+        if("teacher".equals(userType))
         {
-            success = service.LoginAsTeacher(username, password);
-            if(success) redirect = "teacher/add_assignment.do?courseId=1";
+            success = service.LoginAsTeacher(username, password)!=null;
+            if(success) redirect = "t/workspace.do";
         }
 
         if(success)
@@ -121,12 +114,12 @@ public class LoginController {
             //UserSession us = new UserSession();
 
             request.getSession().setAttribute("id", username);
-            request.getSession().setAttribute("auth", authtype);
+            request.getSession().setAttribute("userType", userType);
         }
 
         return "redirect:"+redirect;
     }
-    */
+
 
     private static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6',
             '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };

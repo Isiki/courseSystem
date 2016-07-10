@@ -4,6 +4,7 @@ import jxl.write.DateTime;
 import model.*;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,10 +76,17 @@ public class StudentViewController {
      * 将目前所选课程写入session，并返回模板
      */
     @RequestMapping(value = "course_navigate", method = RequestMethod.GET)
-    public String showCourseEntry(HttpServletRequest request, Model model) {
+    public void showCourseEntry(HttpServletRequest request, HttpServletResponse response) {
         String course_id = request.getParameter("course_id");
         request.getSession().setAttribute("course_id", course_id);
-        return "course";
+
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/text;charset=utf-8");
+        try {
+            response.getWriter().append("resource.do");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -11,7 +11,6 @@ import java.util.List;
  * Created by isiki on 2016/7/3.
  */
 public interface StudentService {
-
     Student getStudentById(String id);
     ArrayList<Course> getAllCourseById(String id);
     PersonalAssignmentAnswer getAnswer(String aid, String sid);
