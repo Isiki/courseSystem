@@ -1,8 +1,6 @@
 package service;
 
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -18,4 +16,5 @@ public interface FileService {
     List<File> getAllFiles(String dir);
     String filesToJson(List<File> files);
     String filesToJson(List<File> files,  String action);
+    String getDirStructionJson(String filepath);
 }

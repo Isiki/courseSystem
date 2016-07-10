@@ -1,7 +1,6 @@
 package serviceImpl;
 
 
-import com.google.gson.JsonArray;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -10,9 +9,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import service.FileService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -67,6 +67,8 @@ public class FileServiceImpl implements FileService {
         return Arrays.asList(files);
     }
 
+    private static final DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
     public String filesToJson(List<File> files, String action)
     {
         if (files == null)
@@ -77,7 +79,8 @@ public class FileServiceImpl implements FileService {
             Map<String,String> list = new HashMap<>();
 
             list.put("fileName",file.getName());
-            list.put("fileCTime",new Date(file.lastModified()).toString());
+            list.put("fileType", file.isDirectory()?"folder":"file");
+            list.put("fileCTime",format.format(new Date(file.lastModified())));
             list.put("fileSize",getFormatSize(file.length()));
             arr.add(list);
         }
@@ -118,4 +121,42 @@ public class FileServiceImpl implements FileService {
         BigDecimal result4 = new BigDecimal(teraBytes);
         return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
     }
+
+    public String getDirStructionJson(String filepath)
+    {
+        File rootPath = new File(filepath);
+        if(!rootPath.isDirectory())
+        {
+            return "";
+        }
+        JSONObject rootObj = new JSONObject();
+        rootObj.put("text", "资源");
+        rootObj.put("type", "folder");
+        rootObj.put("children", getDirJsonArray(rootPath));
+        return rootObj.toString();
+    }
+
+    private JSONArray getDirJsonArray(File filepath)
+    {
+        JSONArray arr = new JSONArray();
+        try {
+            File[] files = filepath.listFiles();
+
+            for(File file : files)
+            {
+                JSONObject obj = new JSONObject();
+                obj.put("text", file.getName());
+                if (file.isDirectory()) {
+                    //目录
+                    obj.put("type", "folder");
+                    obj.put("children", getDirJsonArray(file));
+                    arr.add(obj);
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arr;
+    }
+
 }
