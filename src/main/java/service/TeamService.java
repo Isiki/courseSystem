@@ -1,10 +1,9 @@
 package service;
+import model.Course;
 import model.Student;
 import model.Team;
-import model.Team;
-
+import model.TeamApplication;
 import java.util.List;
-
 /**
  * Created by 陌上花开 on 2016/7/5.
  */

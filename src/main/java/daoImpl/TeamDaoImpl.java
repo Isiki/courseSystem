@@ -17,7 +17,7 @@ import java.util.List;
  * Created by 陌上花开 on 2016/7/5.
  */
 @Repository("TeamDao")
-public class TeamDaoImpl implements TeamDao{
+public class TeamDaoImpl extends DaoImpl<Team,String> implements TeamDao{
     @Autowired
     private SessionFactory sessionFactory;
    /*
