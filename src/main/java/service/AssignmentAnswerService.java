@@ -11,7 +11,7 @@ import java.util.List;
  * Created by ElaineC on 2016/7/8.
  */
 public interface AssignmentAnswerService {
-    List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id);
+    //List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id);
     List<PersonalAssignmentAnswer> getPersonalAnswerByCourseId(String id);
     List<TeamAssignmentAnswer> getTeamAnswerByTeamId(String id);
     List<TeamAssignmentAnswer> getTeamAnswerByCourseId(String id);

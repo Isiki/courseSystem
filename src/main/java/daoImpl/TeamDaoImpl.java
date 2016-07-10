@@ -182,4 +182,12 @@ public class TeamDaoImpl implements TeamDao{
         return true;
     }
 
+    public String getTeamIdByStudent(String student_id){
+        Query query = sessionFactory.getCurrentSession()
+                .createSQLQuery("SELECT * FROM teaming WHERE student_id = \'"+student_id+"\'")
+                .addEntity(Teaming.class);
+        List<Teaming> teamming = query.list();
+        return teamming.get(0).getTeamId();
+    }
+
 }

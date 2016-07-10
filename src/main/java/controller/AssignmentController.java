@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import service.AssignmentAnswerService;
 import service.AssignmentService;
 
 import javax.servlet.http.HttpSession;
@@ -57,7 +58,7 @@ public class AssignmentController {
 
     }
 
-    @RequestMapping(value = "t/assignment",method = RequestMethod.GET)
+    /*@RequestMapping(value = "t/assignment",method = RequestMethod.GET)
     public String listAssignment(Model model, HttpSession session){
         UserSession user =new UserSession(session);
         List<Assignment> assignment = assignmentService.getAllByCourseId(user.getCourse().getId());
@@ -65,9 +66,9 @@ public class AssignmentController {
         assignments.setList(assignment);
         model.addAttribute("assignments",assignments);
         return "assignmentlist";
-    }
+    }*/
 
-    @RequestMapping(value = "t/assignment_detail",method = RequestMethod.GET)
+    /*@RequestMapping(value = "t/assignment_detail",method = RequestMethod.GET)
     public String consultAssignment(String assignment_id ,Model model){
         Assignment det=assignmentService.getAssignmentById(assignment_id);
         model.addAttribute("assignment",det);
@@ -79,7 +80,7 @@ public class AssignmentController {
             model.addAttribute("assignmentAnswers",assignmentAnswerService.getPersonalAnswerByAssignment(det.getId()));
         }
         return "assignment_detail";
-    }
+    }*/
 
     @RequestMapping(value = "t/assignment_detail", method = RequestMethod.POST)
     @ResponseBody

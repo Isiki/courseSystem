@@ -24,9 +24,9 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
     @Autowired
     private TeamAssignmentAnswerDao teamAssignmentAnswerDao;
 
-    public List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id){
-        return personalAssignmentAnswerDao.getPersonalAnswerByStudentId(id);
-    }
+    /*public List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id){
+        return personalAssignmentAnswerDao.getPersonalAnswerByStudentId(id);}
+        */
     public List<PersonalAssignmentAnswer> getPersonalAnswerByCourseId(String id){
         return personalAssignmentAnswerDao.getPersonalAnswerByCourseId(id);
     }
