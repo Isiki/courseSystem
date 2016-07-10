@@ -17,6 +17,7 @@ import service.TeacherService;
 import util.UserSession;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -33,7 +34,6 @@ public class LoginController {
     @Autowired
     private StudentService studentService;
 
-    // TODO: UserSession as parameter
     @RequestMapping(value = "login")
     public String userLogin(@ModelAttribute("user") String user, @ModelAttribute("errorInfo") String errorInfo,
                             @ModelAttribute("isAdmin") String isAdmin, Model model) throws BaseException {
@@ -64,9 +64,9 @@ public class LoginController {
     @Autowired
     private LoginService service;
 
-    /*
+
     @RequestMapping(value = "login_action", method = RequestMethod.POST)
-    public String loginAction(HttpServletRequest request,
+    public String loginAction(HttpServletRequest request,HttpSession session,
                               Model model)
     {
         boolean success = false;
@@ -96,37 +96,33 @@ public class LoginController {
 
         if("admin".equals(authtype))
         {
-            success = service.LoginAsAdmin(username, password);
-            if(success)
-            {
-                redirect = "admin/course.do";
-            }
+            success = service.LoginAsAdmin(username, password)!=null;
+            if(success) redirect = "admin/course.do";
         }
 
         if("student".equals(authtype))
         {
-            success = service.LoginAsStudent(username, password);
+            success = service.LoginAsStudent(username, password)!=null;
             if(success) redirect = "student/course.do";
         }
 
         if("teacher".equals(authtype))
         {
-            success = service.LoginAsTeacher(username, password);
+            success = service.LoginAsTeacher(username, password)!=null;
             if(success) redirect = "teacher/add_assignment.do?courseId=1";
         }
 
         if(success)
         {
             // TODO: UserSession as parameter
-            //UserSession us = new UserSession();
-
+            UserSession us = new UserSession(session);
             request.getSession().setAttribute("id", username);
             request.getSession().setAttribute("auth", authtype);
         }
 
         return "redirect:"+redirect;
     }
-    */
+
 
     private static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6',
             '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
