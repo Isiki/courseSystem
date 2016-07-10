@@ -236,7 +236,7 @@ public class StudentViewController {
      */
     @RequestMapping(value = "team_join", method = RequestMethod.POST)
     public void joinTeam(HttpServletRequest request, HttpServletResponse response){
-        // undefined
+        // 学生类型
     }
 
 /* ------------------------ Util functions below ------------------------------ */
