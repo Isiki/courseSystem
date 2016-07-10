@@ -25,5 +25,11 @@
         <property name="attachmentUrl">
             <column name="attachment_url" sql-type="varchar(50)" length="50" not-null="true"/>
         </property>
+        <property name="grade">
+            <column name="grade" sql-type="int(11)" />
+        </property>
+        <property name="comment">
+            <column name="comment" sql-type="longtext"/>
+        </property>
     </class>
 </hibernate-mapping>

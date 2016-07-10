@@ -8,32 +8,36 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.AssignmentService;
 
 import javax.servlet.http.HttpSession;
 import entity.BaseException;
 import service.CourseService;
+import util.PageResultSet;
+import util.UserSession;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by isiki on 2016/7/4.
  */
 @Controller
-@RequestMapping("teacher")
+
 public class AssignmentController {
     @Autowired
     private AssignmentService assignmentService;
     @Autowired
     private CourseService courseService;
-    @RequestMapping("add_assignment")
-    public String addAssignment(String courseId,Model model) {
-        model.addAttribute("course",courseService.searchCourseById(courseId));
+    @RequestMapping(value = "t/add_assignment",method = RequestMethod.GET)
+    public String addAssignment() {
         return "assignment/add_assignment";
     }
 
-    @RequestMapping("save_assignment")
+    @RequestMapping(value = "t/add_assignment",method = RequestMethod.POST)
     @ResponseBody
     public String saveAssignment(Assignment assignment, @ModelAttribute("startDate") String startDate , @ModelAttribute("endDate")String endDate, HttpSession session) {
         assignment.setIdInCourse(assignmentService.consultAssignmentNumber(assignment.getCourseId()));
@@ -49,5 +53,43 @@ public class AssignmentController {
             assignmentService.insertAssignment(assignment);
         return "success";
 
+    }
+
+    @RequestMapping(value = "t/assignment",method = RequestMethod.GET)
+    public String listAssignment(Model model, HttpSession session){
+        UserSession user =new UserSession(session);
+        List<Assignment> assignment = assignmentService.getAllByCourseId(user.getCourse().getId());
+        PageResultSet<Assignment> assignments = new PageResultSet<>();
+        assignments.setList(assignment);
+        model.addAttribute("assignments",assignments);
+        return "assignmentlist";
+    }
+
+    @RequestMapping(value = "t/assignment_detail",method = RequestMethod.GET)
+    public String consultAssignment(String assignment_id ,Model model){
+        model.addAttribute("assignment",assignmentService.getAssignmentById(assignment_id));
+        return "assignment_detail";
+    }
+
+    @RequestMapping(value = "t/assignment_detail", method = RequestMethod.POST)
+    @ResponseBody
+    public Assignment alterAssignment(Assignment assignment, @ModelAttribute("startDate") String startDate , @ModelAttribute("endDate")String endDate){
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd" );
+        try {
+            assignment.setStartTime(dateFormat.parse(startDate));
+            assignment.setEndTime(dateFormat.parse(endDate));
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+        return assignmentService.updateAssignment(assignment);
+    }
+
+    @RequestMapping(value = "t/assignment", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Assignment> removeAssignment(String assignment_id,Model model, HttpSession session){
+        assignmentService.removeAssignment(assignment_id);
+        UserSession user =new UserSession(session);
+        return assignmentService.getAllByCourseId(user.getCourse().getId());
     }
 }

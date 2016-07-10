@@ -1,13 +1,10 @@
 package model;
 
-import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by Admin on 2016/7/4.
  */
-@Entity
-@IdClass(PersonalAssignmentAnswerPK.class)
 public class PersonalAssignmentAnswer {
     private String studentId;
     private String assignmentId;
@@ -15,9 +12,9 @@ public class PersonalAssignmentAnswer {
     private Date submitTime;
     private String text;
     private String attachmentUrl;
+    private int grade;
+    private String comment;
 
-    @Id
-    @Column(name = "student_id", nullable = false, length = 50)
     public String getStudentId() {
         return studentId;
     }
@@ -26,8 +23,6 @@ public class PersonalAssignmentAnswer {
         this.studentId = studentId;
     }
 
-    @Id
-    @Column(name = "assignment_id", nullable = false, length = 50)
     public String getAssignmentId() {
         return assignmentId;
     }
@@ -36,8 +31,6 @@ public class PersonalAssignmentAnswer {
         this.assignmentId = assignmentId;
     }
 
-    @Basic
-    @Column(name = "is_submitted", nullable = false)
     public boolean getIsSubmitted() {
         return isSubmitted;
     }
@@ -46,8 +39,6 @@ public class PersonalAssignmentAnswer {
         isSubmitted = submitted;
     }
 
-    @Basic
-    @Column(name = "submit_time", nullable = true)
     public Date getSubmitTime() {
         return submitTime;
     }
@@ -56,8 +47,6 @@ public class PersonalAssignmentAnswer {
         this.submitTime = submitTime;
     }
 
-    @Basic
-    @Column(name = "text", nullable = true, length = -1)
     public String getText() {
         return text;
     }
@@ -66,8 +55,6 @@ public class PersonalAssignmentAnswer {
         this.text = text;
     }
 
-    @Basic
-    @Column(name = "attachment_url", nullable = true, length = 50)
     public String getAttachmentUrl() {
         return attachmentUrl;
     }
@@ -75,6 +62,14 @@ public class PersonalAssignmentAnswer {
     public void setAttachmentUrl(String attachmentUrl) {
         this.attachmentUrl = attachmentUrl;
     }
+
+    public int getGrade(){return grade;}
+
+    public void setGrade(int grade){this.grade=grade;}
+
+    public String getComment(){return comment;}
+
+    public void setComment(String comment){this.comment=comment;}
 
     @Override
     public boolean equals(Object o) {

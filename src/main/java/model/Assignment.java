@@ -1,11 +1,12 @@
 package model;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by Admin on 2016/7/4.
  */
-
+@Entity
 public class Assignment {
     private String id;
     private String courseId;
@@ -16,8 +17,9 @@ public class Assignment {
     private Date endTime;
     private String description;
     private String attachmentUrl;
-
-
+    private int grade;
+    @Id
+    @Column(name = "id", nullable = false, length = 10)
     public String getId() {
         return id;
     }
@@ -26,7 +28,8 @@ public class Assignment {
         this.id = id;
     }
 
-
+    @JoinTable
+    @Column(name = "course_id", length = 10)
     public String getCourseId() {
         return courseId;
     }
@@ -35,7 +38,8 @@ public class Assignment {
         this.courseId = courseId;
     }
 
-
+    @Basic
+    @Column(name = "is_teamwork", nullable = false, length = 1)
     public boolean getIsTeamwork() {
         return isTeamwork;
     }
@@ -44,7 +48,8 @@ public class Assignment {
         isTeamwork = teamwork;
     }
 
-
+    @Basic
+    @Column(name = "id_in_course", nullable = false, length = 11)
     public int getIdInCourse() {
         return idInCourse;
     }
@@ -53,7 +58,8 @@ public class Assignment {
         this.idInCourse = idInCourse;
     }
 
-
+    @Basic
+    @Column(name = "heading", length = 50)
     public String getHeading() {
         return heading;
     }
@@ -63,6 +69,7 @@ public class Assignment {
     }
 
 
+    @Column(name = "start_time")
     public Date getStartTime() {
         return startTime;
     }
@@ -71,7 +78,7 @@ public class Assignment {
         this.startTime = startTime;
     }
 
-
+    @Column(name = "end_time")
     public Date getEndTime() {
         return endTime;
     }
@@ -80,7 +87,8 @@ public class Assignment {
         this.endTime = endTime;
     }
 
-
+    @Basic
+    @Column(name = "description",length = -1)
     public String getDescription() {
         return description;
     }
@@ -89,7 +97,8 @@ public class Assignment {
         this.description = description;
     }
 
-
+    @Basic
+    @Column(name = "attachment_url",length=50)
     public String getAttachmentUrl() {
         return attachmentUrl;
     }
@@ -97,6 +106,7 @@ public class Assignment {
     public void setAttachmentUrl(String attachmentUrl) {
         this.attachmentUrl = attachmentUrl;
     }
+
 
     @Override
     public boolean equals(Object o) {

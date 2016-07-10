@@ -104,7 +104,7 @@ public class CourseDaoImpl implements CourseDao{
 
     public List<Teacher> getTeachersByCourseId(String id){
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("select teacher.id, teacher.real_name, teacher.password from course left join teaching on course.id=teaching.course_id left join teacher on teaching.teacher_id=teacher.id where course.id='"+id+"'")
+                .createSQLQuery("select teacher.id, teacher.real_name, teacher.password from course left join teaching on course.id=teaching.course_id left join teacher on teaching.teacher_id=teacher.id where course.id=\'"+id+"\'")
                 .addEntity(Teacher.class);
         List<Teacher> tcs = new ArrayList<>();
         try{
@@ -117,7 +117,7 @@ public class CourseDaoImpl implements CourseDao{
 
     public List<Student> getStudentsByCourseId(String id){
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("select student.id, student.real_name, student.password from course left join selection on course.id=selection.course_id left join student on selection.student_id=student.id where course.id='"+id+"'")
+                .createSQLQuery("select student.id, student.real_name, student.password from course left join selection on course.id=selection.course_id left join student on selection.student_id=student.id where course.id=\'"+id+"\'")
                 .addEntity(Student.class);
 
         List<Student> sts = new ArrayList<>();

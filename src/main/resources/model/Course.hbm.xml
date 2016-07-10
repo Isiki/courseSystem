@@ -14,12 +14,14 @@
         <property name="teamAllowed">
             <column name="team_allowed" sql-type="tinyint(1)"/>
         </property>
-        <property name="teamMinMember">
-            <column name="team_min_member" sql-type="varchar(50)" length="50"/>
+        <property name="teamMinNumber">
+            <column name="team_min_number" sql-type="varchar(50)" length="50"/>
         </property>
         <property name="teamMaxNumber">
             <column name="team_max_number" sql-type="varchar(50)" length="50"/>
         </property>
-
+        <property name="description">
+            <column name="description" sql-type="text"/>
+        </property>
     </class>
 </hibernate-mapping>

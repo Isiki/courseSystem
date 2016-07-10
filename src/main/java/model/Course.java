@@ -8,10 +8,13 @@ public class Course {
     private String id;
     private String courseName;
     private boolean teamAllowed;
-    private String teamMinMember;
+    private String teamMinNumber;
     private String teamMaxNumber;
+    private String description;
 
+    public void setDescription(String description){this.description =  description;}
 
+    public String getDescription(){return description;}
 
     public String getId() {
         return id;
@@ -21,7 +24,6 @@ public class Course {
         this.id = id;
     }
 
-
     public String getCourseName() {
         return courseName;
     }
@@ -29,7 +31,6 @@ public class Course {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
-
 
     public boolean isTeamAllowed() {
         return teamAllowed;
@@ -39,15 +40,13 @@ public class Course {
         this.teamAllowed = teamAllowed;
     }
 
-
-    public String getTeamMinMember() {
-        return teamMinMember;
+    public String getTeamMinNumber() {
+        return teamMinNumber;
     }
 
-    public void setTeamMinMember(String teamMinMember) {
-        this.teamMinMember = teamMinMember;
+    public void setTeamMinNumber(String teamMinMember) {
+        this.teamMinNumber = teamMinNumber;
     }
-
 
     public String getTeamMaxNumber() {
         return teamMaxNumber;
@@ -56,7 +55,6 @@ public class Course {
     public void setTeamMaxNumber(String teamMaxNumber) {
         this.teamMaxNumber = teamMaxNumber;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -68,7 +66,7 @@ public class Course {
         if (teamAllowed != course.teamAllowed) return false;
         if (id != null ? !id.equals(course.id) : course.id != null) return false;
         if (courseName != null ? !courseName.equals(course.courseName) : course.courseName != null) return false;
-        if (teamMinMember != null ? !teamMinMember.equals(course.teamMinMember) : course.teamMinMember != null)
+        if (teamMinNumber != null ? !teamMinNumber.equals(course.teamMinNumber) : course.teamMinNumber != null)
             return false;
         if (teamMaxNumber != null ? !teamMaxNumber.equals(course.teamMaxNumber) : course.teamMaxNumber != null)
             return false;
@@ -81,7 +79,7 @@ public class Course {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (courseName != null ? courseName.hashCode() : 0);
         result = 31 * result + (teamAllowed ? 1 : 0);
-        result = 31 * result + (teamMinMember != null ? teamMinMember.hashCode() : 0);
+        result = 31 * result + (teamMinNumber != null ? teamMinNumber.hashCode() : 0);
         result = 31 * result + (teamMaxNumber != null ? teamMaxNumber.hashCode() : 0);
         return result;
     }

@@ -33,5 +33,6 @@
         <property name="attachmentUrl">
             <column name="attachment_url" sql-type="varchar(50)" length="50" not-null="true"/>
         </property>
+
     </class>
 </hibernate-mapping>

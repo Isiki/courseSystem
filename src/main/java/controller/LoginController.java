@@ -14,6 +14,7 @@ import service.LoginService;
 import service.StudentService;
 import model.Student;
 import service.TeacherService;
+import util.UserSession;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -32,13 +33,12 @@ public class LoginController {
     @Autowired
     private StudentService studentService;
 
-
+    // TODO: UserSession as parameter
     @RequestMapping(value = "login")
     public String userLogin(@ModelAttribute("user") String user, @ModelAttribute("errorInfo") String errorInfo,
                             @ModelAttribute("isAdmin") String isAdmin, Model model) throws BaseException {
         return "login";
     }
-
 
     @RequestMapping(value = "find_password")
     public String findPassword(Model model)  {
@@ -64,6 +64,7 @@ public class LoginController {
     @Autowired
     private LoginService service;
 
+    /*
     @RequestMapping(value = "login_action", method = RequestMethod.POST)
     public String loginAction(HttpServletRequest request,
                               Model model)
@@ -116,12 +117,16 @@ public class LoginController {
 
         if(success)
         {
+            // TODO: UserSession as parameter
+            //UserSession us = new UserSession();
+
             request.getSession().setAttribute("id", username);
             request.getSession().setAttribute("auth", authtype);
         }
 
         return "redirect:"+redirect;
     }
+    */
 
     private static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6',
             '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
@@ -138,7 +143,6 @@ public class LoginController {
 
         return out;
     }
-
 
 
 }
