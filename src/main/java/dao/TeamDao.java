@@ -10,5 +10,8 @@ public interface TeamDao {
     public String createTeam(Team team);
     public Team getTeamById(String id,String course_id);
     public Team getTeamByName(String name,String course_id);
-    public List<Team> getTeamInCourse(String course_id);
+    public List<Team> getTeamsById(String id,String course_id);
+    public List<Team> getTeamsByName(String name,String course_id);
+    public List<Team> getTeamsInCourse(String course_id);
+    public String joinTeam(String  team_id,String course_id,String student_id);
 }

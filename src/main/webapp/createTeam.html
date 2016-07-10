@@ -140,11 +140,11 @@
                     dataType:"json",
                     success:function(result){
                         if(result=="success"){
-                            result.msg = "提交成功";
+                            result = "提交成功";
                         }else {
-                            result.msg = "提交失败";
+                            result= "提交失败";
                         }
-                        layer.alert(result.msg);
+                        layer.alert(result);
 
                     }
                 });

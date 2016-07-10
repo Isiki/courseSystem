@@ -18,10 +18,10 @@ public class TeamServiceImpl implements TeamService {
     @Autowired
     private TeamDao teamDao;
 
-    public String createTeam( String team_id, String course_id, String student_id,String team_name,String description){
+    public String createTeam(  String course_id, String student_id,String team_name,String description){
 
             Team team=new Team();
-            team.setId(team_id);
+
             team.setCourseId(course_id);
             team.setTeamleaderId(student_id);
             team.setTeamDescription(description);
@@ -41,8 +41,13 @@ public class TeamServiceImpl implements TeamService {
     }
 
     public List<Team> getTeamsInCourse(String course_id){
-        List<Team> team=teamDao.getTeamInCourse(course_id);
+        List<Team> team=teamDao.getTeamsInCourse(course_id);
         return team;
+    }
+
+    public String joinTeam(String team_id,String course_id,String student_id){
+        String result = teamDao.joinTeam(team_id,course_id,student_id);
+        return result;
     }
 
 }
