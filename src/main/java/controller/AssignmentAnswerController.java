@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.AssignmentAnswerService;
-import util.UserSession;
-
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -22,6 +25,8 @@ import java.util.List;
 public class AssignmentAnswerController {
     @Autowired
     private AssignmentAnswerService assignmentAnswerService;
+    private static final String answerRootPath="/uploadFiles/assignment";
+
 
     @RequestMapping(value = "searchpersonalassignmentanswer", method = RequestMethod.POST)
     public String searchPersonalAssignmentAnswer(@RequestParam("method") String meth, @RequestParam("value") String val, Model model) {
@@ -76,7 +81,7 @@ public class AssignmentAnswerController {
         assignmentAnswerService.commentAssignment(answer);
         return "success";
     }
-
+    
     @RequestMapping(value = "t/check_personal_assignment", method = RequestMethod.POST)
     @ResponseBody
     public String commentPersonalAssignment(PersonalAssignmentAnswer answer, String submitDate){
@@ -90,4 +95,35 @@ public class AssignmentAnswerController {
         assignmentAnswerService.commentAssignment(answer);
         return "success";
     }
+
+    @RequestMapping(value = "downloadAnswer")
+    public void downloadFile(HttpServletRequest request, HttpServletResponse response){
+        String path = request.getParameter("path");
+        String filename = request.getParameter("filename");
+        String filepath = request.getSession().getServletContext().getRealPath(answerRootPath) + path + filename;
+        File file = new File(filepath);
+        if(!file.exists()){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+        try {
+            response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
+            FileInputStream in = new FileInputStream(filepath);
+            OutputStream out = response.getOutputStream();
+            byte buffer[] = new byte[1024];
+            int len;
+            while((len=in.read(buffer))>0){
+                out.write(buffer, 0, len);
+            }
+            in.close();
+            out.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
 }

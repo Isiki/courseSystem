@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.AssignmentAnswerService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +23,7 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
     private PersonalAssignmentAnswerDao personalAssignmentAnswerDao;
     @Autowired
     private TeamAssignmentAnswerDao teamAssignmentAnswerDao;
+
     public List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id){
         return personalAssignmentAnswerDao.getPersonalAnswerByStudentId(id);
     }
@@ -60,7 +62,7 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
 
     }
 
-    @Override
+
     public void commentAssignment(TeamAssignmentAnswer assignmentAnswer) {
         TeamAssignmentAnswerPK pk= new TeamAssignmentAnswerPK();
         pk.setTeamId(assignmentAnswer.getTeamId());
@@ -71,23 +73,36 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
             return;
         }
     }
+    
 
-    @Override
+    public boolean insertPAnswer(PersonalAssignmentAnswer answer) {
+        answer.setIsSubmitted(true);
+        answer.setSubmitTime(new Date());
+        personalAssignmentAnswerDao.saveOrUpdate(answer);
+        return true;
+    }
+
+    public boolean insertTAnswer(TeamAssignmentAnswer answer) {
+        answer.setIsSubmitted(true);
+        answer.setSubmitTime(new Date());
+        teamAssignmentAnswerDao.saveOrUpdate(answer);
+        return true;
+    }
+
     public List<TeamAssignmentAnswer> getTeamAnswerByAssignment(String id) {
         return teamAssignmentAnswerDao.getAnswerByAssignmentId(id);
     }
 
-    @Override
     public List<PersonalAssignmentAnswer> getPersonalAnswerByAssignment(String id) {
         return personalAssignmentAnswerDao.getAnswerByAssignmentId(id);
     }
 
-    @Override
+
     public TeamAssignmentAnswer getTeamAnswerByPK(TeamAssignmentAnswerPK pk) {
         return teamAssignmentAnswerDao.get(pk);
     }
 
-    @Override
+
     public PersonalAssignmentAnswer getPersonalAnswerByPK(PersonalAssignmentAnswerPK pk) {
         return personalAssignmentAnswerDao.get(pk);
     }
