@@ -81,7 +81,7 @@ public class AssignmentAnswerController {
         assignmentAnswerService.commentAssignment(answer);
         return "success";
     }
-
+    
     @RequestMapping(value = "t/check_personal_assignment", method = RequestMethod.POST)
     @ResponseBody
     public String commentPersonalAssignment(PersonalAssignmentAnswer answer, String submitDate){

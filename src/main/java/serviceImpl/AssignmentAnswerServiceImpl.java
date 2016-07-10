@@ -73,7 +73,7 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
             return;
         }
     }
-
+    
 
     public boolean insertPAnswer(PersonalAssignmentAnswer answer) {
         answer.setIsSubmitted(true);
@@ -89,11 +89,9 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
         return true;
     }
 
-
     public List<TeamAssignmentAnswer> getTeamAnswerByAssignment(String id) {
         return teamAssignmentAnswerDao.getAnswerByAssignmentId(id);
     }
-
 
     public List<PersonalAssignmentAnswer> getPersonalAnswerByAssignment(String id) {
         return personalAssignmentAnswerDao.getAnswerByAssignmentId(id);
