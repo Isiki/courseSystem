@@ -21,34 +21,10 @@ public class AssignmentAnswerController {
     @Autowired
     private AssignmentAnswerService assignmentAnswerService;
 
-    @RequestMapping(value = "searchpersonalassignmentanswer",method = RequestMethod.POST)
-    public String searchPersonalAssignmentAnswer(@RequestParam("method")String meth,@RequestParam("value")String val,Model model)
+    @RequestMapping(value = "assignmentanswer",method = RequestMethod.POST)
+    public String showAssignmentsWithSubmitStatus(@RequestParam("studentId")String id, Model model)
     {
-        if(meth.equals("ById"))
-        {
-            List<PersonalAssignmentAnswer> personalAssignmentAnswers=assignmentAnswerService.getPersonalAnswerByStudentId(val);
-            model.addAttribute("personalassignmentanswers",personalAssignmentAnswers);
-        }
-        else if(meth.equals("ByCourse"))
-        {
-            List<PersonalAssignmentAnswer> personalAssignmentAnswers=assignmentAnswerService.getPersonalAnswerByCourseId(val);
-            model.addAttribute("personalassignmentanswers",personalAssignmentAnswers);
-        }
-        return "searchresult";
+        List
     }
-    @RequestMapping(value = "searchpersonalassignmentanswer",method = RequestMethod.POST)
-    public String searchTeamAssignmentAnswer(@RequestParam("method")String meth,@RequestParam("value")String val,Model model)
-    {
-        if(meth.equals("ById"))
-        {
-            List<TeamAssignmentAnswer> teamAssignmentAnswers=assignmentAnswerService.getTeamAnswerByTeamId(val);
-            model.addAttribute("teamassignmentanswers",teamAssignmentAnswers);
-        }
-        else if(meth.equals("ByCourse"))
-        {
-            List<TeamAssignmentAnswer> teamAssignmentAnswers=assignmentAnswerService.getTeamAnswerByCourseId(val);
-            model.addAttribute("teamassignmentanswers",teamAssignmentAnswers);
-        }
-        return "searchresult";
-    }
+
 }
