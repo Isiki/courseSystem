@@ -35,7 +35,7 @@ public class ResourceController {
     public String resouceManage(HttpServletRequest request)
     {
         setResCoursePath(request);
-        createCourseResFolderIfNotExsits();
+        createCourseResFolderIfNotExsits(request);
         return "resource";
     }
 
@@ -43,12 +43,12 @@ public class ResourceController {
     public String studentResouceManage(HttpServletRequest request)
     {
         setResCoursePath(request);
-        createCourseResFolderIfNotExsits();
+        createCourseResFolderIfNotExsits(request);
         return "student_resource";
     }
 
-    private void createCourseResFolderIfNotExsits() {
-        File folder = new File(resCoursePath);
+    private void createCourseResFolderIfNotExsits(HttpServletRequest request) {
+        File folder = new File(request.getSession().getServletContext().getRealPath(resCoursePath));
         if(!folder.exists())
         {
             folder.mkdirs();
@@ -77,7 +77,7 @@ public class ResourceController {
         setResCoursePath(request);
         PrintWriter respWriter=null;
         try {
-            String resURL = request.getSession().getServletContext().getRealPath(resCoursePath);
+            String resURL = request.getSession().getServletContext().getRealPath(resCoursePath + request.getParameter("path"));
             String uploadFilesJson = fileService.saveFile(request, resURL);
 
             response.setCharacterEncoding("UTF-8");

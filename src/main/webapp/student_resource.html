@@ -10,25 +10,25 @@
     <meta content="" name="description"/>
     <meta content="" name="author"/>
 
-    <link href="resources/css/my_dataTable.css" rel="stylesheet" type="text/css" />
+    <link href="/resources/css/my_dataTable.css" rel="stylesheet" type="text/css" />
 
     <!-- 开发智能提示需要，真正发布的时候需要删除-->
-    <link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN THEME STYLES -->
-    <link href="resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
-    <link id="style_color" href="resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/treetable/css/jquery.treetable.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/global/plugins/jstree/dist/themes/default/style.css" rel="stylesheet" type="text/css" />
+    <link href="/resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="/resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/treetable/css/jquery.treetable.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/jstree/dist/themes/default/style.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
@@ -178,13 +178,22 @@
 <script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/fileinput.js}"></script>
 <script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>
 <script th:src="@{/resources/DataTables/datatables.js}"></script>
-<script th:src="@{resources/assets/global/plugins/jstree/dist/jstree.js}"></script>
+<script th:src="@{/resources/assets/global/plugins/jstree/dist/jstree.js}"></script>
 
 <script type="text/javascript">
+
+    var table;
+    var resTree;
+    var wrapper = $('#div-table-container');
+    var item;
+    var dirPath = "/";
 
     $("#input-file").fileinput({
         language: "zh",
         uploadUrl: "/saveResource_action.do",
+        uploadExtraData: {
+            path: dirPath
+        },
         uploadAsync: true,
         maxFileCount: 5,
         autoReplace: true
@@ -193,17 +202,13 @@
             var datalist = data['response']['data'];
             for (var i=0; i<datalist.length; i++) {
                 table.row.add(
-                    datalist[i]
+                        datalist[i]
                 ).draw()
             }
         }
     })
 
-    var table;
-    var resTree;
-    var wrapper = $('#div-table-container');
-    var item;
-    var dirPath = "/";
+
     var fileType = ['aac','ace','ai','ain','amr','app','arj',
         'asf','asp','aspx','av','avi','bin','bmp','cab','cad',
         'cat','cdr','chm','com','css','cur','dat','db','dll',
@@ -219,10 +224,11 @@
 
     $(document).ready(function () {
         table = $('#resTable').DataTable({
-            dom: "Bfrtip",
+            dom: "frtip",
             ajax: {
-                url: "show_resource.do",
+                url: "/show_resource.do",
                 method: "get",
+                async: false,
                 data: {path: dirPath}
             },
             paging: false,
@@ -254,16 +260,16 @@
                         var ext = data['fileName'].match('\\.([^\\.]*)$');
                         if(data['fileType']=='folder') {
                             ext = 'folder';
-                            return '<a class="nextPathLevel" href="javascript:void(0)"><img src="resources/image/filetype/'+ ext +'.gif" /><span>'+data['fileName']+'</span></a>';
+                            return '<a class="nextPathLevel" href="javascript:void(0)"><img src="/resources/image/filetype/'+ ext +'.gif" /><span>'+data['fileName']+'</span></a>';
                         }
                         ext = ext[1];
                         if (fileType.indexOf(ext)==-1) {
                             ext = 'unknown';
                         }
-                        return '<img src="resources/image/filetype/'+ ext +'.gif" /><span>'+data['fileName']+'</span>';
+                        return '<img src="/resources/image/filetype/'+ ext +'.gif" /><span>'+data['fileName']+'</span>';
                         /*if(data['fileType']=='folder')
-                                return '<i class="fa fa-folder icon-state-warning icon-lg"></i>'+data['fileName'];
-                        else return '<i class="fa fa-file icon-state-warning icon-lg"></i>'+data['fileName'];*/
+                         return '<i class="fa fa-folder icon-state-warning icon-lg"></i>'+data['fileName'];
+                         else return '<i class="fa fa-file icon-state-warning icon-lg"></i>'+data['fileName'];*/
                     }
                 },
                 {
@@ -282,59 +288,22 @@
                     width: "30px",
                     orderable: false,
                     render: function(data, type, rpw, meta) {
-                        return '<div class="btn-group">\
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >操作<span class="caret"></span>\
-                                    </button>\
-                                    <ul class="dropdown-menu dropdown-less-wide pull-right" >'+
-                                (data["fileType"]=="file"?'<li><a href="javascript:void(0)" class="btn-download">下载</a></li>':'')+
-                                        '<li><a href="javascript:void(0)" class="btn-moveTo">移动到</a></li>\
-                                        <li><a href="javascript:void(0)" class="btn-remove">删除</a></li>\
-                                    </ul>\
-                                </div>';
+                        return '<a href="javascript:void(0)" class="btn btn-primary btn-download"' + (data["fileType"]!="file"?'disabled="disabled"':'')+'>下载</a>';
                     }
                 }],
             select: true,
-            buttons: [
-                {
-                    text: '<i class="icon-plus"></i>上传文件',
-                    action: function(e, dt, node, config) {
-                        $('#uploadModal').modal();
-                    }
-                },
-                {
-                    text: '<i class="icon-plus"></i>新建文件夹',
-                    action: function(e, dt, node, config) {
-                        $('#newFolderModal').modal();
-                    }
-                }
-            ],
             initComplete: function() {
                 Metronic.init();
                 $(document).on("click", ".nextPathLevel", function () {
                     var dirName = $(this).children("span").text();
                     dirPath = dirPath + dirName +'/';
-                    table.ajax.url("show_resource.do?path="+dirPath).load(function() {
+                    table.ajax.url("/show_resource.do?path="+dirPath).load(function() {
                         Metronic.init();
                     });
                     $("#respath-bar").children().last().append('<i class="fa fa-angle-right"></i>');
                     $('<li></li>').append('<a class="dirPath" href="javascript:void(0)">'+ dirName +'</a>').appendTo("#respath-bar");
                     //$("#respath-bar")
                 });
-            }
-        });
-
-        resTree = $('#ResTree').jstree({
-            plugins: ["wholerow", "types"],
-            core: {
-                multiple: false
-            },
-            types: {
-                folder: {
-                    icon: "fa fa-folder icon-state-warning icon-lg"
-                },
-                file: {
-                    icon: "fa fa-file icon-state-warning icon-lg"
-                }
             }
         });
 
@@ -362,67 +331,7 @@
         }).on("click", ".btn-download", function(event) {
             //点击下载按钮
             item = table.row($(this).closest('tr')).data();
-            openUrlUtil('POST','downloadResource.do',{path: dirPath, filename: item['fileName']},'_self');
-        }).on("click", ".btn-moveTo", function(event) {
-            //点击移动到按钮
-            item = table.row($(this).closest('tr')).data();
-            //获取数据
-            $.ajax({
-                type: "POST",
-                url: "show_resTree.do",
-                success: function(data) {
-                    //刷新jstree
-                    var treeRef = $("#ResTree").jstree(true);
-                    treeRef.settings.core.data = data;
-                    treeRef.close_all();
-                    treeRef.refresh();
-                }
-            });
-
-            $('#moveToModal').modal();
-        }).on("click", ".btn-remove", function () {
-            //点击删除按钮
-            item = table.row($(this).closest('tr')).data();
-            $.ajax({
-                type: "POST",
-                url: "removeFile.do",
-                data: {path: dirPath+item['fileName']},
-                success: function(data) {
-                    layer.alert("删除成功");
-                    table.ajax.reload();
-                }
-            });
-        });
-
-        $('#btn-moveToNewFolder').on("click",function () {
-            var treeRef = $('#ResTree').jstree(true);
-            var SelectedNodes = treeRef.get_selected(true);
-            if(SelectedNodes.length==0)
-            {
-                layer.alert("请选择要移动到的目录！");
-                return;
-            }
-            var sourcePath = dirPath+item['fileName'];
-            var destinationPath = treeRef.get_path(SelectedNodes[0],'/',false).substr(2)+'/'+item['fileName']; //multiple: false
-
-            if(destinationPath.indexOf(sourcePath)==0 && destinationPath[sourcePath.length]=='/')
-            {
-                layer.alert("不能完成操作，因为目标文件夹是原文件夹的子文件夹");
-                return;
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "moveFile.do",
-                data: {
-                    source: sourcePath,
-                    destination: destinationPath
-                },
-                success: function() {
-                    layer.alert("移动成功");
-                    table.ajax.reload();
-                }
-            });
+            openUrlUtil('POST','/downloadResource.do',{path: dirPath, filename: item['fileName']},'_self');
         });
 
         $(document).on("click", ".dirPath", function(){
@@ -436,35 +345,11 @@
                 dirDesPath = dirDesPath + $(this).text() + '/';
             }
             dirPath = dirDesPath;
-            table.ajax.url("show_resource.do?path="+dirPath).load(function() {
+            table.ajax.url("/show_resource.do?path="+dirPath).load(function() {
                 Metronic.init();
             });
             $(this).parent().nextAll().remove();
             $(this).siblings().last().remove();
-        });
-
-        $(document).on("click", "#btn-newFolder", function () {
-            var name = $('#input-newFolder').val();
-            if(name == null)
-            {
-                layer.alert("请填写文件夹名称");
-                return;
-            }
-            $.ajax({
-                url: "newFolder.do",
-                method: "post",
-                data: {
-                    path: dirPath,
-                    folderName: name
-                },
-                success: function () {
-                    table.ajax.reload();
-                    $('#newFolderModal').modal('toggle');
-                },
-                error: function() {
-                    layer.alert("创建文件夹失败");
-                }
-            });
         });
 
     });

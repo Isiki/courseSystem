@@ -102,11 +102,11 @@ public class StudentViewController {
      * 返回学生资源页面，详情咨询赵天宇
      * session.getAttribute("course_id")
      */
-    @RequestMapping(value = "resource", method = RequestMethod.GET)
+    /*@RequestMapping(value = "resource", method = RequestMethod.GET)
     public String showResource(HttpServletRequest request, Model model) {
         // i know nothing about this.
         return "resource";
-    }
+    }*/
 
 
     /* 显示课程下作业列表
@@ -184,7 +184,7 @@ public class StudentViewController {
                                   .getServletContext()
                                   .getRealPath("/uploadFiles/assignments");
         try {
-            File uploadFile = fileService.saveFile(request, targetUrl);
+            fileService.saveFile(request, targetUrl);
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);

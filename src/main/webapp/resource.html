@@ -182,9 +182,18 @@
 
 <script type="text/javascript">
 
+    var table;
+    var resTree;
+    var wrapper = $('#div-table-container');
+    var item;
+    var dirPath = "/";
+
     $("#input-file").fileinput({
         language: "zh",
         uploadUrl: "/saveResource_action.do",
+        uploadExtraData: {
+            path: dirPath
+        },
         uploadAsync: true,
         maxFileCount: 5,
         autoReplace: true
@@ -193,17 +202,13 @@
             var datalist = data['response']['data'];
             for (var i=0; i<datalist.length; i++) {
                 table.row.add(
-                    datalist[i]
+                        datalist[i]
                 ).draw()
             }
         }
     })
 
-    var table;
-    var resTree;
-    var wrapper = $('#div-table-container');
-    var item;
-    var dirPath = "/";
+
     var fileType = ['aac','ace','ai','ain','amr','app','arj',
         'asf','asp','aspx','av','avi','bin','bmp','cab','cad',
         'cat','cdr','chm','com','css','cur','dat','db','dll',
@@ -223,6 +228,7 @@
             ajax: {
                 url: "/show_resource.do",
                 method: "get",
+                async: false,
                 data: {path: dirPath}
             },
             paging: false,
@@ -254,16 +260,16 @@
                         var ext = data['fileName'].match('\\.([^\\.]*)$');
                         if(data['fileType']=='folder') {
                             ext = 'folder';
-                            return '<a class="nextPathLevel" href="javascript:void(0)"><img src="resources/image/filetype/'+ ext +'.gif" /><span>'+data['fileName']+'</span></a>';
+                            return '<a class="nextPathLevel" href="javascript:void(0)"><img src="/resources/image/filetype/'+ ext +'.gif" /><span>'+data['fileName']+'</span></a>';
                         }
                         ext = ext[1];
                         if (fileType.indexOf(ext)==-1) {
                             ext = 'unknown';
                         }
-                        return '<img src="resources/image/filetype/'+ ext +'.gif" /><span>'+data['fileName']+'</span>';
+                        return '<img src="/resources/image/filetype/'+ ext +'.gif" /><span>'+data['fileName']+'</span>';
                         /*if(data['fileType']=='folder')
-                                return '<i class="fa fa-folder icon-state-warning icon-lg"></i>'+data['fileName'];
-                        else return '<i class="fa fa-file icon-state-warning icon-lg"></i>'+data['fileName'];*/
+                         return '<i class="fa fa-folder icon-state-warning icon-lg"></i>'+data['fileName'];
+                         else return '<i class="fa fa-file icon-state-warning icon-lg"></i>'+data['fileName'];*/
                     }
                 },
                 {
@@ -287,10 +293,10 @@
                                     </button>\
                                     <ul class="dropdown-menu dropdown-less-wide pull-right" >'+
                                 (data["fileType"]=="file"?'<li><a href="javascript:void(0)" class="btn-download">下载</a></li>':'')+
-                                        '<li><a href="javascript:void(0)" class="btn-moveTo">移动到</a></li>\
-                                        <li><a href="javascript:void(0)" class="btn-remove">删除</a></li>\
-                                    </ul>\
-                                </div>';
+                                '<li><a href="javascript:void(0)" class="btn-moveTo">移动到</a></li>\
+                                <li><a href="javascript:void(0)" class="btn-remove">删除</a></li>\
+                            </ul>\
+                        </div>';
                     }
                 }],
             select: true,
@@ -298,6 +304,7 @@
                 {
                     text: '<i class="icon-plus"></i>上传文件',
                     action: function(e, dt, node, config) {
+                        $('#input-file').fileinput('refresh', {uploadExtraData: {path: dirPath}});
                         $('#uploadModal').modal();
                     }
                 },
