@@ -21,10 +21,11 @@ import java.util.List;
 public class TeamAssignmentAnswerDaoImpl extends DaoImpl<TeamAssignmentAnswer, TeamAssignmentAnswerPK> implements TeamAssignmentAnswerDao{
     @Autowired
     private SessionFactory sessionFactory;
+
     public List<TeamAssignmentAnswer> getAnswerByAssignmentId(String assignmentId) {
         if (assignmentId!=null)
         {
-            String hql="from PersonalAssignmentAnswer n where n.assignmentId=?";
+            String hql="from TeamAssignmentAnswer n where n.assignmentId=?";
             List<Object> params = new ArrayList<Object>(0);
             params.add(assignmentId);
             return super.hqlFind(hql,params.toArray(),false);
