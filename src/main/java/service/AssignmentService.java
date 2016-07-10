@@ -14,7 +14,7 @@ import java.util.List;
 public interface AssignmentService {
     int  getAssignmentTeamType(String assignment_id);
     void insertAssignment(Assignment assignment);
-    int consultAssignmentNumber(String coursId);
+    int consultAssignmentMaxId(String coursId);
     Assignment getAssignmentById(String id);
     ArrayList<Assignment> getAllByCourseId(String id);
     Assignment updateAssignment(Assignment assignment);

@@ -111,7 +111,7 @@
                                     <tbody>
                                     <tr th:each="homework:${assignments.list}">
                                         <td th:text="${homework.idInCourse}" class="text-info"></td>
-                                        <td th:text="${homework.isTeamwork}"></td>
+                                        <td th:text="${homework.isTeamwork}==true?是:否"></td>
                                         <td th:text="${homework.heading}"></td>
                                         <td th:text="${homework.description}"></td>
                                         <td th:text="${homework.startTime}"></td>
@@ -144,7 +144,7 @@
             $('#form').submit();
         }
         function openUrl(id){
-            openUrlUtil('POST','handin.do',{id:id},'_blank');
+            openUrlUtil('POST','handin.do',{id:id});
         }
     </script>
 </div>

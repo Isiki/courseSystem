@@ -5,6 +5,7 @@ import dao.TeamAssignmentAnswerDao;
 import model.PersonalAssignmentAnswer;
 import model.Team;
 import model.TeamAssignmentAnswer;
+import model.TeamAssignmentAnswerPK;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.List;
  * Created by andyz_000 on 2016/7/8.
  */
 @Repository("TeamAssignmentAnswerDao")
-public class TeamAssignmentAnswerDaoImpl extends DaoImpl<TeamAssignmentAnswer,String> implements TeamAssignmentAnswerDao{
+public class TeamAssignmentAnswerDaoImpl extends DaoImpl<TeamAssignmentAnswer, TeamAssignmentAnswerPK> implements TeamAssignmentAnswerDao{
     @Autowired
     private SessionFactory sessionFactory;
     public List<TeamAssignmentAnswer> getAnswerByAssignmentId(String assignmentId) {

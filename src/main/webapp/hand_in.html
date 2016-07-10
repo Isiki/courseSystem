@@ -125,10 +125,12 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label">Select File</label>
+                                        <label for="text" class="col-md-2 control-label">上传文件</label>
                                         <div class="col-md-6">
                                         <input id="input-file" name="resource" type="file" class="file" data-show-preview="false">
+                                        </div>
                                     </div>
+
 
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-6">
@@ -160,33 +162,29 @@
     function assign(){
         var data= $.param($('#form').serializeArray());
         $.ajax({
-            url:"handin_action.do",
+            url:"savePAnswer_action.do",
             type:"POST",
             data:data,
             dataType:"json",
-            success:function(result){
-                if(result.code==0)
-                    result.msg = "提交成功"
-                layer.alert(result.msg);
+            success:function(){
+                layer.alert("上传成功");
+            },
+            failure:function () {
+                layer.alert("提交失败");
             }
         });
     }
 
+    var assign_id = $("#id").attr("value");
     $("#input-file").fileinput({
         language: "zh",
-        uploadUrl: "/saveResource_action.do",
+        uploadUrl: "/student/savePAttach_action.do",
+        uploadExtraData: {id: assign_id},
         uploadAsync: true,
-        maxFileCount: 5,
+        maxFileCount: 1,
         autoReplace: true
     }).on("fileuploaded", function (e, data) {
-        if (data['response']['action'] == 'add') {
-            var datalist = data['response']['data'];
-            for (var i=0; i<datalist.length; i++) {
-                table.row.add(
-                        datalist[i]
-                ).draw()
-            }
-        }
+
     })
 
 
