@@ -23,7 +23,7 @@ public class TeacherDaoImpl extends DaoImpl<Teacher,String> implements TeacherDa
 
     public List<Teacher> getAllTeachers(){
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT * FROM teacher ")
+                .createSQLQuery("SELECT * FROM teacher")
                 .addEntity(Teacher.class);
         List<Teacher> teachers;
         try {

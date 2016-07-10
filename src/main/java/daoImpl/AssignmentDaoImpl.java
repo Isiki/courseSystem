@@ -49,11 +49,12 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
     public List<Map<String, Object>> allAssignmentsWithSubmissionStatusMP(String course_id, String student_id){
         Query query1=sessionFactory.getCurrentSession()
                 .createSQLQuery(
-                        "select heading,course_name,start_time,end_time,is_teamwork,total_grade,grade,is_submitted " +
+                        "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted,assignment.id " +
                         "from assignment " +
-                        "left join personalassignmentanswer on assignment.id=personalassignmentanswer.assignment_id " +
+                        "left join personalassignmentanswer on assignment.id = personalassignmentanswer.assignment_id " +
                         "left join course on assignment.course_id = course.id " +
-                        "where course_id=\'"+course_id+"\' and student_id=\'"+student_id+"\'"
+                        "left join selection on selection.course_id = course.id " +
+                        "where course.id=\'"+course_id+"\' and selection.student_id=\'"+student_id+"\' group by assignment.id"
                 );
         List<Object[]> personalResult = query1.list();
         List<Map<String, Object>> targetList = new ArrayList<>();
@@ -68,17 +69,19 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
             tmp.put("is_submitted", line[7]!=null?"true":"false");
+            tmp.put("assignment_id", line[8]);
             targetList.add(tmp);
         }
 
         Query query2=sessionFactory.getCurrentSession()
                 .createSQLQuery(
-                        "select heading,course_name,start_time,end_time,is_teamwork,total_grade,grade,is_submitted " +
+                        "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted,assignment.id " +
                                 "from assignment " +
-                                "left join teamassignmentanswer on assignment.id=teamassignmentanswer.assignment_id " +
+                                "left join teamassignmentanswer on assignment.id = teamassignmentanswer.assignment_id " +
                                 "left join course on assignment.course_id = course.id " +
-                                "left join teaming on teaming.team_id=teamassignmentanswer. team_id"+
-                                "where course_id=\'"+course_id+"\' and student_id=\'"+student_id+"\'"
+                                "left join teaming on teaming.team_id = teamassignmentanswer.team_id "+
+                                "left join selection on selection.course_id = course.id " +
+                                "where course.id=\'"+course_id+"\' and selection.student_id=\'"+student_id+"\' group by assignment.id"
                 );
         List<Object[]> teamResult = query2.list();
         List<Map<String, Object>> targetList1 = new ArrayList<>();
@@ -93,10 +96,10 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
             tmp.put("is_submitted", line[7]!=null?"true":"false");
+            tmp.put("assignment_id", line[8]);
             targetList1.add(tmp);
         }
         targetList.addAll(targetList1);
-
 
         return targetList;
     }
@@ -104,11 +107,12 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
     public List<Map<String,Object>> allAssimentsWithCourseAndSubmission(String student_id){
         Query query1=sessionFactory.getCurrentSession()
                 .createSQLQuery(
-                        "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted " +
+                        "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted,assignment.id " +
                                 "from assignment " +
-                                "left join personalassignmentanswer on assignment.id=personalassignmentanswer.assignment_id " +
+                                "left join personalassignmentanswer on assignment.id = personalassignmentanswer.assignment_id " +
                                 "left join course on assignment.course_id = course.id " +
-                                "where student_id=\'"+student_id+"\'"
+                                "left join selection on selection.course_id = course.id " +
+                                "where selection.student_id=\'"+student_id+"\'  group by assignment.id"
                 );
         List<Object[]> personalResult = query1.list();
         List<Map<String, Object>> targetList = new ArrayList<>();
@@ -123,17 +127,19 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
             tmp.put("is_submitted", line[7]!=null?"true":"false");
+            tmp.put("assignment_id", line[8]);
             targetList.add(tmp);
         }
 
         Query query2=sessionFactory.getCurrentSession()
                 .createSQLQuery(
-                        "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted " +
+                        "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted, assignment.id " +
                                 "from assignment " +
                                 "left join teamassignmentanswer on assignment.id=teamassignmentanswer.assignment_id " +
                                 "left join course on assignment.course_id = course.id " +
                                 "left join teaming on teaming.team_id=teamassignmentanswer.team_id "+
-                                "where student_id=\'"+student_id+"\'"
+                                "left join selection on selection.course_id = course.id " +
+                                "where selection.student_id=\'"+student_id+"\'  group by assignment.id"
                 );
         List<Object[]> teamResult = query2.list();
         List<Map<String, Object>> targetList1 = new ArrayList<>();
@@ -148,6 +154,7 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
             tmp.put("is_submitted", line[7]!=null?"true":"false");
+            tmp.put("assignment_id", line[8]);
             targetList1.add(tmp);
         }
         targetList.addAll(targetList1);

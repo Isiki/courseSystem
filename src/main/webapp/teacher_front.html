@@ -42,6 +42,8 @@
 <div class="clearfix"></div>
 
 
+
+
 <!-- CONTENT START -->
 <div class="page-container">
 
@@ -86,7 +88,7 @@
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="icon-social-dribbble font-dark hide"></i>
-                            <span class="caption-subject font-dark bold uppercase">课程列表</span>
+                            <span class="caption-subject font-dark bold uppercase">教师列表</span>
                         </div>
                         <div class="actions">
                             <!-- BEGIN SEARCH BAR -->
@@ -100,23 +102,15 @@
                             <div class="fixed-table-toolbar"></div>
                             <div class="fixed-table-body">
                                 <div class="fixed-table-loading" style="top: 41px; display: none;">Loading, please wait...</div>
-                                    <table id="course_table" class="table table-striped table-bordered" style="margin-top: 0px;">
+                                    <table id="teacher_table" class="table table-striped table-bordered" style="margin-top: 0px;">
                                         <thead>
                                         <tr>
                                             <th style="" data-field="id" tabindex="0">
-                                                <div class="th-inner ">课程ID</div>
-                                                <div class="fht-cell"></div>
-                                            </th>
-                                            <th style="" data-field="course_name" tabindex="0">
-                                                <div class="th-inner ">课程名称</div>
+                                                <div class="th-inner ">学号</div>
                                                 <div class="fht-cell"></div>
                                             </th>
                                             <th style="" data-field="teacher_name" tabindex="0">
-                                                <div class="th-inner ">授课教师</div>
-                                                <div class="fht-cell"></div>
-                                            </th>
-                                            <th style="" data-field="allow_team" tabindex="0">
-                                                <div class="th-inner">组队要求</div>
+                                                <div class="th-inner ">姓名</div>
                                                 <div class="fht-cell"></div>
                                             </th>
                                             <th style="" data-field="" tabindex="0">
@@ -125,14 +119,12 @@
                                             </th>
                                         </tr>
                                         </thead>
-                                        <tbody id="course_show_case">
-                                        <tr th:unless="${courses.isEmpty()}" th:each="cs:${courses}">
-                                                <td th:text="${cs.id}"></td>
-                                                <td th:text="${cs.courseName}"></td>
-                                                <td>TEACHER NAME</td>
-                                                <td>ALLOW TEAM</td>
+                                        <tbody id="teacher_show_case">
+                                        <tr th:each="tc:${teachers}">
+                                                <td th:text="${tc.id}"></td>
+                                                <td th:text="${tc.realName}"></td>
                                                 <td>
-                                                    <a th:href="@{course_detail.do(course_id=${cs.id})}" class="glyphicon glyphicon-edit"></a>
+                                                    <a th:href="@{teacher_detail.do(teacher_id=${tc.id})}" class="glyphicon glyphicon-edit"></a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -166,7 +158,7 @@
 <script th:src="@{/resources/DataTables/datatables.js}"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#course_table").dataTable();
+        $("#teacher_table").dataTable();
     });
 </script>
 

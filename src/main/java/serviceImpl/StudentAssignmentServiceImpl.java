@@ -27,24 +27,28 @@ public class StudentAssignmentServiceImpl implements StudentAssignmentService{
 
     @Override
     public List<Map<String, Object>> getAllAssignmentsWithSubmissionStatusMP(String course_id, String student_id) {
-        List<Map<String,Object>> list=assignmentDao.allAssignmentsWithSubmissionStatusMP(course_id,student_id);
+        List<Map<String, Object>> list = assignmentDao.allAssignmentsWithSubmissionStatusMP(course_id, student_id);
         return list;
     }
 
     @Override
     public PersonalAssignmentAnswer getMySubmission(String assignment_id, String student_id) {
-        PersonalAssignmentAnswer paa=personalAssignmentAnswerDao.getPersonalAnswerByStudentId(assignment_id,student_id);
-        return paa;
+        List<PersonalAssignmentAnswer> paas = personalAssignmentAnswerDao.getPersonalAnswersByStudentId(assignment_id, student_id);
+        if(paas.isEmpty()) return null;
+
+        return paas.get(0);
     }
 
     @Override
     public TeamAssignmentAnswer getTeamSubmission(String assignment_id, String student_id) {
-        TeamAssignmentAnswer taa=teamAssignmentAnswerDao.getTeamAnswerByStudentId(assignment_id,student_id);
-        return taa;
+        List<TeamAssignmentAnswer> taas = teamAssignmentAnswerDao.getTeamAnswersByStudentId(assignment_id, student_id);
+        if(taas.isEmpty())
+            return null;
+        return taas.get(0);
     }
 
-    public List<Map<String,Object>>    getAssignmentsWithCourseAndSubmission(String student_id){
-        List<Map<String,Object>> list=assignmentDao.allAssimentsWithCourseAndSubmission(student_id);
+    public List<Map<String, Object>> getAssignmentsWithCourseAndSubmission(String student_id) {
+        List<Map<String, Object>> list = assignmentDao.allAssimentsWithCourseAndSubmission(student_id);
         return list;
     }
 }

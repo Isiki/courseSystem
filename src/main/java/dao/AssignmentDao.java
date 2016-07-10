@@ -14,5 +14,5 @@ public interface AssignmentDao extends Dao<Assignment,String>{
     int countByCourseId(String courseId);
     ArrayList<Assignment> getAllByCourseId(String id);
     public List<Map<String, Object>> allAssignmentsWithSubmissionStatusMP(String course_id, String student_id);
-    public List<Map<String,Object>> allAssimentsWithCourseAndSubmission(String student_id);
+    public List<Map<String, Object>> allAssimentsWithCourseAndSubmission(String student_id);
 }

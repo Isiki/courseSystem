@@ -1,6 +1,7 @@
 package serviceImpl;
 
 import dao.TeacherAssignmentDao;
+import model.Assignment;
 import model.PersonalAssignmentAnswer;
 import model.TeamAssignmentAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,10 @@ public class TeacherAssignmentServiceImpl implements TeacherAssignmentService {
     public List<TeamAssignmentAnswer> getAllTeamSubmissions(String assignment_id){
         List<TeamAssignmentAnswer> list=teacherAssignmentDao.getAllTeamSubmissions(assignment_id);
         return list;
+    }
+
+    @Override
+    public List<Assignment> getAllAssignmentsOfTeacher(String teacher_id) {
+        return teacherAssignmentDao.getAllAssignmentsOfTeacher(teacher_id);
     }
 }

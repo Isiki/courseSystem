@@ -78,7 +78,7 @@
 
             <!-- BEGIN PAGE HEADER-->
             <h3 class="page-title">
-                课程详情
+                学生详情
             </h3>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
@@ -88,26 +88,22 @@
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <a href="course.do">课程管理</a>
+                        <a href="student.do">学生管理</a>
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <a href="#">课程详情</a>
+                        <a href="#">学生信息</a>
                     </li>
                 </ul>
             </div>
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
             <!-- important 在这里开始正文的内容-->
-            <h2 th:text="${course.courseName}">
-                <h4>授课教师</h4>
-                <div th:unless="${teachersIn.isEmpty()}" th:each="t:${teachersIn}">
-                    <span class="col-xs-2"><a href="#" th:text="${t.realName}"></a></span>
+            <h2 th:text="${student.realName}">
+                <h4>所选课程</h4>
+                <div th:unless="${coursesIn.isEmpty()}" th:each="c:${coursesIn}">
+                    <span class="col-xs-2"><a href="#" th:text="${c.courseName}"></a></span>
                 </div>
-                <h4>学生名单</h4>
-                <span th:unless="${studentsIn.isEmpty()}" th:each="s:${studentsIn}">
-                    <span class="col-xs-2"><a href="#" th:text="${s.realName}"></a></span>
-                </span>
             </h2>
             <!-- END PAGE CONTENT-->
         </div>

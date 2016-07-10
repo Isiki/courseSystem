@@ -1,6 +1,9 @@
 package controller;
 
 import entity.BaseException;
+import model.Admin;
+import model.Student;
+import model.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,24 +92,34 @@ public class LoginController {
 
         if("admin".equals(userType))
         {
-            success = service.LoginAsAdmin(username, password)!=null;
+            Admin admin = service.LoginAsAdmin(username, password);
+            success = (admin != null);
             if(success)
             {
-                redirect = "a/workspace.do";
+                request.getSession().setAttribute("username", admin.getRealName());
+                redirect = "a/course.do";
             }
 
         }
 
         if("student".equals(userType))
         {
-            success = service.LoginAsStudent(username, password)!=null;
-            if(success) redirect = "s/workspace.do";
+            Student student = service.LoginAsStudent(username, password);
+            success = (student!=null);
+            if(success){
+                request.getSession().setAttribute("username", student.getRealName());
+                redirect = "s/workspace.do";
+            }
         }
 
         if("teacher".equals(userType))
         {
-            success = service.LoginAsTeacher(username, password)!=null;
-            if(success) redirect = "t/workspace.do";
+            Teacher teacher = service.LoginAsTeacher(username, password);
+            success = teacher!=null;
+            if(success){
+                request.getSession().setAttribute("username", teacher.getRealName());
+                redirect = "t/workspace.do";
+            }
         }
 
         if(success)
@@ -136,7 +149,6 @@ public class LoginController {
 
         return out;
     }
-
 
 }
 
