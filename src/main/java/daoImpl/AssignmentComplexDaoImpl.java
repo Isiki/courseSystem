@@ -32,7 +32,10 @@ public class AssignmentComplexDaoImpl implements AssignmentComplexDao{
         for(Object[] objects : t) {
             boolean isTeamWork = (boolean)objects[0];
             if(isTeamWork) {
-                HERE TO GO !
+                DirtySQL("select * from student " +
+                        "inner join teaming on student.id = teaming.student_id " +
+                        "inner join teamassignmentanswer on teamassignmentanswer.team_id = teaming.team_id" +
+                        "where teamassignmentanswer.assignment_id = '"+)
             }
         }
 
