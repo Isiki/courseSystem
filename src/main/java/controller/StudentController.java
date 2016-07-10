@@ -22,6 +22,7 @@ import java.util.List;
  * Created by Admin on 2016/7/5.
  */
 @Controller
+@RequestMapping(value = "s")
 public class StudentController {
     @Autowired
     private StudentService studentService;
@@ -35,8 +36,7 @@ public class StudentController {
     private TeamService teamService;
 
 
-
-    @RequestMapping(value = "student/course")
+    /*@RequestMapping(value = "student/course")
     public String ListCourse(Model model){
         Student student = studentService.getStudentById("12005001");
         ArrayList<Course> course = studentService.getAllCourseById(student.getId());
@@ -44,16 +44,16 @@ public class StudentController {
         cources.setList(course);
         model.addAttribute("courses",cources);
         return "course";
-    }
+    }*/
 
-    @RequestMapping(value = "/student/handin")
+    @RequestMapping(value = "handin")
     public String handin(String id,Model model){
         Assignment assignment = assignmentService.getAssignmentById(id);
         model.addAttribute("assignment",assignment);
         return "hand_in";
     }
 
-    @RequestMapping(value = "/student/savePAttach_action")
+    @RequestMapping(value = "savePAttach_action")
     public void savePAttach(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String aid = request.getParameter("id");
         String uid = (String) session.getAttribute("id");
@@ -71,7 +71,7 @@ public class StudentController {
         }
     }
 
-    @RequestMapping(value = "/student/saveTAttach_action")
+    @RequestMapping(value = "saveTAttach_action")
     public void saveTAttach(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String aid = request.getParameter("id");
         String tid = teamService.getTeamIdByStudent(new UserSession(session).getUserId());
@@ -84,8 +84,13 @@ public class StudentController {
     }
 
 
-    @RequestMapping(value = "/student/savePAnswer_action")
+    @RequestMapping(value = "savePAnswer_action")
     public void savePAnswer(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+
+        System.out.println(request.toString());
+
+
+
         PersonalAssignmentAnswer answer = new PersonalAssignmentAnswer();
         String aid = request.getParameter("id");
         String uid = new UserSession(session).getUserId();
@@ -100,7 +105,7 @@ public class StudentController {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/student/saveTAnswer_action")
+    @RequestMapping(value = "saveTAnswer_action")
     public void saveTAnswer(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         TeamAssignmentAnswer answer = new TeamAssignmentAnswer();
         String aid = request.getParameter("id");
@@ -117,8 +122,8 @@ public class StudentController {
     }
 
 
-    @RequestMapping(value = "/student/assignmentlist")
-    public String listAssignment(String id,Model model){
+    //@RequestMapping(value = "assignmentlist")
+    public String listAssignment(String id, Model model){
         ArrayList<Assignment> assignment = assignmentService.getAllByCourseId(id);
         PageResultSet<Assignment> assignments = new PageResultSet<>();
         assignments.setList(assignment);

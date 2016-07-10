@@ -18,7 +18,7 @@ public class StudentDaoImpl implements StudentDao{
     @Autowired
     private SessionFactory sessionFactory;
     public List<Student> getAllStudents(){
-        Query query = sessionFactory.getCurrentSession().createSQLQuery("select * FROM student").addEntity(Course.class);
+        Query query = sessionFactory.getCurrentSession().createSQLQuery("select * FROM student").addEntity(Student.class);
         return query.list();
     }
 

@@ -135,7 +135,7 @@
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-6">
                                             <button id="submit-btn" type="button" class="btn green" onclick="assign()">确认提交</button>
-                                            <button id="return-btn" type="button" class="btn red col-md-offset-1" onclick="javascript:window.history.back(-1);">返回前页</button>
+                                            <button id="return-btn" type="button" class="btn red col-md-offset-1" onclick="javascript:window.location.href='assignment.do';">返回前页</button>
                                         </div>
                                     </div>
                                     <input class="form-control invisible" readonly type="text" name="id" id="id" th:value="${assignment.id}" >
@@ -178,7 +178,7 @@
     var assign_id = $("#id").attr("value");
     $("#input-file").fileinput({
         language: "zh",
-        uploadUrl: "/student/savePAttach_action.do",
+        uploadUrl: "savePAttach_action.do",
         uploadExtraData: {id: assign_id},
         uploadAsync: true,
         maxFileCount: 1,

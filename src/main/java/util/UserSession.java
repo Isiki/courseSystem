@@ -17,22 +17,21 @@ public class UserSession {
         this.session = session;
     }
 
-
     public void setCurrentUser(Teacher user){
-        session.setAttribute("userId", user.getId());
-        session.setAttribute("userName",user.getRealName());
+        session.setAttribute("id", user.getId());
+        session.setAttribute("username",user.getRealName());
         session.setAttribute("userType","teacher");
     }
 
     public void setCurrentUser(Student user){
-        session.setAttribute("userId", user.getId());
-        session.setAttribute("userName",user.getRealName());
+        session.setAttribute("id", user.getId());
+        session.setAttribute("username",user.getRealName());
         session.setAttribute("userType","student");
     }
 
     public void setCurrentUser(Admin user){
-        session.setAttribute("userId", user.getId());
-        session.setAttribute("userName",user.getRealName());
+        session.setAttribute("id", user.getId());
+        session.setAttribute("username",user.getRealName());
         session.setAttribute("userType","admin");
     }
 
@@ -49,7 +48,7 @@ public class UserSession {
         }
     }
     public String getUserId(){
-        String userid=(String)session.getAttribute("userId");
+        String userid=(String)session.getAttribute("id");
         if(null==userid){
             System.out.println("userId not set!");
             return "";
@@ -58,7 +57,7 @@ public class UserSession {
     }
 
     public String getUserName(){
-        String username=(String)session.getAttribute("userName");
+        String username=(String)session.getAttribute("username");
         if(null==username){
             System.out.println("userId not set!");
             return "";

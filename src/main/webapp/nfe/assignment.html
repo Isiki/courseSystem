@@ -25,6 +25,7 @@
     <link href="../resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
     <link href="../resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
     <link href="../resources/css/course_custom.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/DataTables/datatables.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -109,7 +110,7 @@
                             <div class="fixed-table-toolbar"></div>
                             <div class="fixed-table-body">
                                 <div class="fixed-table-loading" style="top: 41px; display: none;">Loading, please wait...</div>
-                                <table data-toggle="table" data-url="" data-height="299" class="table table-hover" style="margin-top: -16px;">
+                                <table id="assignTable" data-toggle="table" data-url="" data-height="299" class="table table-hover" style="margin-top: -16px;">
                                     <thead>
                                     <tr>
                                         <th style="" data-field="" tabindex="0">
@@ -197,6 +198,11 @@
 <div th:replace="footer::footer"></div>
 <!-- 把公用的js包含进来,包含一些初始化的工作 -->
 <div th:include="common::js"></div>
+<script src="../resources/DataTables/datatables.js" />
+<script>
+    $("#assignTable").dataTable();
+</script>
+
 <!-- footer end -->
 
 

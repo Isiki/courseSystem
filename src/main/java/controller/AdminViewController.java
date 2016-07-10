@@ -30,7 +30,7 @@ public class AdminViewController {
     @RequestMapping(value = "course", method = RequestMethod.GET)
     public String showCourses(Model model){
         model.addAttribute("courses", courseService.getAllCourses());
-        return "course";
+        return "course_front";
     }
 
     @RequestMapping(value = "course_detail", method = RequestMethod.GET)
@@ -46,7 +46,7 @@ public class AdminViewController {
     @RequestMapping(value = "teacher", method = RequestMethod.GET)
     public String showTeachers(Model model){
         model.addAttribute("teachers", teacherService.getAllTeachers());
-        return "teacher";
+        return "teacher_front";
     }
 
     @RequestMapping(value = "teacher_detail", method = RequestMethod.GET)
@@ -62,7 +62,7 @@ public class AdminViewController {
     public String showStudents(Model model)
     {
         model.addAttribute("students", studentService.getAllStudents());
-        return "student";
+        return "student_front";
     }
 
     @RequestMapping(value = "student_detail", method = RequestMethod.GET)

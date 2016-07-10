@@ -85,6 +85,11 @@
             </div>
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
+
+
+
+
+
             <!-- important 在这里开始正文的内容-->
             <div class="row" >
                 <div class="col-md-12">
@@ -95,30 +100,28 @@
                         <div class="portlet-body">
                             <form th:action="@{/admin/tasklist.do}" method="post" id="form" role="form">
                                 <hr class="clearfix"/>
-                                <table class="table table-striped table-bordered table-hover table-full-width m-table"
-                                       id="sample_1">
+                                <table id="homework_table" class="table table-striped table-bordered" style="margin: 0 0 0 0;">
                                     <thead>
                                     <tr>
                                         <th>作业号</th>
                                         <th>是否为团队作业</th>
                                         <th>作业标题</th>
-                                        <th>作业描述</th>
                                         <th>开始时间</th>
                                         <th>结束时间</th>
+                                        <th>提交状态</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr th:each="homework:${assignments.list}">
-                                        <td th:text="${homework.idInCourse}" class="text-info"></td>
-                                        <td th:text="${homework.isTeamwork}==true?是:否"></td>
-                                        <td th:text="${homework.heading}"></td>
-                                        <td th:text="${homework.description}"></td>
-                                        <td th:text="${homework.startTime}"></td>
-                                        <td th:text="${homework.endTime}"></td>
+                                    <tbody id="homework_show_case">
+                                    <tr th:each="ass:${pAssignments}" th:with="aid=${ass['assignment_id']}">
+                                        <td th:text="${ass['assignment_id']}"></td>
+                                        <td th:text="${ass['is_teamwork']}=='1'?是:否"></td>
+                                        <td th:text="${ass['heading']}"></td>
+                                        <td th:text="${ass['start_time']}"></td>
+                                        <td th:text="${ass['end_time']}"></td>
+                                        <td th:text="${ass['is_submitted']=='true'?'已提交':'未提交'}"></td>
                                         <td>
-                                            <a class="btn blue btn-sm"  href="javascript:void(0)" th:onclick="|openUrl('${homework.id}')|"
-                                               role="button b">查看作业</a>
+                                            <a class="btn blue btn-sm" href="javascript:void(0)" th:onclick="|openUrl('${aid}')|" role="button b">查看作业</a>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -136,7 +139,22 @@
     <div th:replace="footer::footer"></div>
     <!-- 把公用的js包含进来,包含一些初始化的工作 -->
     <div th:include="common::js"></div>
+
+    <script src="/resources/DataTables/datatables.js"></script>
     <script type="application/javascript">
+        $(document).ready(function(){
+            $("#homework_table").dataTable({
+                "language": {
+                    "lengthMenu": "每页 _MENU_ 条记录",
+                    "zeroRecords": "没有找到记录",
+                    "search" : "搜索",
+                    "info": "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+                    "infoEmpty": "无记录",
+                    "infoFiltered": "(从 _MAX_ 条记录过滤)"
+                }
+            });
+        });
+
         function commitForm(page) {
             var url = $('#form').attr('action');
             url = url;

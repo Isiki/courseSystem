@@ -104,7 +104,7 @@ public class CourseDaoImpl implements CourseDao{
 
     public List<Teacher> getTeachersByCourseId(String id){
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("select teacher.id, teacher.real_name, teacher.password from course left join teaching on course.id=teaching.course_id left join teacher on teaching.teacher_id=teacher.id where course.id=\'"+id+"\'")
+                .createSQLQuery("select teacher.* from course left join teaching on course.id=teaching.course_id left join teacher on teaching.teacher_id=teacher.id where course.id=\'"+id+"\'")
                 .addEntity(Teacher.class);
         List<Teacher> tcs = new ArrayList<>();
         try{

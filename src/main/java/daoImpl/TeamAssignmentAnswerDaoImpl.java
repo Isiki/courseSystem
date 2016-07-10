@@ -55,16 +55,12 @@ public class TeamAssignmentAnswerDaoImpl extends DaoImpl<TeamAssignmentAnswer, T
     }
 
     public List<TeamAssignmentAnswer> getTeamAssignmentToBeSubmittedByCourseId(String courseId){
+        return null;
+    }
+    public List<TeamAssignmentAnswer> getTeamAnswersByStudentId(String assignment_id,String student_id){
         Query query=sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT team_id,assignment_id,is_submitted,submit_time,text,attachment_url FROM assignment inner JOIN team ON team.course_id=assignment.course_id LEFT JOIN teamassignmentanswer ON assignment.id = teamassignmentanswer.assignment_id AND team.id=teamassignmentanswer.team_id WHERE assignment_id is NULL AND assignment.is_teamwork=1 and start_time<now() and now()<end_time and assignment.course_id=\'"+courseId+"'\'")
+                .createSQLQuery("select teamassignmentanswer.* from teamassignmentanswer inner join teaming on teaming.team_id=teamassignmentanswer.team_id inner join assignment on teamassignmentanswer.assignment_id=assignment.id where assignment_id=\'"+assignment_id+"\'and student_id=\'"+student_id+"\'" )
                 .addEntity(TeamAssignmentAnswer.class);
         return query.list();
-
-    }
-    public TeamAssignmentAnswer getTeamAnswerByStudentId(String assignment_id,String student_id){
-        Query query=sessionFactory.getCurrentSession()
-                .createSQLQuery("select teamassignmentanswer.* from teamassignmentanswer inner join teaming on teaming.team_id=teamassignmentanswe.team_id inner join assignment on teamassignmentanswer.assignment_id=assignment.id where assignment_id=\'"+assignment_id+"\'and student_id=\'"+student_id+"\'" )
-                .addEntity(TeamAssignmentAnswer.class);
-        return (TeamAssignmentAnswer)query.list();
     }
 }
