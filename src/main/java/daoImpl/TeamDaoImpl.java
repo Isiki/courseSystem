@@ -1,6 +1,7 @@
 package daoImpl;
 
 import dao.TeamDao;
+import model.Student;
 import model.Teaming;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -19,7 +20,7 @@ import java.util.List;
 public class TeamDaoImpl implements TeamDao{
     @Autowired
     private SessionFactory sessionFactory;
-
+   /*
     public String createTeam(Team team) {
         Query query1=sessionFactory.getCurrentSession()
                 .createSQLQuery("SELECT * FROM Team WHERE id=\'"+team.getId()+"\' AND course_id=\'"+team.getCourseId()+"\'").addEntity(Team.class);
@@ -108,4 +109,77 @@ public class TeamDaoImpl implements TeamDao{
         }
         return "error";
     }
+    */
+   public Team getStudentTeamInCourse(String course_id,String student_id){
+       List<Team> tm = getStudentTeamsInCourse(course_id,student_id);
+       if(tm.isEmpty()) return null;
+       return tm.get(0);
+   }
+
+   public List<Team> getStudentTeamsInCourse(String course_id,String student_id){
+       Query query = sessionFactory.getCurrentSession()
+               .createSQLQuery("SELECT id,course_id,teamleader_id,team_name,team_description,is_full FROM team " +
+                       "INNER JOIN teaming ON team.id = teaming.team_id WHERE course_id = \'"
+                       +course_id+"\'AND student_id = \'"+student_id+"\'")
+               .addEntity(Team.class);
+       List<Team> tm = query.list();
+       try {
+           tm = query.list();
+       } catch (HibernateException e){
+           e.printStackTrace();
+           return new ArrayList<Team>();
+       }
+       return tm;
+
+   }
+
+    public List<Student> getStudentsInTeam(String team_id){
+        Query query = sessionFactory.getCurrentSession()
+                .createSQLQuery("SELECT student.* FROM student INNER JOIN teaming " +
+                        "ON student.id = teaming.student_id WHERE team_id = \'"+team_id+"\'")
+                .addEntity(Student.class);
+        List<Student> st = query.list();
+        try {
+            st = query.list();
+        } catch (HibernateException e){
+            e.printStackTrace();
+            return new ArrayList<Student>();
+        }
+        return st;
+    }
+
+    public List<Team> getAllTeamsUnderCourse(String course_id){
+        Query query = sessionFactory.getCurrentSession()
+                .createSQLQuery("SELECT team.* FROM team " +
+                        "INNER JOIN course ON team.course_id = course.id WHERE course_id = \'"+course_id+"\'")
+                .addEntity(Team.class);
+        List<Team> tm = query.list();
+        try {
+            tm = query.list();
+        } catch (HibernateException e){
+            e.printStackTrace();
+            return new ArrayList<Team>();
+        }
+        return tm;
+    }
+
+    public boolean canStudentCreateTeamInCourse(String course_id,String student_id){
+        Query query = sessionFactory.getCurrentSession()
+                .createSQLQuery("SELECT * FROM teaming INNER JOIN team ON teaming.team_id = team.id " +
+                        "INNER JOIN course ON team.course_id = course.id " +
+                        "WHERE course_id = \'"+course_id +"\'AND student_id = \'"+student_id+"\'");
+        if(query.list().isEmpty())
+            return true;
+        return false;
+    }
+
+    public boolean createTeamInCourse(Team team, String course_id){
+        sessionFactory.getCurrentSession().save(team);
+        Teaming teaming = new Teaming();
+        teaming.setTeamId(team.getId());
+        teaming.setStudentId(team.getTeamleaderId());
+        sessionFactory.getCurrentSession().save(teaming);
+        return true;
+    }
+
 }

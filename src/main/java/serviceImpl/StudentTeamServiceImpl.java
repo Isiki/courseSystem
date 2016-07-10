@@ -1,7 +1,9 @@
 package serviceImpl;
 
+import dao.TeamDao;
 import model.Student;
 import model.Team;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.StudentTeamService;
 
@@ -12,28 +14,20 @@ import java.util.List;
  */
 @Service
 public class StudentTeamServiceImpl implements StudentTeamService {
-    @Override
-    public List<Student> getStudentsInTeam(String team_id) {
-        return null;
-    }
+    @Autowired
+    private TeamDao teamDao;
 
-    @Override
-    public Team getStudentTeamInCourse(String course_id, String student_id) {
-        return null;
-    }
 
-    @Override
-    public List<Team> getAllTeamsUnderCourse(String course_id) {
-        return null;
-    }
 
     @Override
     public boolean canStudentCreateTeamInCourse(String course_id, String student_id) {
-        return false;
+        boolean bool=teamDao.canStudentCreateTeamInCourse(course_id,student_id);
+        return bool;
     }
 
     @Override
     public boolean createTeamInCourse(Team team, String course_id) {
-        return false;
+        boolean bool = teamDao.createTeamInCourse(team, course_id);
+        return bool;
     }
 }

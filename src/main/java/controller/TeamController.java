@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Controller
 public class TeamController {
-    @Autowired
+    /*@Autowired
     private TeamService teamService;
 
    @RequestMapping(value = "createTeam")
@@ -95,6 +95,6 @@ public class TeamController {
         model.addAttribute("result",result);
         return "join_team_result";
     }
-
+*/
 
 }
