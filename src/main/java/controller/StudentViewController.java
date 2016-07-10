@@ -9,9 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import service.FileService;
-import service.StudentAssignmentService;
-import service.StudentTeamService;
+import service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +38,15 @@ public class StudentViewController {
     @Autowired
     private StudentTeamService stService;
 
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private TeamService teamService;
+
+    @Autowired
+    private CourseService courseService;
+
     /* 学生工作空间
      * 返回工作空间页面，并加载课程列表栏和作业总表
      *
@@ -48,9 +55,12 @@ public class StudentViewController {
      * assignments:     学生各个课程的作业总表
      */
     @RequestMapping(value = "workspace", method = RequestMethod.GET)
-    public String showWorkspace(Model model) {
-        List<Course> courses = null;
-        List<Assignment> assignments = null;
+    public String showWorkspace(HttpServletRequest request, Model model) {
+        String student_id = getStudentIdInSession(request.getSession());
+        List<Course> courses =
+                studentService.getAllCourseById(student_id);
+        List<Assignment> assignments =
+                saService.getAssignmentsWithCourseAndSubmissions(student_id);
 
         model.addAttribute("courses", courses);
         model.addAttribute("assignments", assignments);
@@ -181,16 +191,16 @@ public class StudentViewController {
         String course_id = getCourseIdInSession(request.getSession());
         String student_id = getStudentIdInSession(request.getSession());
 
-        Team team = stService.getStudentTeamInCourse(course_id, student_id);
+        Team team = teamService.getStudentTeamInCourse(course_id, student_id);
         boolean hasTeam = (null!=team);
         model.addAttribute("hasTeam", (hasTeam?"true":"false"));
 
         if(hasTeam) {
-            List<Student> studentsIn = stService.getStudentsInTeam(team.getId());
+            List<Student> studentsIn = teamService.getStudentsInTeam(team.getId());
             model.addAttribute("team", team);
             model.addAttribute("studentsIn", studentsIn);
         } else {
-            List<Team> teams = stService.getAllTeamsUnderCourse(course_id);
+            List<Team> teams = teamService.getAllTeamsUnderCourse(course_id);
             model.addAttribute("teams", teams);
         }
 
