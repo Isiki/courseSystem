@@ -28,7 +28,7 @@ public class AssignmentAnswerController {
     private static final String answerRootPath="/uploadFiles/assignment";
 
 
-    @RequestMapping(value = "searchpersonalassignmentanswer", method = RequestMethod.POST)
+    /*@RequestMapping(value = "searchpersonalassignmentanswer", method = RequestMethod.POST)
     public String searchPersonalAssignmentAnswer(@RequestParam("method") String meth, @RequestParam("value") String val, Model model) {
         if (meth.equals("ById")) {
             List<PersonalAssignmentAnswer> personalAssignmentAnswers = assignmentAnswerService.getPersonalAnswerByStudentId(val);
@@ -38,7 +38,7 @@ public class AssignmentAnswerController {
             model.addAttribute("personalassignmentanswers", personalAssignmentAnswers);
         }
         return "searchresult";
-    }
+    }*/
 
     @RequestMapping(value = "searchteamassignmentanswer", method = RequestMethod.POST)
     public String searchTeamAssignmentAnswer(@RequestParam("method") String meth, @RequestParam("value") String val, Model model) {
@@ -122,7 +122,6 @@ public class AssignmentAnswerController {
         }
 
     }
-
 
 
 

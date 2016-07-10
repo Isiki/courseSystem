@@ -4,6 +4,7 @@ import jxl.write.DateTime;
 import model.*;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ import service.StudentAssignmentService;
 import service.StudentTeamService;
 import service.TeamService;
 import util.UserSession;
-
+import service.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,10 +39,22 @@ import java.util.Map;
 public class StudentViewController {
 
     @Autowired
+    private AssignmentService assignmentService;
+
+    @Autowired
     private StudentAssignmentService saService;
 
     @Autowired
     private StudentTeamService stService;
+
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private TeamService teamService;
+
+    @Autowired
+    private CourseService courseService;
 
     /* 学生工作空间
      * 返回工作空间页面，并加载课程列表栏和作业总表
@@ -51,9 +64,12 @@ public class StudentViewController {
      * assignments:     学生各个课程的作业总表
      */
     @RequestMapping(value = "workspace", method = RequestMethod.GET)
-    public String showWorkspace(Model model) {
-        List<Course> courses = null;
-        List<Assignment> assignments = null;
+    public String showWorkspace(HttpServletRequest request, Model model) {
+        String student_id = getStudentIdInSession(request.getSession());
+        List<Course> courses =
+                studentService.getAllCourseById(student_id);
+        List<Map<String, Object>> assignments =
+                saService.getAssignmentsWithCourseAndSubmission(student_id);
 
         model.addAttribute("courses", courses);
         model.addAttribute("assignments", assignments);
@@ -65,10 +81,17 @@ public class StudentViewController {
      * 将目前所选课程写入session，并返回模板
      */
     @RequestMapping(value = "course_navigate", method = RequestMethod.GET)
-    public String showCourseEntry(HttpServletRequest request, Model model) {
+    public void showCourseEntry(HttpServletRequest request, HttpServletResponse response) {
         String course_id = request.getParameter("course_id");
         request.getSession().setAttribute("course_id", course_id);
-        return "course";
+
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/text;charset=utf-8");
+        try {
+            response.getWriter().append("resource.do");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -119,7 +142,7 @@ public class StudentViewController {
         String assignment_id = request.getParameter("assignment_id");
         String student_id = getStudentIdInSession(request.getSession());
 
-        int atype = saService.getAssignmentTeamType(assignment_id);
+        int atype = assignmentService.getAssignmentTeamType(assignment_id);
 
         if(AssignmentTeamType.PERSONAL == atype) {
             PersonalAssignmentAnswer paa = saService.getMySubmission(assignment_id, student_id);
@@ -184,16 +207,16 @@ public class StudentViewController {
         String course_id = getCourseIdInSession(request.getSession());
         String student_id = getStudentIdInSession(request.getSession());
 
-        Team team = stService.getStudentTeamInCourse(course_id, student_id);
+        Team team = teamService.getStudentTeamInCourse(course_id, student_id);
         boolean hasTeam = (null!=team);
         model.addAttribute("hasTeam", (hasTeam?"true":"false"));
 
         if(hasTeam) {
-            List<Student> studentsIn = stService.getStudentsInTeam(team.getId());
+            List<Student> studentsIn = teamService.getStudentsInTeam(team.getId());
             model.addAttribute("team", team);
             model.addAttribute("studentsIn", studentsIn);
         } else {
-            List<Team> teams = stService.getAllTeamsUnderCourse(course_id);
+            List<Team> teams = teamService.getAllTeamsUnderCourse(course_id);
             model.addAttribute("teams", teams);
         }
 

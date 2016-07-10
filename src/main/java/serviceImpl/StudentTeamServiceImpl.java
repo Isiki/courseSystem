@@ -44,12 +44,14 @@ public class StudentTeamServiceImpl implements StudentTeamService {
 
     @Override
     public boolean canStudentCreateTeamInCourse(String course_id, String student_id) {
-        return false;
+        boolean bool=teamDao.canStudentCreateTeamInCourse(course_id,student_id);
+        return bool;
     }
 
     @Override
     public boolean createTeamInCourse(Team team, String course_id) {
-        return false;
+        boolean bool = teamDao.createTeamInCourse(team, course_id);
+        return bool;
     }
 
     @Override

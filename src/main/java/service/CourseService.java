@@ -22,4 +22,6 @@ public interface CourseService {
     List<Teacher> getTeachers(String id);
 
     List<Student> getStudents(String id);
+    Course getCourseById(String course_id);
+
 }

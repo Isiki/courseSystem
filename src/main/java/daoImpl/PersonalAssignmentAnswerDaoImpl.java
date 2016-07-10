@@ -20,14 +20,14 @@ public class PersonalAssignmentAnswerDaoImpl extends DaoImpl<PersonalAssignmentA
     private SessionFactory sessionFactory;
 
 
-    public List<PersonalAssignmentAnswer> getPersonalAnswerByStudentId(String id){
+    public PersonalAssignmentAnswer getPersonalAnswerByStudentId(String assgnment_id, String id){
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT * FROM personalassignmentanswer WHERE student_id = \'"+id+"\'")
+                .createSQLQuery("SELECT * FROM personalassignmentanswer WHERE student_id = \'"+id+"\'AND assignment_id=\'"+assgnment_id+"\'")
                 .addEntity(PersonalAssignmentAnswer.class);
-        return query.list();
+        return (PersonalAssignmentAnswer)query.list();
     }
 
-    public List<PersonalAssignmentAnswer> getPersonalAnswerByCourseId(String id){
+    public List<PersonalAssignmentAnswer> getPersonalAnswersByCourseId(String id){
         Query query=sessionFactory.getCurrentSession()
                 .createSQLQuery("SELECT student_id,assignment_id,is_submitted,submit_time,text,attachment_url FROM personalassignmentanswer INNER JOIN  assignment ON personalassignmentanswer.assignment_id = assignment.id WHERE assignment.course_id=\'"+id+"\'")
                 .addEntity(PersonalAssignmentAnswer.class);
@@ -35,14 +35,14 @@ public class PersonalAssignmentAnswerDaoImpl extends DaoImpl<PersonalAssignmentA
 
     }
 
-    public List<PersonalAssignmentAnswer> getPersonalAssignmentToBeSubmittedByStudent(String studentId){
+    public List<PersonalAssignmentAnswer> getPersonalAssignmentsToBeSubmittedByStudent(String studentId){
         Query query=sessionFactory.getCurrentSession()
                 .createSQLQuery("SELECT student_id,assignment_id,is_submitted,submit_time,text,attachment_url FROM assignment INNER JOIN selection ON  assignment.course_id=selection.course_id LEFT JOIN personalassignmentanswer ON personalassignmentanswer.student_id=selection.student_id AND personalassignmentanswer.assignment_id=assignment.id WHERE is_teamwork=0 AND assignment_id is NULL AND student_id=\'"+studentId+"\'AND start_time<now() AND now()<assignment.end_time")
                 .addEntity(PersonalAssignmentAnswer.class);
         return query.list();
     }
 
-    public List<PersonalAssignmentAnswer> getPersonalAssignmentToBeSubmittedByCourseId(String courseId){
+    public List<PersonalAssignmentAnswer> getPersonalAssignmentsToBeSubmittedByCourseId(String courseId){
         Query query=sessionFactory.getCurrentSession()
                 .createSQLQuery("SELECT student_id,assignment_id,is_submitted,submit_time,text,attachment_url FROM assignment INNER JOIN selection ON  assignment.course_id=selection.course_id LEFT JOIN personalassignmentanswer ON personalassignmentanswer.student_id=selection.student_id AND personalassignmentanswer.assignment_id=assignment.id WHERE is_teamwork=0 AND assignment_id is NULL AND assignment.course_id=\'"+courseId+"\'AND start_time<now() AND now()<assignment.end_time")
                 .addEntity(PersonalAssignmentAnswer.class);

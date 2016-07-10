@@ -21,10 +21,11 @@ import java.util.List;
 public class TeamAssignmentAnswerDaoImpl extends DaoImpl<TeamAssignmentAnswer, TeamAssignmentAnswerPK> implements TeamAssignmentAnswerDao{
     @Autowired
     private SessionFactory sessionFactory;
+
     public List<TeamAssignmentAnswer> getAnswerByAssignmentId(String assignmentId) {
         if (assignmentId!=null)
         {
-            String hql="from PersonalAssignmentAnswer n where n.assignmentId=?";
+            String hql="from TeamAssignmentAnswer n where n.assignmentId=?";
             List<Object> params = new ArrayList<Object>(0);
             params.add(assignmentId);
             return super.hqlFind(hql,params.toArray(),false);
@@ -59,5 +60,11 @@ public class TeamAssignmentAnswerDaoImpl extends DaoImpl<TeamAssignmentAnswer, T
                 .addEntity(TeamAssignmentAnswer.class);
         return query.list();
 
+    }
+    public TeamAssignmentAnswer getTeamAnswerByStudentId(String assignment_id,String student_id){
+        Query query=sessionFactory.getCurrentSession()
+                .createSQLQuery("select teamassignmentanswer.* from teamassignmentanswer inner join teaming on teaming.team_id=teamassignmentanswe.team_id inner join assignment on teamassignmentanswer.assignment_id=assignment.id where assignment_id=\'"+assignment_id+"\'and student_id=\'"+student_id+"\'" )
+                .addEntity(TeamAssignmentAnswer.class);
+        return (TeamAssignmentAnswer)query.list();
     }
 }
