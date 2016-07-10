@@ -59,7 +59,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         }
     }
     @Override
-    public int consultAssignmentNumber(String coursId) {
+    public int consultAssignmentMaxId(String coursId) {
         return assignmentDao.countByCourseId(coursId);
     }
 

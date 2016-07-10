@@ -9,6 +9,7 @@ import java.util.List;
  * Created by 陌上花开 on 2016/7/5.
  */
 public interface TeamService {
+
     /*
     public String createTeam( String course_id, String student_id,String team_name,String description);
 
@@ -24,5 +25,6 @@ public interface TeamService {
     public List<Student> getStudentsInTeam(String team_id);
     public Team getStudentTeamInCourse(String course_id, String student_id);
     public List<Team> getAllTeamsUnderCourse(String course_id);
+
 
 }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import service.AssignmentAnswerService;
 import service.AssignmentService;
 import service.FileService;
 import service.StudentService;
@@ -19,6 +20,7 @@ import util.UserSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,10 @@ public class StudentController {
     private AssignmentService assignmentService;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private AssignmentAnswerService answerService;
+
+
 
     @RequestMapping(value = "student/course")
     public String ListCourse(Model model){
@@ -51,25 +57,39 @@ public class StudentController {
         return "hand_in";
     }
 
-    @RequestMapping(value = "/student/handin_action")
-    public void save(HttpServletRequest request, HttpServletResponse response, HttpSession session){
-        PersonalAssignmentAnswer answer = new PersonalAssignmentAnswer();
-        answer.setAssignmentId(request.getParameter("number"));
-        UserSession uSession = new UserSession(session);
-        answer.setStudentId(uSession.getUserId());
-        answer.setText(request.getParameter("text"));
-        String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment");
+    @RequestMapping(value = "/student/savePAttach_action")
+    public void savePAttach(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        String aid = request.getParameter("id");
+        String uid = (String) session.getAttribute("id");
+        String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment/"+aid+"/"+uid);
+        File f = new File(resURL);
+        if(!f.exists())
+            f.mkdirs();
+        else for (File df:f.listFiles()) {
+            df.delete();
+        }
         try {
             fileService.saveFile(request, resURL);
         }catch (Exception e){
-
+            e.printStackTrace();
         }
-
-
-
     }
 
-
+    @RequestMapping(value = "/student/savePAnswer_action")
+    public void savePAnswer(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        PersonalAssignmentAnswer answer = new PersonalAssignmentAnswer();
+        String aid = request.getParameter("id");
+        String uid = new UserSession(session).getUserId();
+        String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment/"+aid+"/"+uid);
+        answer.setAssignmentId(aid);
+        answer.setStudentId(uid);
+        answer.setText(request.getParameter("text"));
+        answer.setAttachmentUrl(resURL);
+        if (answerService.insertPAnswer(answer))
+            response.setStatus(HttpServletResponse.SC_OK);
+        else
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    }
 
 
 

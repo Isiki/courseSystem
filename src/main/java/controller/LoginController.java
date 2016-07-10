@@ -11,6 +11,7 @@ import service.LoginService;
 import service.StudentService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -26,7 +27,6 @@ public class LoginController {
     @Autowired
     private StudentService studentService;
 
-    // TODO: UserSession as parameter
     @RequestMapping(value = "login")
     public String userLogin(@ModelAttribute("user") String user, @ModelAttribute("errorInfo") String errorInfo,
                             @ModelAttribute("isAdmin") String isAdmin, Model model) throws BaseException {
@@ -59,7 +59,7 @@ public class LoginController {
 
 
     @RequestMapping(value = "login_action", method = RequestMethod.POST)
-    public String loginAction(HttpServletRequest request,
+    public String loginAction(HttpServletRequest request,HttpSession session,
                               Model model)
     {
         boolean success = false;
@@ -94,6 +94,7 @@ public class LoginController {
             {
                 redirect = "a/workspace.do";
             }
+
         }
 
         if("student".equals(userType))
@@ -111,8 +112,7 @@ public class LoginController {
         if(success)
         {
             // TODO: UserSession as parameter
-            //UserSession us = new UserSession();
-
+            // UserSession us = new UserSession(session);
             request.getSession().setAttribute("id", username);
             request.getSession().setAttribute("userType", userType);
         }
