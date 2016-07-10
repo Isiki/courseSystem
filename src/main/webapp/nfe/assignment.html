@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Metronic | Page Layouts - Blank Page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <!-- 开发智能提示需要，真正发布的时候需要删除-->
+    <link href="../resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="../resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="../resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/course_custom.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+
+
+<body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
+
+<!--常用的公用的css-->
+<div th:include="common::css"></div>
+<!-- header -->
+<div th:replace="header :: header"></div>
+<!-- header结束 -->
+
+<div class="clearfix"></div>
+
+
+
+
+<!-- CONTENT START -->
+<div class="page-container">
+
+    <!-- 侧边导航栏 -->
+    <div th:replace="sidebar::sidebar"></div>
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+            <!-- BEGIN PAGE HEADER-->
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <!-- important 在这里开始正文的内容-->
+
+            <!-- BEGIN SAMPLE TABLE -->
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-social-dribbble font-dark hide"></i>
+                            <span class="caption-subject font-dark bold uppercase">作业列表</span>
+                        </div>
+                        <div class="actions">
+                            <!-- BEGIN SEARCH BAR -->
+                            <div class="input-group">
+                                <form action="#" method="GET">
+                                    <select id="whichcourse" name="coursename">
+                                        <option value="10000">数据结构</option>
+                                        <option value="10001">软件工程导论</option>
+                                    </select>
+                                    <button id="search_btn" type="submit" class="submit-transparent"><p class="glyphicon glyphicon-search"></p></button>
+                                    <a href="#">Show all</a>
+                                </form>
+                            </div>
+                            <!-- END SEARCH BAR -->
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="bootstrap-table">
+                            <div class="fixed-table-toolbar"></div>
+                            <div class="fixed-table-body">
+                                <div class="fixed-table-loading" style="top: 41px; display: none;">Loading, please wait...</div>
+                                <table data-toggle="table" data-url="" data-height="299" class="table table-hover" style="margin-top: -16px;">
+                                    <thead>
+                                    <tr>
+                                        <th style="" data-field="" tabindex="0">
+                                            <div class="th-inner ">作业名称</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="" tabindex="0">
+                                            <div class="th-inner ">所属课程</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="" tabindex="0">
+                                            <div class="th-inner ">提交时间</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="" tabindex="0">
+                                            <div class="th-inner">结束时间</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="" tabindex="0">
+                                            <div class="th-inner">总分</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <!-- if TEACHER -->
+                                        <th style="" data-field="" tabindex="0">
+                                            <div class="th-inner">
+                                                <span class="text-muted small">if teacher</span>
+                                            </div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <!-- end if -->
+                                        <!-- if STUDENT -->
+                                        <th>
+                                            <div class="th-inner">
+                                                <span class="text-muted small">是否提交(if stu)</span>
+                                            </div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <!-- end if -->
+                                    </tr>
+                                    </thead>
+                                    <tbody id="course_show_case">
+                                    <tr>
+                                        <td>
+                                            <a href="#">用户故事-第二次迭代</a>
+                                        </td>
+                                        <td>数据结构</td>
+                                        <td>2016-07-08 16:00</td>
+                                        <td>2016-07-08 20:00</td>
+                                        <td>5.0</td>
+                                        <!-- if TEACHER -->
+                                        <td>
+                                            <a href="#" class="glyphicon glyphicon-edit"></a>
+                                            <a href="#" class="glyphicon glyphicon-comment"></a>
+                                        </td>
+                                        <!-- end if -->
+                                        <!-- if STUDENT -->
+                                        <td>
+                                            <span class="text-success">已提交</span>
+                                        </td>
+                                        <!-- end if -->
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END SAMPLE TABLE -->
+
+        </div>
+        <!-- END CONTENT -->
+
+    </div>
+    <!-- CONTENT END -->
+
+
+
+</div>
+<!-- END CONTENT BODY -->
+
+
+
+<!-- footer-->
+<div th:replace="footer::footer"></div>
+<!-- 把公用的js包含进来,包含一些初始化的工作 -->
+<div th:include="common::js"></div>
+<!-- footer end -->
+
+
+
+</div>
+
+
+
+</body>
+
+
+
+</html>

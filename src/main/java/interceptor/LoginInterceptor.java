@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Constants;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import util.UserSession;
 //import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +24,6 @@ public class LoginInterceptor implements  HandlerInterceptor {
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         boolean flag=false;
-        UserSession userSession=new UserSession(httpServletRequest.getSession());
         String url=httpServletRequest.getRequestURL().toString();
         for(String s:excludeUrls){
             if(url.contains(s)){
@@ -34,12 +32,13 @@ public class LoginInterceptor implements  HandlerInterceptor {
         }
 
         if(!flag) {
+            //String user = (String)httpServletRequest.getSession().getAttribute("id");
             // TODO 为了方便开发和调试，直接添加管理员
             //User user = (User) httpServletRequest.getSession().getAttribute(Constants.USER_INFO);
 //            User user=userService.getUserById(4);
 //            httpServletRequest.getSession().setAttribute(Constants.USER_INFO,user);
-            //String user = "isiki" ;  //user not defined, delete later
-            if(userSession.getUserId()!=null) {
+            String user = "isiki" ;  //user not defined, delete later
+            if(user!=null) {
                 flag = true;
             }else{
                 httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/login.do");
