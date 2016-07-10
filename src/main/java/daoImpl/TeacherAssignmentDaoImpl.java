@@ -6,12 +6,14 @@ import model.TeamAssignmentAnswer;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by ElaineC on 2016/7/10.
  */
+@Repository("TeacherAssignmentDao")
 public class TeacherAssignmentDaoImpl implements TeacherAssignmentDao{
     @Autowired
     private SessionFactory sessionFactory;
