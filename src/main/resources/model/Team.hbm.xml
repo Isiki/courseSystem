@@ -7,7 +7,7 @@
     <class name="model.Team" table="team" schema="coursecenter">
         <id name="id">
             <column name="id" sql-type="varchar(10)" length="10"/>
-            <generator class="guid" />
+            <generator class="uuid" />
         </id>
         <property name="courseId">
             <column name="course_id" sql-type="varchar(10)" length="10"/>

@@ -1,6 +1,7 @@
 package util;
 
 import model.Admin;
+import model.Course;
 import model.Student;
 import model.Teacher;
 
@@ -35,6 +36,18 @@ public class UserSession {
         session.setAttribute("userType","admin");
     }
 
+    public void setCurrentCourse(Course course){
+        session.setAttribute("course",course);
+    }
+
+    public Course getCourse(){
+        Course course=(Course)session.getAttribute("course");
+        if(null!=course){
+            return course;
+        }else{
+            return null;
+        }
+    }
     public String getUserId(){
         String userid=(String)session.getAttribute("userId");
         if(null==userid){

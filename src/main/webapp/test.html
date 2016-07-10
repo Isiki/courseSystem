@@ -15,10 +15,13 @@
 
 
 
-    <div><span type="text" th:text="${teacher.description}" /></div>
-
-
-
+    <button onclick="openUrl('123/s1.txt')">下载</button>
+    <div th:include="common::js"></div>
+    <script>
+        function openUrl(url){
+            openUrlUtil('POST','downloadFile.do',{url:url},'_self');
+        }
+    </script>
 </div>
 </body>
 </html>

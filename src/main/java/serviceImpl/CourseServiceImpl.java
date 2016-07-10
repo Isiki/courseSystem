@@ -54,4 +54,9 @@ public class CourseServiceImpl implements CourseService {
     {
         return courseDao.getStudentsByCourseId(id);
     }
+
+    public Course getCourseById(String course_id){
+        Course course = courseDao.getCourseById(course_id);
+        return  course;
+    }
 }

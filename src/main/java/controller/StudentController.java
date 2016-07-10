@@ -1,18 +1,20 @@
 package controller;
 
-import model.Assignment;
-import model.Course;
-import model.Student;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import service.AssignmentService;
-import service.StudentService;
+import service.*;
 import util.PageResultSet;
+import util.UserSession;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,14 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private AssignmentService assignmentService;
+    @Autowired
+    private FileService fileService;
+    @Autowired
+    private AssignmentAnswerService answerService;
+    @Autowired
+    private TeamService teamService;
+
+
 
     @RequestMapping(value = "student/course")
     public String ListCourse(Model model){
@@ -43,6 +53,70 @@ public class StudentController {
         return "hand_in";
     }
 
+    @RequestMapping(value = "/student/savePAttach_action")
+    public void savePAttach(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        String aid = request.getParameter("id");
+        String uid = (String) session.getAttribute("id");
+        String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment/"+aid+"/"+uid);
+        File f = new File(resURL);
+        if(!f.exists())
+            f.mkdirs();
+        else for (File df:f.listFiles()) {
+            df.delete();
+        }
+        try {
+            fileService.saveFile(request, resURL);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/student/saveTAttach_action")
+    public void saveTAttach(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        String aid = request.getParameter("id");
+        String tid = teamService.getTeamIdByStudent(new UserSession(session).getUserId());
+        String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment/"+aid+"/"+tid);
+        try {
+            fileService.saveFile(request, resURL);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    @RequestMapping(value = "/student/savePAnswer_action")
+    public void savePAnswer(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        PersonalAssignmentAnswer answer = new PersonalAssignmentAnswer();
+        String aid = request.getParameter("id");
+        String uid = new UserSession(session).getUserId();
+        String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment/"+aid+"/"+uid);
+        answer.setAssignmentId(aid);
+        answer.setStudentId(uid);
+        answer.setText(request.getParameter("text"));
+        answer.setAttachmentUrl(resURL);
+        if (answerService.insertPAnswer(answer))
+            response.setStatus(HttpServletResponse.SC_OK);
+        else
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/student/saveTAnswer_action")
+    public void saveTAnswer(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        TeamAssignmentAnswer answer = new TeamAssignmentAnswer();
+        String aid = request.getParameter("id");
+        String tid = teamService.getTeamIdByStudent(new UserSession(session).getUserId());
+        String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment/"+aid+"/"+tid);
+        answer.setAssignmentId(aid);
+        answer.setTeamId(tid);
+        answer.setText(request.getParameter("text"));
+        answer.setAttachmentUrl(resURL);
+        if (answerService.insertTAnswer(answer))
+            response.setStatus(HttpServletResponse.SC_OK);
+        else
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    }
+
+
     @RequestMapping(value = "/student/assignmentlist")
     public String listAssignment(String id,Model model){
         ArrayList<Assignment> assignment = assignmentService.getAllByCourseId(id);
@@ -52,7 +126,7 @@ public class StudentController {
         return "assignmentlist";
     }
 
-    @RequestMapping(value="searchAllstudent",method = RequestMethod.GET)
+    @RequestMapping(value="searchallstudent",method = RequestMethod.GET)
     public String searchAllStudents(Model model){
         List<Student> student=studentService.getAllStudents();
         model.addAttribute(student);

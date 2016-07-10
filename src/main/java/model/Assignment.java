@@ -17,7 +17,7 @@ public class Assignment {
     private Date endTime;
     private String description;
     private String attachmentUrl;
-    private int grade;
+    private int totalGrade;
     @Id
     @Column(name = "id", nullable = false, length = 10)
     public String getId() {
@@ -108,10 +108,14 @@ public class Assignment {
     }
 
     @Basic
-    @Column(name = "grade",length = -1)
-    public int getGrade(){return grade;}
+    @Column(name = "totalGrade",length = 11)
+    public int getTotalGrade() {
+        return totalGrade;
+    }
 
-    public void setGrade(int grade){this.grade=grade;}
+    public void setTotalGrade(int totalGrade) {
+        this.totalGrade = totalGrade;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -147,4 +151,6 @@ public class Assignment {
         result = 31 * result + (attachmentUrl != null ? attachmentUrl.hashCode() : 0);
         return result;
     }
+
+
 }

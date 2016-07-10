@@ -1,0 +1,20 @@
+package dao;
+
+import model.TeamAssignmentAnswer;
+import model.TeamAssignmentAnswerPK;
+
+import java.util.List;
+
+/**
+ * Created by andyz_000 on 2016/7/8.
+ */
+public interface TeamAssignmentAnswerDao extends Dao<TeamAssignmentAnswer, TeamAssignmentAnswerPK> {
+    List<TeamAssignmentAnswer> getAnswerByAssignmentId(String assignmentId);
+    public List<TeamAssignmentAnswer> getTeamAnswerByTeamId(String id);
+    public List<TeamAssignmentAnswer> getTeamAnswerByCourseId(String id);
+
+    public List<TeamAssignmentAnswer> getTeamAssignmentToBeSubmittedByTeam(String teamId);
+    public List<TeamAssignmentAnswer> getTeamAssignmentToBeSubmittedByCourseId(String courseId);
+    public TeamAssignmentAnswer getTeamAnswerByStudentId(String assignment_id,String student_id);
+
+}
