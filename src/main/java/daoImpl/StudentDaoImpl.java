@@ -27,17 +27,17 @@ public class StudentDaoImpl implements StudentDao{
         return student;
     }
 
-    public ArrayList<PersonalAssignmentAnswer> getAnswer(String aid,String sid){
-        String sql = "select * from personalassignmentanswer where student_id = ? and assignment_id = ?";
+    public ArrayList<PersonalAssignmentAnswer> getAnswer(String aid, String sid){
+        String sql = "select * from personalassignmentanswer where student_id = '"+sid+"' and assignment_id = '"+aid+"'";
         Query query = sessionFactory.getCurrentSession().createSQLQuery(sql).addEntity(PersonalAssignmentAnswer.class);
-        query.setString(0,sid);
-        query.setString(1,aid);
+        //query.setString(0,sid);
+        //query.setString(1,aid);
         ArrayList<PersonalAssignmentAnswer> p = (ArrayList<PersonalAssignmentAnswer>) query.list();
         return p;
     }
 
     public Student getStudentByName(String name){
-        Student student=(Student) sessionFactory.getCurrentSession().get(Student.class,name);
+        Student student = (Student) sessionFactory.getCurrentSession().get(Student.class,name);
         return student;
     }
 
