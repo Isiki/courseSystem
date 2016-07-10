@@ -1,0 +1,7 @@
+.content-center {
+    text-align: center;
+}
+
+.dropdown-less-wide {
+    min-width: 20px !important;
+}
