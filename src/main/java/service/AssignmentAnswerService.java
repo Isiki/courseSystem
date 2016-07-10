@@ -1,7 +1,9 @@
 package service;
 
 import model.PersonalAssignmentAnswer;
+import model.PersonalAssignmentAnswerPK;
 import model.TeamAssignmentAnswer;
+import model.TeamAssignmentAnswerPK;
 
 import java.util.List;
 
@@ -19,4 +21,8 @@ public interface AssignmentAnswerService {
     public List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByCourse(String courseId);
     void commentAssignment(PersonalAssignmentAnswer assignmentAnswer);
     void commentAssignment(TeamAssignmentAnswer assignmentAnswer);
+    List<TeamAssignmentAnswer> getTeamAnswerByAssignment(String id);
+    List<PersonalAssignmentAnswer> getPersonalAnswerByAssignment(String id);
+    TeamAssignmentAnswer getTeamAnswerByPK(TeamAssignmentAnswerPK pk);
+    PersonalAssignmentAnswer getPersonalAnswerByPK(PersonalAssignmentAnswerPK pk);
 }
