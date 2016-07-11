@@ -136,7 +136,7 @@ public class TeacherViewController {
 
         if(StudentViewController.AssignmentTeamType.PERSONAL == atype) {
             List<PersonalAssignmentAnswer> paas = taService.getAllPersonalSubmissions(assignment_id);
-            ta.Service.getAllAssignmentSubmissions(assignment_id, false);
+            taService.getAllAssignmentSubmissions(assignment_id, false);
             model.addAttribute("assignmentAnswers", paas);
             model.addAttribute("teamType", "personal");
         }

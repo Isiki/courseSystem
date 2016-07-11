@@ -36,6 +36,15 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping(value = "logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("id");
+        session.removeAttribute("userType");
+        session.removeAttribute("course_id");
+        session.removeAttribute("course_name");
+        return "login";
+    }
+
     @RequestMapping(value = "find_password")
     public String findPassword(Model model)  {
         return "find_password";
