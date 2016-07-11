@@ -77,4 +77,14 @@ public class TeamAssignmentAnswerDaoImpl extends DaoImpl<TeamAssignmentAnswer, T
         sessionFactory.getCurrentSession().save(teamAssignmentAnswer);
         return  "success";
     }
+
+    @Override
+    public int UpdateTeamGradeAndComment(String assid, String tmid, int grade, String comment) {
+        Query query = sessionFactory.getCurrentSession().createSQLQuery(
+                "UPDATE teamassignmentanswer " +
+                        "SET grade = " + grade + ", comment='"+comment+"' " +
+                        "WHERE assignment_id='"+assid+"' AND team_id='"+tmid+"'");
+        return query.executeUpdate();
+    }
+
 }

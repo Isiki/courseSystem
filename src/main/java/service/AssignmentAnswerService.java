@@ -20,8 +20,8 @@ public interface AssignmentAnswerService {
     List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByTeam(String teamId);
     List<TeamAssignmentAnswer> getTeamAssignmentNotSubmittedByCourse(String courseId);
 
-    void commentAssignment(PersonalAssignmentAnswer assignmentAnswer);
-    void commentAssignment(TeamAssignmentAnswer assignmentAnswer);
+    boolean commentAssignment(PersonalAssignmentAnswer assignmentAnswer);
+    boolean commentAssignment(TeamAssignmentAnswer assignmentAnswer);
     boolean insertPAnswer(PersonalAssignmentAnswer answer);
     boolean insertTAnswer(TeamAssignmentAnswer answer);
     List<TeamAssignmentAnswer> getTeamAnswerByAssignment(String id);

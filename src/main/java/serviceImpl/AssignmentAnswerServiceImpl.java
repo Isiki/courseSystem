@@ -47,27 +47,37 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
     }
 
     @Override
-    public void commentAssignment(PersonalAssignmentAnswer assignmentAnswer) {
+    public boolean commentAssignment(PersonalAssignmentAnswer assignmentAnswer) {
         PersonalAssignmentAnswerPK pk= new PersonalAssignmentAnswerPK();
         pk.setStudentId(assignmentAnswer.getStudentId());
         pk.setAssignmentId(assignmentAnswer.getAssignmentId());
         if(null!=personalAssignmentAnswerDao.get(pk)) {
-            personalAssignmentAnswerDao.saveOrUpdate(assignmentAnswer);
+            //personalAssignmentAnswerDao.saveOrUpdate(assignmentAnswer);
+            return personalAssignmentAnswerDao.UpdatePersonalGradeAndComment(
+                    assignmentAnswer.getAssignmentId(),
+                    assignmentAnswer.getStudentId(),
+                    assignmentAnswer.getGrade(),
+                    assignmentAnswer.getComment())==1;
         }else{
-            return;
+            return false;
         }
 
     }
 
     @Override
-    public void commentAssignment(TeamAssignmentAnswer assignmentAnswer) {
+    public boolean commentAssignment(TeamAssignmentAnswer assignmentAnswer) {
         TeamAssignmentAnswerPK pk= new TeamAssignmentAnswerPK();
         pk.setTeamId(assignmentAnswer.getTeamId());
         pk.setAssignmentId(assignmentAnswer.getAssignmentId());
         if (null != teamAssignmentAnswerDao.get(pk)) {
-            teamAssignmentAnswerDao.saveOrUpdate(assignmentAnswer);
+            //teamAssignmentAnswerDao.saveOrUpdate(assignmentAnswer);
+            return teamAssignmentAnswerDao.UpdateTeamGradeAndComment(
+                    assignmentAnswer.getAssignmentId(),
+                    assignmentAnswer.getTeamId(),
+                    assignmentAnswer.getGrade(),
+                    assignmentAnswer.getComment())==1;
         } else {
-            return;
+            return false;
         }
     }
 

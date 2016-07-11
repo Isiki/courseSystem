@@ -79,8 +79,8 @@ public class AssignmentAnswerController {
         TeamAssignmentAnswer answer=assignmentAnswerService.getTeamAnswerByPK(pk);
         answer.setComment(comment);
         answer.setGrade(Integer.parseInt(grade));
-        assignmentAnswerService.commentAssignment(answer);
-        return "success";
+        boolean success = assignmentAnswerService.commentAssignment(answer);
+        return success?"success":"failed";
     }
     
     @RequestMapping(value = "t/check_personal_assignment", method = RequestMethod.POST)

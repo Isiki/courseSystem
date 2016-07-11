@@ -94,7 +94,6 @@
             <!-- BEGIN PAGE CONTENT-->
             <!-- important 在这里开始正文的内容-->
 
-            <!-- BEGIN SAMPLE TABLE -->
             <div class="col-md-12">
                 <p class="h1" th:text="${assignment.heading}">用户故事-第二次迭代</p>
                 <div class="fixed-margin">
@@ -118,8 +117,9 @@
                 </div>
                 <div class="fixed-margin">
                     <!-- 作业提交统计表 -->
+                    <div class="table-container">
                     <div class="col-md-12">
-                        <table id="resTable" class="display table table-striped" cellspacing="0" width="100%">
+                        <table id="resTable" class="display table" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th>提交者</th>
@@ -147,10 +147,9 @@
                             </tbody>
                         </table>
                     </div>
+                    </div>
                     <!-- 作业提交统计表结束 -->
                 </div>
-                <span></span>
-
 
                 <!-- if STUDENT -->
                 <div th:if="${'student' == session.userType}" >
@@ -198,10 +197,7 @@
                     <!-- end if -->
                 </div>
                 <!-- end if STUDENT -->
-
-                <span></span>
             </div>
-            <!-- END SAMPLE TABLE -->
 
         </div>
         <!-- END CONTENT -->
@@ -230,27 +226,29 @@
 <script th:src="@{/resources/DataTables/datatables.js}"></script>
 <script>
 
-    var table = $("#resTable").dataTable({
-        language: {
-            lengthMenu: "每页 _MENU_ 条记录",
-            zeroRecords: "没有找到记录",
-            info: "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
-            infoEmpty: "无记录",
-            infoFiltered: "(从 _MAX_ 条记录过滤)",
-            search: "搜索",
-            processing: "处理中……",
-            loadingRecords: "加载中……",
-            paginate: {
-                first: "首页",
-                last: "尾页",
-                next: "下一页",
-                previous: "上一页"
-            },
-            aria: {
-                sortAscending:  "升序排列",
-                sortDescending: "降序排列"
+    $(document).ready(function() {
+        var table = $("#resTable").DataTable({
+            language: {
+                lengthMenu: "每页 _MENU_ 条记录",
+                zeroRecords: "没有找到记录",
+                info: "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+                infoEmpty: "无记录",
+                infoFiltered: "(从 _MAX_ 条记录过滤)",
+                search: "搜索",
+                processing: "处理中……",
+                loadingRecords: "加载中……",
+                paginate: {
+                    first: "首页",
+                    last: "尾页",
+                    next: "下一页",
+                    previous: "上一页"
+                },
+                aria: {
+                    sortAscending: "升序排列",
+                    sortDescending: "降序排列"
+                }
             }
-        }
+        });
     });
 
     function download(aid, bid) {
@@ -267,7 +265,7 @@
                         team_id: subid
                     },
                     function(data, status, xhr){
-                        alert(data);
+                        alert(data=="success"?"批改成功":"错误");
                         $("#portlet-config").toggle();
                     });
         }
@@ -303,6 +301,8 @@
             handIn(grd, cmt, assid, subid, isteam);
         })
     }
+
+
 </script>
 
 </html>
