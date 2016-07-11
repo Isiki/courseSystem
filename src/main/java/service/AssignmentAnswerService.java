@@ -28,4 +28,5 @@ public interface AssignmentAnswerService {
     List<PersonalAssignmentAnswer> getPersonalAnswerByAssignment(String id);
     TeamAssignmentAnswer getTeamAnswerByPK(TeamAssignmentAnswerPK pk);
     PersonalAssignmentAnswer getPersonalAnswerByPK(PersonalAssignmentAnswerPK pk);
+    String teamLeaderSubmit(String sid,String cid,String assignment_id);
 }

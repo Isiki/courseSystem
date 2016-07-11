@@ -17,4 +17,5 @@ public interface StudentTeamService {
     boolean permitapply(String id);
     List<TeamApplication> consultapply(String teamId);
     boolean denyapply(String id);
+    String  isTeamLeader(String sid,String cid);
 }

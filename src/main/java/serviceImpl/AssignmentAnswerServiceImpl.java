@@ -80,7 +80,7 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
     }
 
     public boolean insertTAnswer(TeamAssignmentAnswer answer) {
-        answer.setIsSubmitted(true);
+        answer.setIsSubmitted(false);
         answer.setSubmitTime(new Date());
         teamAssignmentAnswerDao.saveOrUpdate(answer);
         return true;
@@ -102,5 +102,9 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
 
     public PersonalAssignmentAnswer getPersonalAnswerByPK(PersonalAssignmentAnswerPK pk) {
         return personalAssignmentAnswerDao.get(pk);
+    }
+    public String teamLeaderSubmit(String sid,String cid,String assignment_id){
+        String result = teamAssignmentAnswerDao.teamLeaderSubmit(sid,cid,assignment_id);
+        return  result;
     }
 }
