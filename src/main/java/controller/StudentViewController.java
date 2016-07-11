@@ -309,8 +309,10 @@ public class StudentViewController {
         UserSession user = new UserSession(session);
         Team team=teamService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
         if(team.getTeamleaderId()==user.getUserId()) {
+            List<TeamApplication> apps=stService.consultapply(team.getId());
             model.addAttribute("isTeamLeader","true");
-            model.addAttribute("applications",stService.consultapply(team.getId()));
+            model.addAttribute("applications",apps);
+            model.addAttribute("appAmount",apps.size());
         }else{
             model.addAttribute("isTeamLeader","false");
         }
