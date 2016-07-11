@@ -230,11 +230,15 @@ public class StudentViewController {
         boolean isTeamLeader;
 
         if(hasTeam) {
-            if(team.getTeamleaderId()==student_id)
+            String a=team.getTeamleaderId();
+            if(a.equals(student_id)) {
                 isTeamLeader= true;
-            else  isTeamLeader = false;
+            }
+            else{
+                isTeamLeader = false;
+            }
             List<Student> studentsIn = teamService.getStudentsInTeam(team.getId());
-            model.addAttribute("team", team);
+            model.addAttribute("theTeam", team);
             model.addAttribute("isTeamLeader",isTeamLeader);
             model.addAttribute("studentsIn", studentsIn);
         } else {
