@@ -69,9 +69,8 @@
             <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
             <!-- BEGIN PAGE HEADER-->
-            <h3 class="page-title">
-                Blank Page <small>blank page</small>
-            </h3>
+            <h3 class="page-title" th:text="'资源 - '+${session.course_name}"></h3>
+
             <div class="page-bar">
                 <ul id="respath-bar" class="page-breadcrumb">
                     <li class="dirPath-home-li">

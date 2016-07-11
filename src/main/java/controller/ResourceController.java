@@ -62,7 +62,7 @@ public class ResourceController {
     @RequestMapping(value = "show_resource")
     public void showResource(HttpServletRequest request, HttpServletResponse response){
         setResCoursePath(request);
-         String resURL = request.getSession().getServletContext().getRealPath(resCoursePath + request.getParameter("path"));
+        String resURL = request.getSession().getServletContext().getRealPath(resCoursePath + request.getParameter("path"));
         List<File> files = fileService.getAllFiles(resURL);
         String json = fileService.filesToJson(files);
 
