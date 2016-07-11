@@ -206,8 +206,7 @@ public class TeamDaoImpl extends DaoImpl<Team,String> implements TeamDao{
     }
 
     public List<Map<String,Object>> getAllTeamWithLeaders(String course_id){
-        Query query=sessionFactory.getCurrentSession()
-                .createQuery("select team.*,student.real_name from team inner  join student on student.id=team.teamleader_id inner join course on course.id=team.course_id where course_id=\'"+course_id+"\'");
+        Query query=sessionFactory.getCurrentSession().createQuery("select team.*,student.real_name from team inner  join student on student.id=team.teamleader_id inner join course on course.id=team.course_id where course_id=\'"+course_id+"\'");
         List<Object[]> teamResult = query.list();
         List<Map<String, Object>> targetList= new ArrayList<>();
         for(Object[] line : teamResult)
