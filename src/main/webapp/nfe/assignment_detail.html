@@ -259,12 +259,12 @@
 
     function handIn(grade, comment, assid, subid, isteam){
         if(isteam == "true") {
-            $.post("check_team_assignment",
+            $.post("check_team_assignment.do",
                     {
                         grade: grade,
                         comment: comment,
                         assignment_id: assid,
-                        team_id: sub_id
+                        team_id: subid
                     },
                     function(data, status, xhr){
                         alert(data);
@@ -272,16 +272,16 @@
                     });
         }
         else{
-            $.post("check_personal_assignment",
+            $.post("check_personal_assignment.do",
                     {
                         grade: grade,
                         comment: comment,
                         assignment_id: assid,
-                        student_id: sub_id
+                        student_id: subid
                     },
                     function(data, status, xhr){
                         alert(data);
-                        $("#portlet-config").toggle();
+                        $("#portlet-config").modal('toggle');
                     }
             );
         }
@@ -290,11 +290,18 @@
     function openModal(content, assid, subid, isteam){
         $("#portlet-config").modal();
         $("#check_content").text(content);
-        var grade = $("#check_score").text();
-        var comment = $("#check_comment").text();
-        $("#check_submit_btn").click(function(){
-            handIn(grade, comment, assid, subid, isteam);
-        });
+        $("#check_assid").val(assid);
+        $("#check_subid").val(subid);
+        $("#check_isteam").val(isteam);
+
+        $(document).on("click", '#check_submit_btn', function () {
+            var grd = $("#check_score").val();
+            var cmt = $("#check_comment").val();
+            var assid = $("#check_assid").val();
+            var subid = $("#check_subid").val();
+            var isteam = $("#check_isteam").val();
+            handIn(grd, cmt, assid, subid, isteam);
+        })
     }
 </script>
 
