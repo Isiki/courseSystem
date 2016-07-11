@@ -456,6 +456,24 @@
         });
     });
 
+    $(document).on('click', '.btn-deny', function () {
+        var collapse = $(this).closest('.panel-collapse');
+        var studentId = collapse.attr("value");
+        var teamId = $('#team-id-storage').attr("value");
+        $.ajax({
+            url: "deny_team_app.do",
+            method: "post",
+            data: {
+                student_id: studentId,
+                team_id: teamId
+            },
+            success: function() {
+                collapse.collapse('toggle');
+                window.location.reload();
+            }
+        });
+    });
+
     $(document).on('click', '#btn-newFolder', function () {
         var teamName = $('#newTeamName').val();
         var teamDescription = $('#newTeamDescription').val();
