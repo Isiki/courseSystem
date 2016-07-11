@@ -17,6 +17,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.ref.ReferenceQueue;
+
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -196,25 +201,82 @@ public class TeacherViewController {
         }
     }
 
+    @RequestMapping(value = "update_assignment_info", method = RequestMethod.POST)
+    public void updateAssignmentInfo(HttpServletRequest request,
+                                     HttpServletResponse response){
+        String assid = request.getParameter("assid");
+        String column_name = request.getParameter("column_name");
 
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    /* 打开批改作业页面
-     * reference: 张威
-     * @RequestParams:
-     *      teamType: "personal" / "team"
-     *
-     */
-    //@RequestMapping(value = "check_assignment", method = RequestMethod.GET)
-    //public String checkAssignment(...){}
+        Assignment ass = assignmentService.getAssignmentById(assid);
+        if("heading".equals(column_name)) {
+            String heading = request.getParameter("new_value");
+            ass.setHeading(heading);
+        }
+        if("desc".equals(column_name)){
+            String desc = request.getParameter("new_value");
+            ass.setDescription(desc);
+        }
+        if("start_time".equals(column_name)){
+            String start_time = request.getParameter("new_value");
+            Date dt = null;
+            try {
+                dt = dfm.parse(start_time);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            if(dt != null) ass.setStartTime(dt);
+        }
+        if("end_time".equals(column_name)){
+            String end_time = request.getParameter("new_value");
+            Date dt = null;
+            try {
+                dt = dfm.parse(end_time);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            if(dt != null) ass.setEndTime(dt);
+        }
+        if("total_grade".equals(column_name)) {
+            String total_grade = request.getParameter("new_value");
+            int tg = -1;
+            try{
+                tg = Integer.parseInt(total_grade);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            if(tg>=0)
+                ass.setTotalGrade(tg);
+        }
+        assignmentService.updateAssignment(ass);
 
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/text;charset=utf-8");
+        try {
+            response.getWriter().append("success");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    /* 批改作业
-     * reference: 张威
-     */
-    //@RequestMapping(value = "check_team_assignment", method = RequestMethod.POST)
-    //public void checkTeamAssignment(...){}
-    //@RequestMapping(value = "check_personal_assignment", method = RequestMethod.POST)
-    //public void checkPersonalAssignment(...){}
+    @RequestMapping(value = "remove_assignment", method = RequestMethod.POST)
+    public void removeAssignmentInfo(HttpServletRequest request,
+                                     HttpServletResponse response){
+        String assid = request.getParameter("assid");
+        assignmentService.removeAssignment(assid);
+
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/text;charset=utf-8");
+        try {
+            response.getWriter().append("success");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 /* ------------------------ Util functions below ------------------------------ */
