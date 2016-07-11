@@ -35,7 +35,6 @@ import static java.lang.System.in;
  * Created by isiki on 2016/7/4.
  */
 @Controller
-@RequestMapping("teacher")
 public class AssignmentController {
     @Autowired
     private AssignmentService assignmentService;
@@ -48,8 +47,9 @@ public class AssignmentController {
     @Autowired
     private StudentService studentService;
 
-    @RequestMapping("add_assignment")
-    public String addAssignment(String courseId, Model model) {
+    @RequestMapping(value = "t/add_assignment", method = RequestMethod.GET)
+    public String addAssignment(HttpServletRequest request, Model model) {
+        String courseId = (String)request.getSession().getAttribute("course_id");
         model.addAttribute("course",courseService.searchCourseById(courseId));
         return "assignment/add_assignment";
     }
@@ -72,7 +72,7 @@ public class AssignmentController {
 
     }
 
-    @RequestMapping(value = "t/assignment",method = RequestMethod.GET)
+    //@RequestMapping(value = "t/assignment",method = RequestMethod.GET)
     public String listAssignment(Model model, HttpSession session){
         UserSession user =new UserSession(session);
         List<Assignment> assignment = assignmentService.getAllByCourseId(user.getCourse().getId());
@@ -82,7 +82,7 @@ public class AssignmentController {
         return "assignmentlist";
     }
 
-    @RequestMapping(value = "t/assignment_detail",method = RequestMethod.GET)
+    //@RequestMapping(value = "t/assignment_detail",method = RequestMethod.GET)
     public String consultAssignment(String assignment_id ,Model model){
         Assignment det=assignmentService.getAssignmentById(assignment_id);
         model.addAttribute("assignment",det);
@@ -96,8 +96,8 @@ public class AssignmentController {
         return "assignment_detail";
     }
 
-    @RequestMapping(value = "t/assignment_detail", method = RequestMethod.POST)
-    @ResponseBody
+    //@RequestMapping(value = "t/assignment_detail", method = RequestMethod.POST)
+    //@ResponseBody
     public Assignment alterAssignment(Assignment assignment, @ModelAttribute("startDate") String startDate , @ModelAttribute("endDate")String endDate){
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss" );
         try {
@@ -110,8 +110,8 @@ public class AssignmentController {
         return assignmentService.updateAssignment(assignment);
     }
 
-    @RequestMapping(value = "t/assignment", method = RequestMethod.POST)
-    @ResponseBody
+    //@RequestMapping(value = "t/assignment", method = RequestMethod.POST)
+    //@ResponseBody
     public List<Assignment> removeAssignment(String assignment_id, HttpSession session){
         assignmentService.removeAssignment(assignment_id);
         UserSession user =new UserSession(session);

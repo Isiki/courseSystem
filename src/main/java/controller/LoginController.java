@@ -14,6 +14,7 @@ import service.LoginService;
 import service.StudentService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -34,6 +35,15 @@ public class LoginController {
     public String userLogin(@ModelAttribute("user") String user, @ModelAttribute("errorInfo") String errorInfo,
                             @ModelAttribute("isAdmin") String isAdmin, Model model) throws BaseException {
         return "login";
+    }
+
+    @RequestMapping(value = "logout_action")
+    public String logout(HttpSession session){
+        session.removeAttribute("id");
+        session.removeAttribute("userType");
+        session.removeAttribute("course_id");
+        session.removeAttribute("course_name");
+        return "redirect:/login.do";
     }
 
     @RequestMapping(value = "find_password")

@@ -70,6 +70,11 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public List<Team> getStudentTeamsInCourse(String course_id, String student_id) {
+        return teamDao.getStudentTeamsInCourse(course_id, student_id);
+    }
+
+    @Override
     public String getTeamIdByStudent(String student_id){
         String team_id = teamDao.getTeamIdByStudent(student_id);
         return  team_id;

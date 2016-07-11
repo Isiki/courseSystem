@@ -91,11 +91,11 @@ public class TeacherViewController {
      * 返回教师资源页面，详情咨询赵天宇
      * session.getAttribute("course_id")
      */
-    @RequestMapping(value = "resource", method = RequestMethod.GET)
+    /*@RequestMapping(value = "resource", method = RequestMethod.GET)
     public String showResource(HttpServletRequest request, Model model) {
         // i know nothing about this.
         return "resource";
-    }
+    }*/
 
 
     /* 显示课程下作业列表
@@ -105,7 +105,7 @@ public class TeacherViewController {
     @RequestMapping(value = "assignment", method = RequestMethod.GET)
     public String showAssignment(HttpServletRequest request, Model model){
         String course_id = getCourseIdInSession(request.getSession());
-        String teacher_id = getTeacherIdInSession(request.getSession());
+        //String teacher_id = getTeacherIdInSession(request.getSession());
 
         List<Assignment> assignments = assignmentService.getAllByCourseId(course_id);
         model.addAttribute("assignments", assignments);
@@ -135,16 +135,18 @@ public class TeacherViewController {
         int atype = assignmentService.getAssignmentTeamType(assignment_id);
 
         if(StudentViewController.AssignmentTeamType.PERSONAL == atype) {
-            List<PersonalAssignmentAnswer> paas = taService.getAllPersonalSubmissions(assignment_id);
+            //List<PersonalAssignmentAnswer> paas = taService.getAllPersonalSubmissions(assignment_id);
+            List<Map<String, Object>> paas = taService.getAllAssignmentSubmissions(assignment_id, false);
             model.addAttribute("assignmentAnswers", paas);
             model.addAttribute("teamType", "personal");
         }
         else if(StudentViewController.AssignmentTeamType.TEAM == atype) {
-            List<TeamAssignmentAnswer> taas = taService.getAllTeamSubmissions(assignment_id);
+            //List<TeamAssignmentAnswer> taas = taService.getAllTeamSubmissions(assignment_id);
+            List<Map<String, Object>> taas = taService.getAllAssignmentSubmissions(assignment_id, true);
             model.addAttribute("assignmentAnswers", taas);
             model.addAttribute("teamType", "team");
         }
-        return "assignment_detail";
+        return "nfe/assignment_detail";
     }
 
 

@@ -147,11 +147,11 @@ public class CourseDaoImpl implements CourseDao{
             Map<String, Object> tmp = new HashMap<>();
             tmp.put("course_name", line[0]);
             tmp.put("teacher.real_name", line[1]);
-            tmp.put("team_allowed", line[2]);
+            tmp.put("team_allowed", (byte)line[2]==1?"true":"false");
 
             targetList.add(tmp);
         }
-        targetList.addAll(targetList);
+
         return targetList;
     }
 }

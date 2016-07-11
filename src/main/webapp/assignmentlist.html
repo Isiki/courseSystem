@@ -67,9 +67,7 @@
             <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
             <!-- BEGIN PAGE HEADER-->
-            <h3 class="page-title">
-                作业列表
-            </h3>
+            <h3 class="page-title"  th:text="'作业列表 - '+${session.course_name}"></h3>
 
             <div class="page-bar">
                 <ul class="page-breadcrumb">
@@ -126,6 +124,7 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                                <a href="add_assignment.do" th:if="${session.userType=='teacher'}" class="btn btn-primary">添加作业</a>
                             </form>
                         </div>
                     </div>
@@ -144,13 +143,25 @@
     <script type="application/javascript">
         $(document).ready(function(){
             $("#homework_table").dataTable({
-                "language": {
-                    "lengthMenu": "每页 _MENU_ 条记录",
-                    "zeroRecords": "没有找到记录",
-                    "search" : "搜索",
-                    "info": "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
-                    "infoEmpty": "无记录",
-                    "infoFiltered": "(从 _MAX_ 条记录过滤)"
+                language: {
+                    lengthMenu: "每页 _MENU_ 条记录",
+                    zeroRecords: "没有找到记录",
+                    info: "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+                    infoEmpty: "无记录",
+                    infoFiltered: "(从 _MAX_ 条记录过滤)",
+                    search: "搜索",
+                    processing: "处理中……",
+                    loadingRecords: "加载中……",
+                    paginate: {
+                        first: "首页",
+                        last: "尾页",
+                        next: "下一页",
+                        previous: "上一页"
+                    },
+                    aria: {
+                        sortAscending:  "升序排列",
+                        sortDescending: "降序排列"
+                    }
                 }
             });
         });
