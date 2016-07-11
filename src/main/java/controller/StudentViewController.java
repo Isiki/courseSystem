@@ -85,6 +85,9 @@ public class StudentViewController {
         String course_id = request.getParameter("course_id");
         request.getSession().setAttribute("course_id", course_id);
 
+        Course c = courseService.getCourseById(course_id);
+        request.getSession().setAttribute("course_name", c.getCourseName());
+
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/text;charset=utf-8");
         try {
@@ -99,11 +102,11 @@ public class StudentViewController {
      * 返回学生资源页面，详情咨询赵天宇
      * session.getAttribute("course_id")
      */
-    @RequestMapping(value = "resource", method = RequestMethod.GET)
+    /*@RequestMapping(value = "resource", method = RequestMethod.GET)
     public String showResource(HttpServletRequest request, Model model) {
         // i know nothing about this.
         return "resource";
-    }
+    }*/
 
 
     /* 显示课程下作业列表
@@ -120,7 +123,7 @@ public class StudentViewController {
 
         model.addAttribute("pAssignments", pAssignments);
 
-        return "assignment";
+        return "assignmentlist";
     }
 
 
@@ -142,19 +145,27 @@ public class StudentViewController {
         String assignment_id = request.getParameter("assignment_id");
         String student_id = getStudentIdInSession(request.getSession());
 
-        int atype = assignmentService.getAssignmentTeamType(assignment_id);
+        Assignment ass = assignmentService.getAssignmentById(assignment_id);
+
+        //int atype = assignmentService.getAssignmentTeamType(assignment_id);
+        int atype = ass.getIsTeamwork()?1:0;
+
+        // REMINDER: this edition is not in PDF:
+        model.addAttribute("assignment", ass);
+        // END REMINDER
 
         if(AssignmentTeamType.PERSONAL == atype) {
             PersonalAssignmentAnswer paa = saService.getMySubmission(assignment_id, student_id);
-            model.addAttribute("pAssignmentAnswer", paa);
+            if(paa != null) model.addAttribute("pAssignmentAnswer", paa);
             model.addAttribute("teamType", "personal");
         }
         else if(AssignmentTeamType.TEAM == atype) {
             TeamAssignmentAnswer taa = saService.getTeamSubmission(assignment_id, student_id);
-            model.addAttribute("tAssignmentAnswer", taa);
+            if(taa != null) model.addAttribute("tAssignmentAnswer", taa);
             model.addAttribute("teamType", "team");
         }
-        return "assignment_detail";
+        //return "assignment_detail";
+        return "hand_in";
     }
 
     /* 上传文件的后端处理函数
@@ -173,7 +184,7 @@ public class StudentViewController {
                                   .getServletContext()
                                   .getRealPath("/uploadFiles/assignments");
         try {
-            File uploadFile = fileService.saveFile(request, targetUrl);
+            fileService.saveFile(request, targetUrl);
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);

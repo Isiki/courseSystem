@@ -1,7 +1,6 @@
 package serviceImpl;
 
 
-import com.google.gson.JsonArray;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -10,9 +9,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import service.FileService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -20,7 +20,7 @@ import java.util.*;
  */
 @Service
 public class FileServiceImpl implements FileService {
-    public File saveFile(HttpServletRequest request, String filepath) throws IOException {
+    public String saveFile(HttpServletRequest request, String filepath) throws IOException {
 
         // 转换为文件类型的request
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -28,6 +28,9 @@ public class FileServiceImpl implements FileService {
         // 获取对应file对象
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         Iterator<String> fileIterator = multipartRequest.getFileNames();
+
+
+        List<File> uploadFiles = new ArrayList<>();
 
         while (fileIterator.hasNext()) {
             String fileKey = fileIterator.next();
@@ -40,24 +43,16 @@ public class FileServiceImpl implements FileService {
                 //to-do: validate file
 
                 // 调用saveFile方法保存
-                File finalFile = saveEveryFile(theFile, filepath);
-
-                return finalFile;
+                uploadFiles.add(saveEveryFile(theFile, filepath));
             }
         }
 
-        return null;
+
+        return filesToJson(uploadFiles, "add");
     }
 
     private File saveEveryFile(MultipartFile file, String filepath) throws IOException {
         String fileName = file.getOriginalFilename();
-
-        // 封装了一个简单的file对象，增加了几个属性
-        //UploadFile upfile = new UploadFile(filepath, fileName);
-        //upfile.setContentType(file.getContentType());
-
-        // 通过org.apache.commons.io.FileUtils的writeByteArrayToFile进行保存
-        //FileUtils.writeByteArrayToFile(upfile.getFile(), file.getBytes());
 
         File targetFile = new File(filepath, fileName);
         file.transferTo(targetFile);
@@ -65,27 +60,39 @@ public class FileServiceImpl implements FileService {
         return targetFile;
     }
 
-    public File[] getAllFiles(String dir)
+    public List<File> getAllFiles(String dir)
     {
         File dirFile = new File(dir);
         File[] files = dirFile.listFiles();
-        return files;
+        return Arrays.asList(files);
     }
 
-    public String filesToJson(File[] files)
+    private static final DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    public String filesToJson(List<File> files, String action)
     {
         if (files == null)
             return "";
         JSONArray arr = new JSONArray();
         for(File file : files)
         {
-            List<String> list = new ArrayList<String>();
-            list.add(file.getName());
-            list.add(file.isDirectory()?"folder":"file");
-            list.add(getFormatSize(file.length()));
+            Map<String,String> list = new HashMap<>();
+
+            list.put("fileName",file.getName());
+            list.put("fileType", file.isDirectory()?"folder":"file");
+            list.put("fileCTime",format.format(new Date(file.lastModified())));
+            list.put("fileSize",getFormatSize(file.length()));
             arr.add(list);
         }
-        return arr.toString();
+        JSONObject obj = new JSONObject();
+        obj.put("action", action);
+        obj.put("data",arr);
+        return obj.toString();
+    }
+
+    public String filesToJson(List<File> files)
+    {
+        return filesToJson(files,"show");
     }
 
     private String getFormatSize(long size) {
@@ -114,4 +121,42 @@ public class FileServiceImpl implements FileService {
         BigDecimal result4 = new BigDecimal(teraBytes);
         return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
     }
+
+    public String getDirStructionJson(String filepath)
+    {
+        File rootPath = new File(filepath);
+        if(!rootPath.isDirectory())
+        {
+            return "";
+        }
+        JSONObject rootObj = new JSONObject();
+        rootObj.put("text", "资源");
+        rootObj.put("type", "folder");
+        rootObj.put("children", getDirJsonArray(rootPath));
+        return rootObj.toString();
+    }
+
+    private JSONArray getDirJsonArray(File filepath)
+    {
+        JSONArray arr = new JSONArray();
+        try {
+            File[] files = filepath.listFiles();
+
+            for(File file : files)
+            {
+                JSONObject obj = new JSONObject();
+                obj.put("text", file.getName());
+                if (file.isDirectory()) {
+                    //目录
+                    obj.put("type", "folder");
+                    obj.put("children", getDirJsonArray(file));
+                    arr.add(obj);
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arr;
+    }
+
 }

@@ -28,6 +28,9 @@ import java.util.Map;
 public class TeacherViewController {
 
     @Autowired
+    private TeacherService teacherService;
+
+    @Autowired
     private TeacherAssignmentService taService;
 
     @Autowired
@@ -35,6 +38,7 @@ public class TeacherViewController {
 
     @Autowired
     private AssignmentService assignmentService;
+
 
 
     /* 学生工作空间
@@ -45,9 +49,11 @@ public class TeacherViewController {
      * assignments:     学生各个课程的作业总表
      */
     @RequestMapping(value = "workspace", method = RequestMethod.GET)
-    public String showWorkspace(Model model) {
-        List<Course> courses = null;
-        List<Assignment> assignments = null;
+    public String showWorkspace(HttpServletRequest request, Model model) {
+        String teacher_id = getTeacherIdInSession(request.getSession());
+
+        List<Course> courses = teacherService.getCourses(teacher_id);
+        List<Assignment> assignments = taService.getAllAssignmentsOfTeacher(teacher_id);
 
         model.addAttribute("courses", courses);
         model.addAttribute("assignments", assignments);

@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface PersonalAssignmentAnswerDao extends Dao<PersonalAssignmentAnswer, PersonalAssignmentAnswerPK>{
     List<PersonalAssignmentAnswer> getAnswerByAssignmentId(String courseId);
-    public PersonalAssignmentAnswer getPersonalAnswerByStudentId(String assgnment_id, String id);
+    public List<PersonalAssignmentAnswer> getPersonalAnswersByStudentId(String assgnment_id, String id);
     public List<PersonalAssignmentAnswer> getPersonalAnswersByCourseId(String id);
     public List<PersonalAssignmentAnswer> getPersonalAssignmentsToBeSubmittedByStudent(String studentId);
     public List<PersonalAssignmentAnswer> getPersonalAssignmentsToBeSubmittedByCourseId(String courseId);

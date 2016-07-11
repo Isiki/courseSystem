@@ -63,7 +63,7 @@ public class FrontEditUseController {
         PrintWriter respWriter=null;
         try {
             String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment");
-            File uploadFilesJson = fileService.saveFile(request, resURL);
+            fileService.saveFile(request, resURL);
 
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");

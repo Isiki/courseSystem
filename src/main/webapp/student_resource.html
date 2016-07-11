@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Metronic | Page Layouts - Blank Page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <link href="/resources/css/my_dataTable.css" rel="stylesheet" type="text/css" />
+
+    <!-- 开发智能提示需要，真正发布的时候需要删除-->
+    <link href="/resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="/resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="/resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/treetable/css/jquery.treetable.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/jstree/dist/themes/default/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
+<!--常用的公用的css-->
+<div th:include="common::css"></div>
+<!-- header -->
+<div th:replace="header :: header"></div>
+<!-- header结束 -->
+<div class="clearfix"></div>
+<div class="page-container">
+    <!-- 侧边导航栏 -->
+    <div th:replace="sidebar::sidebar"></div>
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+                Blank Page <small>blank page</small>
+            </h3>
+            <div class="page-bar">
+                <ul id="respath-bar" class="page-breadcrumb">
+                    <li class="dirPath-home-li">
+                        <i class="fa fa-home"></i>
+                        <a class="dirPath dirPath-home" href="javascript:void(0)">资源</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <!-- important 在这里开始正文的内容-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="div-table-container">
+                        <table id="resTable" class="table table-striped" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th class="content-center">
+                                    <input type="checkbox" name="cb-check-all"  class="iCheck td-checkbox" />
+                                </th>
+                                <th>文件</th>
+                                <th>修改时间</th>
+                                <th>大小</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+    </div>
+    <!-- END CONTENT -->
+</div>
+
+<!-- Modal-->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalHead">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="uploadModalHead">上传文件</h4>
+            </div>
+            <div class="modal-body">
+                <input id="input-file" name="resource" type="file" class="file" data-show-preview="false">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="moveToModal" tabindex="-1" role="dialog" aria-labelledby="moveToModalHead">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="moveToModalHead">移动到</h4>
+            </div>
+            <div class="modal-body">
+                <div id="ResTree"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btn-moveToNewFolder">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" id="newFolderModal" tabindex="-1" role="dialog" aria-labelledby="newFolderModalHead">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="moveToModalHead">新建文件夹</h4>
+            </div>
+            <div class="modal-body">
+                <input id="input-newFolder" type="text" placeholder="文件夹名称" class="m-wrap form-control">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btn-newFolder">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer-->
+<div th:replace="footer::footer"></div>
+<!-- 把公用的js包含进来,包含一些初始化的工作 -->
+<div th:include="common::js"></div>
+</div>
+</body>
+
+<script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/fileinput.js}"></script>
+<script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>
+<script th:src="@{/resources/DataTables/datatables.js}"></script>
+<script th:src="@{/resources/assets/global/plugins/jstree/dist/jstree.js}"></script>
+
+<script type="text/javascript">
+
+    var table;
+    var resTree;
+    var wrapper = $('#div-table-container');
+    var item;
+    var dirPath = "/";
+
+    $("#input-file").fileinput({
+        language: "zh",
+        uploadUrl: "/saveResource_action.do",
+        uploadExtraData: {
+            path: dirPath
+        },
+        uploadAsync: true,
+        maxFileCount: 5,
+        autoReplace: true
+    }).on("fileuploaded", function (e, data) {
+        if (data['response']['action'] == 'add') {
+            var datalist = data['response']['data'];
+            for (var i=0; i<datalist.length; i++) {
+                table.row.add(
+                        datalist[i]
+                ).draw()
+            }
+        }
+    })
+
+
+    var fileType = ['aac','ace','ai','ain','amr','app','arj',
+        'asf','asp','aspx','av','avi','bin','bmp','cab','cad',
+        'cat','cdr','chm','com','css','cur','dat','db','dll',
+        'dmv','docx','dot','dps','dpt','dwg','dxf','emf','eps',
+        'et','ett','exe','fla','gif','hlp','htm','html','icl',
+        'ico','img','inf','ini','iso','jpeg','jpg','js','m3u',
+        'max','mdb','mde','mht','mid','midi','mox','mp3','mp4',
+        'mpeg','mpg','msi','nrg','ocx','ogg','ogm','pdf','png',
+        'pot','ppt','pptx','psd','pub','qt','ra','ram','rar',
+        'rm','rmvb','rtf','swf','tar','tif','tiff','txt','url',
+        'vbs','vsd','vss','vst','wav','wave','wm','wma','wmd',
+        'wmf','wmv','wps','wpt','xls','xlsx','xlt','xml','zip'];
+
+    $(document).ready(function () {
+        table = $('#resTable').DataTable({
+            dom: "frtip",
+            ajax: {
+                url: "/show_resource.do",
+                method: "get",
+                async: false,
+                data: {path: dirPath}
+            },
+            paging: false,
+            info: false,
+            searching: false,
+            autoWidth: false,
+            language: {
+                lengthMenu: "每页 _MENU_ 条记录",
+                zeroRecords: "没有找到文件",
+                info: "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+                infoEmpty: "该文件夹为空",
+                infoFiltered: "(从 _MAX_ 条记录过滤)"
+            },
+            columns:[
+                {
+                    data: null,
+                    className: "content-center td-checkbox",
+                    width: "24px",
+                    orderable: false,
+                    render: function(data, type, rpw, meta) {
+
+                        return '<input type="checkbox" class="iCheck checkboxes" value="1" />';
+                    }
+                },
+                {
+                    data: null,
+                    className: "td-fileName",
+                    render: function(data, type, row) {
+                        var ext = data['fileName'].match('\\.([^\\.]*)$');
+                        if(data['fileType']=='folder') {
+                            ext = 'folder';
+                            return '<a class="nextPathLevel" href="javascript:void(0)"><img src="/resources/image/filetype/'+ ext +'.gif" /><span>'+data['fileName']+'</span></a>';
+                        }
+                        ext = ext[1];
+                        if (fileType.indexOf(ext)==-1) {
+                            ext = 'unknown';
+                        }
+                        return '<img src="/resources/image/filetype/'+ ext +'.gif" /><span>'+data['fileName']+'</span>';
+                        /*if(data['fileType']=='folder')
+                         return '<i class="fa fa-folder icon-state-warning icon-lg"></i>'+data['fileName'];
+                         else return '<i class="fa fa-file icon-state-warning icon-lg"></i>'+data['fileName'];*/
+                    }
+                },
+                {
+                    data: "fileCTime",
+                    width: "200px",
+                    className: "td-fileCTime"
+                },
+                {
+                    data: "fileSize",
+                    width: "100px",
+                    className: "td-fileSize"
+                },
+                {
+                    data: null,
+                    className: "content-center td-buttons",
+                    width: "30px",
+                    orderable: false,
+                    render: function(data, type, rpw, meta) {
+                        return '<a href="javascript:void(0)" class="btn btn-primary btn-download"' + (data["fileType"]!="file"?'disabled="disabled"':'')+'>下载</a>';
+                    }
+                }],
+            select: true,
+            initComplete: function() {
+                Metronic.init();
+                $(document).on("click", ".nextPathLevel", function () {
+                    var dirName = $(this).children("span").text();
+                    dirPath = dirPath + dirName +'/';
+                    table.ajax.url("/show_resource.do?path="+dirPath).load(function() {
+                        Metronic.init();
+                    });
+                    $("#respath-bar").children().last().append('<i class="fa fa-angle-right"></i>');
+                    $('<li></li>').append('<a class="dirPath" href="javascript:void(0)">'+ dirName +'</a>').appendTo("#respath-bar");
+                    //$("#respath-bar")
+                });
+            }
+        });
+
+        table.on("change",":checkbox",function() {
+            if ($(this).is("[name='cb-check-all']"))
+            {
+                //全选
+                var checkboxes = "#resTable .checkboxes";
+                var checked = jQuery(this).is(":checked");
+                $(checkboxes).each(function () {
+                    $(this).attr("checked", checked);
+                });
+                jQuery.uniform.update(checkboxes);
+                //$(":checkbox", table).prop("checked", $(this).prop("checked"));
+            }
+            else
+            {
+                //一般选择
+                var checkbox = $("tbody :checkbox", table);
+                $(":checkbox[name='cb-check-all']", table).prop('checked', checkbox.length == checkbox.filter(':checked').length);
+            }
+        }).on("click", ".td-checkbox", function(event) {
+            //点击单元格即点击复选框
+            !$(event.target).is(":checkbox") && $(":checkbox",this).trigger("click");
+        }).on("click", ".btn-download", function(event) {
+            //点击下载按钮
+            item = table.row($(this).closest('tr')).data();
+            openUrlUtil('POST','/downloadResource.do',{path: dirPath, filename: item['fileName']},'_self');
+        });
+
+        $(document).on("click", ".dirPath", function(){
+            var dirDesPath = '';
+            $(this).parent().prevAll(":not(.dirPath-home-li)").each(function(){
+                dirDesPath = dirDesPath + '/' + $(this).children("a").text();
+            });
+            dirDesPath = dirDesPath + '/';
+            if(!$(this).hasClass("dirPath-home"))
+            {
+                dirDesPath = dirDesPath + $(this).text() + '/';
+            }
+            dirPath = dirDesPath;
+            table.ajax.url("/show_resource.do?path="+dirPath).load(function() {
+                Metronic.init();
+            });
+            $(this).parent().nextAll().remove();
+            $(this).siblings().last().remove();
+        });
+
+    });
+
+</script>
+</html>

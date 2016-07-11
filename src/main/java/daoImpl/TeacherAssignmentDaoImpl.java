@@ -1,6 +1,7 @@
 package daoImpl;
 
 import dao.TeacherAssignmentDao;
+import model.Assignment;
 import model.PersonalAssignmentAnswer;
 import model.TeamAssignmentAnswer;
 import org.hibernate.Query;
@@ -27,6 +28,15 @@ public class TeacherAssignmentDaoImpl implements TeacherAssignmentDao{
     public List<TeamAssignmentAnswer> getAllTeamSubmissions(String assignment_id){
         Query query=sessionFactory.getCurrentSession()
                 .createSQLQuery("SELECT * FROM teamassignmentanswer WHERE assignment_id=\'"+assignment_id+"\'");
+        return query.list();
+    }
+
+    @Override
+    public List<Assignment> getAllAssignmentsOfTeacher(String teacher_id) {
+        Query query = sessionFactory.getCurrentSession()
+                .createSQLQuery("SELECT assignment.* FROM assignment " +
+                                "left join teaching on assignment.course_id = teaching.course_id " +
+                                "where teaching.teacher_id = \'"+teacher_id+"\'").addEntity(Assignment.class);
         return query.list();
     }
 }
