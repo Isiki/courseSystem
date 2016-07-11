@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.TeacherAssignmentService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ElaineC on 2016/7/10.
@@ -30,5 +32,18 @@ public class TeacherAssignmentServiceImpl implements TeacherAssignmentService {
     @Override
     public List<Assignment> getAllAssignmentsOfTeacher(String teacher_id) {
         return teacherAssignmentDao.getAllAssignmentsOfTeacher(teacher_id);
+    }
+
+    public List<Map<String,Object>> getAllAssignmentSubmissions(String assignment_id, boolean is_team){
+        List<Map<String,Object>> list=new ArrayList<>();
+        if(is_team==true)
+        {
+            list=teacherAssignmentDao.getAllStudentAssignmentSubmissions(assignment_id);
+        }
+        else
+        {
+            list=teacherAssignmentDao.getAllTeamAssignmentSubmissions(assignment_id);
+        }
+        return list;
     }
 }
