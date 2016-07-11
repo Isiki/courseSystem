@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.ref.ReferenceQueue;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -157,31 +158,14 @@ public class TeacherViewController {
 
 
 
-    /* 显示team信息或team列表（有一个小判断-分转）
-     * model return values
-     * hasTeam: "true"/"false" 该用户是否已属于某个团队
-     * team:                   该用户所属团队          (when hasTeam is true)
-     * studentsIn:             该用户所属团队的成员表  (when hasTeam is true)
-     * teams:                  该课程所有团队列表      (when hasTeam is false)
+    /*
+     * 教师查看当前课程所有团队
      */
     @RequestMapping(value = "team", method = RequestMethod.GET)
     public String showTeam(HttpServletRequest request, Model model){
         String course_id = getCourseIdInSession(request.getSession());
-        String student_id = getTeacherIdInSession(request.getSession());
-
-        Team team = teamService.getStudentTeamInCourse(course_id, student_id);
-        boolean hasTeam = (null!=team);
-        model.addAttribute("hasTeam", (hasTeam?"true":"false"));
-
-        if(hasTeam) {
-            List<Student> studentsIn = teamService.getStudentsInTeam(team.getId());
-            model.addAttribute("team", team);
-            model.addAttribute("studentsIn", studentsIn);
-        } else {
-            List<Team> teams = teamService.getAllTeamsUnderCourse(course_id);
-            model.addAttribute("teams", teams);
-        }
-
+        List<Map<String,Object>> list = teamService.getAllTeamWithLeader(course_id);
+        model.addAttribute("teams", list);
         return "team";
     }
 
