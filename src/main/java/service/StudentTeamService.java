@@ -12,11 +12,12 @@ import java.util.List;
  */
 public interface StudentTeamService {
 
-    boolean         canStudentCreateTeamInCourse(String course_id, String student_id);
-    boolean         createTeamInCourse(Team team, String course_id); // returns success
-    boolean applyForTeam(String studentId, String teamId);
+    boolean canStudentCreateTeamInCourse(String course_id, String student_id);
+    boolean createTeamInCourse(Team team, String course_id); // returns success
+    boolean applyForTeam(String studentId, String teamId, String description);
     boolean permitapply(TeamApplicationPK pk);
     List<TeamApplication> consultapply(String teamId);
     boolean denyapply(TeamApplicationPK pk);
     String  isTeamLeader(String sid,String cid);
+    void clearTeamAppByStudentId(String studentId,String courseId);
 }
