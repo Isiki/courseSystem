@@ -39,6 +39,9 @@ public class TeacherViewController {
     @Autowired
     private AssignmentService assignmentService;
 
+    @Autowired
+    private CourseService courseService;
+
 
 
     /* 学生工作空间
@@ -65,10 +68,22 @@ public class TeacherViewController {
      * 将目前所选课程写入session，并返回模板
      */
     @RequestMapping(value = "course_navigate", method = RequestMethod.GET)
-    public String showCourseEntry(HttpServletRequest request, Model model) {
+    public void showCourseEntry(HttpServletRequest request, HttpServletResponse response) {
+
         String course_id = request.getParameter("course_id");
         request.getSession().setAttribute("course_id", course_id);
-        return "course";
+
+        Course c = courseService.getCourseById(course_id);
+        request.getSession().setAttribute("course_name", c.getCourseName());
+
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/text;charset=utf-8");
+        try {
+            response.getWriter().append("resource.do");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -95,7 +110,7 @@ public class TeacherViewController {
         List<Assignment> assignments = assignmentService.getAllByCourseId(course_id);
         model.addAttribute("assignments", assignments);
 
-        return "assignment";
+        return "assignmentlist";
     }
 
 

@@ -5,6 +5,7 @@ import model.Student;
 import model.Teacher;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ElaineC on 2016/7/4.
@@ -23,5 +24,6 @@ public interface CourseDao {
 
     List<Teacher> getTeachersByCourseId(String id);
     List<Student> getStudentsByCourseId(String id);
+    List<Map<String,Object>> getCourseWithTeacherAndTeamAllowedByStudentId(String student_id);
 
 }
