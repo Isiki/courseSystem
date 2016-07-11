@@ -221,10 +221,15 @@ public class StudentViewController {
         Team team = teamService.getStudentTeamInCourse(course_id, student_id);
         boolean hasTeam = (null!=team);
         model.addAttribute("hasTeam", (hasTeam?"true":"false"));
+        boolean isTeamLeader;
 
         if(hasTeam) {
+            if(team.getTeamleaderId()==student_id)
+                isTeamLeader= true;
+            else  isTeamLeader = false;
             List<Student> studentsIn = teamService.getStudentsInTeam(team.getId());
             model.addAttribute("team", team);
+            model.addAttribute("isTeamLeader",isTeamLeader);
             model.addAttribute("studentsIn", studentsIn);
         } else {
             List<Team> teams = teamService.getAllTeamsUnderCourse(course_id);

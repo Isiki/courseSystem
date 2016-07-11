@@ -190,4 +190,16 @@ public class TeamDaoImpl extends DaoImpl<Team,String> implements TeamDao{
         return teamming.get(0).getTeamId();
     }
 
+    public String isTeamLeader(String sid,String cid){
+        Query query = sessionFactory.getCurrentSession()
+                .createSQLQuery("SELECT * FROM team WHERE course_id = \'"
+                        +cid+"\'AND teamleader_id = \'"+sid +"\'")
+                .addEntity(Team.class);
+        String isTeamLeader;
+        if(query.list().isEmpty())
+            isTeamLeader= "false";
+        else  isTeamLeader = "true";
+
+        return  isTeamLeader;
+    }
 }
