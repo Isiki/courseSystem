@@ -146,6 +146,10 @@ public class StudentViewController {
         String student_id = getStudentIdInSession(request.getSession());
 
         Assignment ass = assignmentService.getAssignmentById(assignment_id);
+        Course c = courseService.getCourseById(ass.getCourseId());
+
+        request.getSession().setAttribute("course_id", ass.getCourseId());
+        request.getSession().setAttribute("course_name", c.getCourseName());
 
         //int atype = assignmentService.getAssignmentTeamType(assignment_id);
         int atype = ass.getIsTeamwork()?1:0;
@@ -184,7 +188,7 @@ public class StudentViewController {
                                   .getServletContext()
                                   .getRealPath("/uploadFiles/assignments");
         try {
-            File uploadFile = fileService.saveFile(request, targetUrl);
+            fileService.saveFile(request, targetUrl);
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);

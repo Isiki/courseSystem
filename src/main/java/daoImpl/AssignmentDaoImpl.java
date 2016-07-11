@@ -69,7 +69,7 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("is_teamwork", line[4]);
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
-            tmp.put("is_submitted", line[7]!=null?"true":"false");
+            tmp.put("is_submitted", (byte)line[7]==1?"true":"false");
             tmp.put("assignment_id", line[8]);
             targetList.add(tmp);
         }
@@ -82,7 +82,8 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
                                 "left join course on assignment.course_id = course.id " +
                                 "left join teaming on teaming.team_id = teamassignmentanswer.team_id "+
                                 "left join selection on selection.course_id = course.id " +
-                                "where course.id=\'"+course_id+"\' and selection.student_id=\'"+student_id+"\' group by assignment.id"
+                                "where course.id=\'"+course_id+"\' and selection.student_id=\'"+student_id+"\' " +
+                                "and teamassignmentanswer.team_id in (select team_id from teaming where student_id=\'"+student_id+"\')"
                 );
         List<Object[]> teamResult = query2.list();
         List<Map<String, Object>> targetList1 = new ArrayList<>();
@@ -96,7 +97,7 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("is_teamwork", line[4]);
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
-            tmp.put("is_submitted", line[7]!=null?"true":"false");
+            tmp.put("is_submitted", (byte)line[7]==1?"true":"false");
             tmp.put("assignment_id", line[8]);
             targetList1.add(tmp);
         }
@@ -112,10 +113,14 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
                         "from assignment left join personalassignmentanswer on assignment.id = personalassignmentanswer.assignment_id "+
                         "left join course on assignment.course_id = course.id " +
                         "left join selection on selection.course_id = course.id " +
-                        "where selection.student_id=\'"+student_id+"\' and personalassignmentanswer.student_id=\'"+student_id+"\'"
+                        "where selection.student_id=\'"+student_id+"\' and personalassignmentanswer.student_id=\'"+student_id+"\' " +
+                        "and personalassignmentanswer.student_id=\'"+student_id+"\'"
                 );
+
+
         List<Object[]> personalResult = query1.list();
         List<Map<String, Object>> targetList = new ArrayList<>();
+        System.out.println(personalResult.get(0)[7]);
         for(Object[] line : personalResult)
         {
             Map<String, Object> tmp = new HashMap<>();
@@ -126,7 +131,7 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("is_teamwork", line[4]);
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
-            tmp.put("is_submitted", line[7]!=null?"true":"false");
+            tmp.put("is_submitted", (byte)line[7]==1?"true":"false");
             tmp.put("assignment_id", line[8]);
             targetList.add(tmp);
         }
@@ -139,7 +144,8 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
                                 "left join course on assignment.course_id = course.id " +
                                 "left join teaming on teaming.team_id=teamassignmentanswer.team_id "+
                                 "left join selection on selection.course_id = course.id " +
-                                "where selection.student_id=\'"+student_id+"\'  group by assignment.id"
+                                "where selection.student_id=\'"+student_id+"\' " +
+                                "and teamassignmentanswer.team_id in (select team_id from teaming where student_id=\'"+student_id+"\')"
                 );
         List<Object[]> teamResult = query2.list();
         List<Map<String, Object>> targetList1 = new ArrayList<>();
@@ -153,7 +159,7 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("is_teamwork", line[4]);
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
-            tmp.put("is_submitted", line[7]!=null?"true":"false");
+            tmp.put("is_submitted", (byte)line[7]==1?"true":"false");
             tmp.put("assignment_id", line[8]);
             targetList1.add(tmp);
         }

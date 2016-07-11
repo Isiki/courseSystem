@@ -42,23 +42,18 @@
             </li>
 
             <li class="start">
-                <a href="javascript:;"> <i class="icon-pencil"></i> <span class="title">课程列表</span> <span class="arrow"></span> </a>
-                <ul class="sub-menu" >
-                    <li><a >查看所有课程</a> </li>
-                    <li ><a >添加课程</a> </li>
-                </ul>
+                <a href="workspace.do"> <i class="icon-pencil"></i> <span class="title">工作空间</span> </a>
             </li>
             <li class="start">
                 <a href="javascript:;"> <i class="fa fa-home"></i> <span class="title">个人中心</span> <span class="arrow"></span> </a>
                 <ul class="sub-menu">
-                    <li><a >编辑个人信息</a> </li>
                     <li><a >修改密码</a></li>
                 </ul>
             </li>
         </ul>
         <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
             <li class="heading">
-                <h3 class="uppercase">我的课程{session.csname}</h3>
+                <p class="h5 uppercase" style="color: #f0ede7" th:text="'当前课程 - '+${session.course_name}"></p>
             </li>
             <li class="start">
                 <a href="assignment.do"> <i class="glyphicon glyphicon-tasks"></i> <span class="title">作业</span> <span class="arrow"></span> </a>

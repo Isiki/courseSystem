@@ -166,7 +166,7 @@ public class ResourceController {
             response.setStatus(HttpServletResponse.SC_OK);
         }catch(Exception e) {
             e.printStackTrace();
-            FileUtils.deleteQuietly(new File(filePath));
+            //FileUtils.deleteQuietly(new File(filePath));
         }
     }
 
