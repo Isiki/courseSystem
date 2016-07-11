@@ -66,12 +66,14 @@ public class StudentViewController {
     @RequestMapping(value = "workspace", method = RequestMethod.GET)
     public String showWorkspace(HttpServletRequest request, Model model) {
         String student_id = getStudentIdInSession(request.getSession());
-        List<Course> courses =
-                studentService.getAllCourseById(student_id);
+
+        List<Course> courses = studentService.getAllCourseById(student_id);
+        List<Map<String, Object>> coursesMP = courseService.getCourseWithTeacherAndTeamAllowedByStudentId(student_id);
         List<Map<String, Object>> assignments =
                 saService.getAssignmentsWithCourseAndSubmission(student_id);
 
         model.addAttribute("courses", courses);
+        model.addAttribute("coursesMP", coursesMP);
         model.addAttribute("assignments", assignments);
         return "workspace";
     }

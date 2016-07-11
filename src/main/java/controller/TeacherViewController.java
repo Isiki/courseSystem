@@ -105,7 +105,7 @@ public class TeacherViewController {
     @RequestMapping(value = "assignment", method = RequestMethod.GET)
     public String showAssignment(HttpServletRequest request, Model model){
         String course_id = getCourseIdInSession(request.getSession());
-        String teacher_id = getTeacherIdInSession(request.getSession());
+        //String teacher_id = getTeacherIdInSession(request.getSession());
 
         List<Assignment> assignments = assignmentService.getAllByCourseId(course_id);
         model.addAttribute("assignments", assignments);
@@ -136,15 +136,17 @@ public class TeacherViewController {
 
         if(StudentViewController.AssignmentTeamType.PERSONAL == atype) {
             List<PersonalAssignmentAnswer> paas = taService.getAllPersonalSubmissions(assignment_id);
+            ta.Service.getAllAssignmentSubmissions(assignment_id, false);
             model.addAttribute("assignmentAnswers", paas);
             model.addAttribute("teamType", "personal");
         }
         else if(StudentViewController.AssignmentTeamType.TEAM == atype) {
             List<TeamAssignmentAnswer> taas = taService.getAllTeamSubmissions(assignment_id);
+            taService.getAllAssignmentSubmissions(assignment_id, true);
             model.addAttribute("assignmentAnswers", taas);
             model.addAttribute("teamType", "team");
         }
-        return "assignment_detail";
+        return "nfe/assignment_detail";
     }
 
 

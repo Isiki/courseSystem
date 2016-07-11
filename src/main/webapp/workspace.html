@@ -149,15 +149,12 @@
             <!-- /.modal -->
 
             <!-- BEGIN COURSE TABLE -->
-            <div class="col-md-12">
+            <div class="col-md-12" th:if="${'student' == session.userType}">
                 <p class="h2">课程列表</p>
                 <div class="fixed-table-body">
                     <table id="course_table" class="table table-striped table-bordered" style="margin-top: -16px;">
                         <thead>
                         <tr>
-                            <th>
-                                课程ID
-                            </th>
                             <th>
                                 课程名称
                             </th>
@@ -169,12 +166,11 @@
                             </th>
                         </tr>
                         </thead>
-                        <tbody id="course_show_case">
-                        <tr th:unless="${courses.isEmpty()}" th:each="cs:${courses}">
-                            <td th:text="${cs.id}"></td>
-                            <td th:text="${cs.courseName}"></td>
-                            <td>TEACHER NAME</td>
-                            <td>ALLOW TEAM</td>
+                        <tbody id="course_show_case_stu">
+                        <tr th:each="cs:${coursesMP}">
+                            <td th:text="${cs['course_name']}"></td>
+                            <td th:text="${cs['teacher.real_name']}"></td>
+                            <td th:text="${cs['team_allowed']=='true'?'组队':'个人'}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -256,7 +252,7 @@
                             <td th:text="${ass.endTime}"></td>
                             <td th:text="${ass.isTeamwork==true?'组队':'个人'}"></td>
                             <td>
-                                <a th:href="@{assignment_detail.do(id=${ass.id})}">查看</a>
+                                <a th:href="@{assignment_detail.do(assignment_id=${ass.id})}">查看</a>
                             </td>
                         </tr>
                         </tbody>

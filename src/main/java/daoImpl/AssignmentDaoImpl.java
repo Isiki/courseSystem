@@ -120,6 +120,7 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
 
         List<Object[]> personalResult = query1.list();
         List<Map<String, Object>> targetList = new ArrayList<>();
+        
         for(Object[] line : personalResult)
         {
             Map<String, Object> tmp = new HashMap<>();
