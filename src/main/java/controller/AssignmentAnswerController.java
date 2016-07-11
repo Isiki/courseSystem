@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.AssignmentAnswerService;
+import service.FileService;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -96,19 +98,25 @@ public class AssignmentAnswerController {
         return "success";
     }
 
+    @Autowired
+    private FileService fileService;
+
     @RequestMapping(value = "downloadAnswer")
     public void downloadFile(HttpServletRequest request, HttpServletResponse response){
-        String path = request.getParameter("path");
-        String filename = request.getParameter("filename");
-        String filepath = request.getSession().getServletContext().getRealPath(answerRootPath) + path + filename;
-        File file = new File(filepath);
-        if(!file.exists()){
+        String assId = request.getParameter("ass_id");
+        String subCataId = request.getParameter("sub_cata_id");
+        String path = request.getSession().getServletContext().getRealPath(answerRootPath + "/" + assId + "/" + subCataId);
+        List<File> files = fileService.getAllFiles(path);
+        if(files.size() <= 0 || files.size() >= 2) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
+        File file = files.get(0);
+        String filename = file.getName();
+        String fullpath = request.getSession().getServletContext().getRealPath(path + "/" + filename);
         try {
             response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
-            FileInputStream in = new FileInputStream(filepath);
+            FileInputStream in = new FileInputStream(fullpath);
             OutputStream out = response.getOutputStream();
             byte buffer[] = new byte[1024];
             int len;
