@@ -42,11 +42,26 @@
         <div class="form-group" th:if="${errorInfo}!=''">
             <label class="control-label text-danger" th:text="${errorInfo}"></label>
         </div>
-        <div class="form-group">
-            <input type="radio" name="usertype" value="admin">管理员
-            <input type="radio" name="usertype" value="student">学生
-            <input type="radio" name="usertype" value="teacher">老师
+
+
+        <div class="row">
+            <div class="form-group control-group">
+                <label class="radio-inline">
+                    <input type="radio" name="usertype" value="admin" />
+                    管理员
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="usertype" value="admin" checked />
+                    学生
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="usertype" value="admin" />
+                    老师
+                </label>
+            </div>
         </div>
+
+
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">用户名</label>
             <input name="username" class="form-control form-control-solid " type="text" placeholder="用户名" >
