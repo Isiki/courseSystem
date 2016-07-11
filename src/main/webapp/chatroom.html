@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>聊天室</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <link href="/resources/css/my_dataTable.css" rel="stylesheet" type="text/css" />
+
+    <!-- 开发智能提示需要，真正发布的时候需要删除-->
+    <link href="/resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="/resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="/resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/treetable/css/jquery.treetable.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/jstree/dist/themes/default/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
+<!--常用的公用的css-->
+<div th:include="common::css"></div>
+<!-- header -->
+<div th:replace="header :: header"></div>
+<!-- header结束 -->
+<div class="clearfix"></div>
+<div class="page-container">
+    <!-- 侧边导航栏 -->
+    <div th:replace="sidebar::sidebar"></div>
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+            <!-- BEGIN PAGE HEADER-->
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <!-- important 在这里开始正文的内容-->
+            <div class="row container-fluid">
+                <div class="col-md-9">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption"></i>聊天室</div>
+                        </div>
+                        <div class="portlet-body">
+                            <div id="msg-show" class="scroller" data-height="350px">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group col-md-10">
+                            <input type="text" class="form-control" id="MsgInput" placeholder="输入要发送的内容">
+                        </div>
+                        <button type="submit" id="submit-msg" class="btn btn-primary col-md-2">发送消息</button>
+                    </div>
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+    </div>
+    <!-- END CONTENT -->
+</div>
+
+<!-- Modal-->
+
+
+<!-- footer-->
+<div th:replace="footer::footer"></div>
+<!-- 把公用的js包含进来,包含一些初始化的工作 -->
+<div th:include="common::js"></div>
+</div>
+</body>
+
+<script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/fileinput.js}"></script>
+<script th:src="@{/resources/assets/global/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>
+<script th:src="@{/resources/DataTables/datatables.js}"></script>
+<script th:src="@{/resources/assets/global/plugins/jstree/dist/jstree.js}"></script>
+
+<script type="text/javascript">
+    setInterval(function(){
+        $.ajax({
+            url: "refresh_chatroom.do",
+            method: "post",
+            success: function (data) {
+                document.getElementById("msg-show").innerHTML=data;
+            }
+        });
+    },2000);
+
+    $(document).on("click", "#submit-msg", function () {
+        var message = $('#MsgInput').val();
+        $.ajax({
+            url: "chat.do",
+            method: "post",
+            data: {
+                msg: message
+            },
+            success: function () {
+                $('#MsgInput').val("");
+            }
+        });
+    })
+</script>
+</html>
