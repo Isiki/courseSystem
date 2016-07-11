@@ -75,4 +75,9 @@ public class StudentTeamServiceImpl implements StudentTeamService {
         teamApplicationDao.deleteByKey(id);
         return true;
     }
+    @Override
+    public String isTeamLeader(String sid,String cid){
+        String isTeamLeader = teamDao.isTeamLeader(sid,cid);
+        return  isTeamLeader;
+    }
 }

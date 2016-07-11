@@ -80,7 +80,7 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
     }
 
     public boolean insertTAnswer(TeamAssignmentAnswer answer) {
-        answer.setIsSubmitted(true);
+        answer.setIsSubmitted(false);
         answer.setSubmitTime(new Date());
         teamAssignmentAnswerDao.saveOrUpdate(answer);
         return true;

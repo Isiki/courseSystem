@@ -34,6 +34,10 @@ public class StudentController {
     private AssignmentAnswerService answerService;
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private  StudentTeamService studentTeamService;
+    @Autowired
+    private  StudentAssignmentService studentAssignmentService;
 
 
     /*@RequestMapping(value = "student/course")
@@ -121,6 +125,24 @@ public class StudentController {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 
+
+    @RequestMapping(value = "hand_in",method = RequestMethod.GET)
+    public String handInTeam (HttpSession session ,
+                              String assignment_id,
+                              Model model){
+        UserSession userSession= new UserSession(session);
+        String sid= userSession.getUserId();
+        String cid = userSession.getCourse().getId();
+        String is_teamLeader = studentTeamService.isTeamLeader(sid,cid);
+        String is_submitted ;
+        if(studentAssignmentService.getTeamSubmission(assignment_id,sid)==null)
+            is_submitted = "false";
+        else  is_submitted = "true";
+        model.addAttribute("is_teamleader",is_teamLeader);
+        model.addAttribute("is_submitted",is_submitted);
+        model.addAttribute("assignment",assignmentService.getAssignmentById(assignment_id));
+        return "hand_in";
+    }
 
     //@RequestMapping(value = "assignmentlist")
     public String listAssignment(String id, Model model){
