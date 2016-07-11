@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 import model.Team;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 陌上花开 on 2016/7/5.
@@ -201,5 +203,28 @@ public class TeamDaoImpl extends DaoImpl<Team,String> implements TeamDao{
         else  isTeamLeader = "true";
 
         return  isTeamLeader;
+    }
+
+    public List<Map<String,Object>> getAllTeamWithLeaders(String course_id){
+        Query query=sessionFactory.getCurrentSession()
+                .createQuery("select team.*,student.real_name from team inner  join student on student.id=team.teamleader_id inner join course on course.id=team.course_id where course_id=\'"+course_id+"\'");
+        List<Object[]> teamResult = query.list();
+        List<Map<String, Object>> targetList= new ArrayList<>();
+        for(Object[] line : teamResult)
+        {
+            Map<String, Object> tmp = new HashMap<>();
+            tmp.put("team_id", line[0]);
+            tmp.put("course_id", line[1]);
+            tmp.put("teamleader_id", line[2]);
+            tmp.put("team_name", line[3]);
+            tmp.put("team_description", line[4]);
+            tmp.put("is_full", line[5]);
+            tmp.put("teamleader_name", line[6]);
+
+
+            targetList.add(tmp);
+        }
+
+        return targetList;
     }
 }

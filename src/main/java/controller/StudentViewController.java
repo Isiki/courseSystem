@@ -243,8 +243,11 @@ public class StudentViewController {
             model.addAttribute("studentsIn", studentsIn);
 
         } else {
-            List<Team> teams = teamService.getAllTeamsUnderCourse(course_id);
-            model.addAttribute("teams", teams);
+           //List<Team> teams = teamService.getAllTeamsUnderCourse(course_id);
+            //model.addAttribute("teams", teams);
+
+            List<Map<String,Object>> list=new ArrayList<>();
+            list=teamService.getAllTeamWithLeader(course_id);
         }
 
         return "team";

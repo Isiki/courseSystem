@@ -4,11 +4,14 @@ import dao.TeamDao;
 import model.Student;
 import model.Team;
 
+import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.TeamService;
+import sun.applet.resources.MsgAppletViewer_zh_TW;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -78,6 +81,11 @@ public class TeamServiceImpl implements TeamService {
     public String getTeamIdByStudent(String student_id){
         String team_id = teamDao.getTeamIdByStudent(student_id);
         return  team_id;
+    }
+
+   public List<Map<String,Object>> getAllTeamWithLeader(String course_id){
+       List<Map<String,Object>> list=teamDao.getAllTeamWithLeaders(course_id);
+       return list;
     }
 
 }
