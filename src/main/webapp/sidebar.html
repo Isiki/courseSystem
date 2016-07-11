@@ -61,7 +61,7 @@
             <li class="start">
                 <a href="resource.do"> <i class="fa fa-print"></i> <span class="title">资源</span> </a>
             </li>
-            <li class="start">
+            <li th:if="${session.team_allowed}"     class="start">
                 <a href="team.do"> <i class="fa fa-user"></i> <span class="title">团队</span> </a>
             </li>
             <li class="start">

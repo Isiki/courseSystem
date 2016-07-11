@@ -88,51 +88,54 @@
                         <div class="portlet-title">
                             <div class="caption">发布作业</div>
                         </div>
-                        <div class="portlet-body">
-                        <form id="add_assignment" action="save_assignment.do" role="add_assignment" method="post">
-                            <hr class="clearfix"/>
-                            <table class="table table-striped table-bordered table-hover table-full-width m-table"
-                                   id="sample_1">
-                                <tr class="hidden">
-                                    <td>
+                            <div class="portlet-body form">
+                                <form  class="form-horizontal" role="form" method="post" id="form">
+                                    <div class="form-body">
                                         <input type="hidden" name="courseId"  th:value="${course.id}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>标题：</td>
-                                    <td>
-                                        <input type="text" name="heading" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>作业描述：</td>
-                                    <td>
-                                        <textarea name="description"></textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>起始时间：</td>
-                                    <td>
-                                        <input id="startDate" type="date" name="startDate"/>
-                                    </td>
-                                    <td>截止时间：</td>
-                                    <td>
-                                        <input id="endDate" type="date" name="endDate"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>是否为团队作业：</td>
-                                    <td><input type="radio" name="isTeamwork" value="true" checked="checked"/>是</td>
-                                    <td><input type="radio" name="isTeamwork" value="false" >否</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button id="submit-btn" type="button" class="btn green" onclick="assign()">发布</button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </form>
-                        </div>
+                                        <div class="form-group">
+                                            <label for="heading" class="col-md-2 control-label" >标题</label>
+                                            <div class="col-md-4">
+                                                <input class="form-control" type="text" name="heading" id="heading">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description" class="col-md-2 control-label" >作业描述</label>
+                                            <div class="col-md-4">
+                                                <input class="form-control" type="textArea" name="description" id="description">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="startDate" class="col-md-2 control-label" >起始时间</label>
+                                            <div class="col-md-4">
+                                                <input class="form-control" type="date" name="startDate" id="startDate">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="endDate" class="col-md-2 control-label" >截止时间</label>
+                                            <div class="col-md-4">
+                                                <input class="form-control" type="date" name="endDate" id="endDate">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" th:if="${course.teamAllowed}">
+                                            <label for="startDate" class="col-md-2 control-label" >是否为团队作业</label>
+                                            <div class="control-group">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="isTeamwork" value="true" />是
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="isTeamwork" value="false" checked />否
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-6">
+                                                <button id="submit-btn" type="button" class="btn green" onclick="assign()">确认发布</button>
+                                                <button id="return-btn" type="button" class="btn red col-md-offset-1" onclick="javascript:window.history.back(-1);">返回前页</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -146,7 +149,7 @@
 <div th:replace="footer::footer"></div>
 <!-- 把公用的js包含进来,包含一些初始化的工作 -->
 <div th:include="common::js"></div>
-</div>
+
 </body>
 <script type="application/javascript">
     function assign(){

@@ -74,6 +74,7 @@ public class TeacherViewController {
         request.getSession().setAttribute("course_id", course_id);
 
         Course c = courseService.getCourseById(course_id);
+        request.getSession().setAttribute("team_allowed",c.isTeamAllowed());
         request.getSession().setAttribute("course_name", c.getCourseName());
 
         response.setStatus(HttpServletResponse.SC_OK);

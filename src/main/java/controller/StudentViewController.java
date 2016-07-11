@@ -88,7 +88,7 @@ public class StudentViewController {
 
         Course c = courseService.getCourseById(course_id);
         request.getSession().setAttribute("course_name", c.getCourseName());
-
+        request.getSession().setAttribute("team_allowed", c.isTeamAllowed());
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/text;charset=utf-8");
         try {
