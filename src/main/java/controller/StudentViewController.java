@@ -69,8 +69,7 @@ public class StudentViewController {
 
         List<Course> courses = studentService.getAllCourseById(student_id);
         List<Map<String, Object>> coursesMP = courseService.getCourseWithTeacherAndTeamAllowedByStudentId(student_id);
-        List<Map<String, Object>> assignments =
-                saService.getAssignmentsWithCourseAndSubmission(student_id);
+        List<Map<String, Object>> assignments = saService.getAssignmentsWithCourseAndSubmission(student_id);
 
         model.addAttribute("courses", courses);
         model.addAttribute("coursesMP", coursesMP);
