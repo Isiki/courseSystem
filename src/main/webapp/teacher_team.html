@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>团队</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <link href="/resources/css/my_dataTable.css" rel="stylesheet" type="text/css" />
+
+    <!-- 开发智能提示需要，真正发布的时候需要删除-->
+    <link href="/resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="/resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="/resources/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/css/workhour_manage.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/treetable/css/jquery.treetable.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/assets/global/plugins/jstree/dist/themes/default/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content m-body-font">
+<!--常用的公用的css-->
+<div th:include="common::css"></div>
+<!-- header -->
+<div th:replace="header :: header"></div>
+<!-- header结束 -->
+<div class="clearfix"></div>
+<div class="page-container">
+    <!-- 侧边导航栏 -->
+    <div th:replace="sidebar::sidebar"></div>
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title" id="team-id-storage">所有团队</h3>
+
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="#">团队列表</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <!-- important 在这里开始正文的内容-->
+            <!--Modal-->
+            <div class="modal fade" id="teamDetailsModal" tabindex="-1" role="dialog" aria-labelledby="teamDetailsModalHead">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="teamDetailsModalHead">团队详细信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="teamDetailsName"></p>
+                            <p id="teamDetailsDescription"></p>
+                            <p id="teamDetailsLeader"></p>
+                            <p>团队名单：</p>
+                            <table id="teamDetailsTable" class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>学号</th>
+                                    <th>姓名</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btn-details-close" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Modal-->
+
+
+            <table id="teams_table" class="table table-striped table-bordered" style="margin: 0 0 0 0;">
+                <thead>
+                <tr>
+                    <th>团队编号</th>
+                    <th>团队名称</th>
+                    <th>团队描述</th>
+                    <th>团队负责人</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="homework_show_case">
+                    <tr th:each="team:${teams}" >
+                        <td th:text="${team['team_id']}"></td>
+                        <td th:text="${team['team_name']}"></td>
+                        <td th:text="${team['team_description']}"></td>
+                        <td th:text="${team['teamleader_name']}"></td>
+                        <td><button class="btn btn-primary btn-details">详细信息</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- END PAGE CONTENT-->
+        </div>
+    </div>
+    <!-- END CONTENT -->
+</div>
+
+
+<!-- footer-->
+<div th:replace="footer::footer"></div>
+<!-- 把公用的js包含进来,包含一些初始化的工作 -->
+<div th:include="common::js"></div>
+</div>
+</body>
+
+
+<script th:src="@{/resources/DataTables/datatables.js}"></script>
+
+
+<script type="text/javascript" th:inline="javascript">
+    var teamsTable = $('#teams_table').DataTable({
+        dom: '<"pull-right"f>rt<"pull-right"p>',
+        columnDefs: [
+            {
+                visible: false,
+                searchable: false,
+                targets: 0
+            },
+            {
+                width: "250px",
+                targets: 1
+            },
+            {
+                width: "150px",
+                targets: 3
+            },
+            {
+                width: "120px",
+                targets: 4
+            }
+        ],
+        language: {
+            lengthMenu: "每页 _MENU_ 条记录",
+            zeroRecords: "没有找到记录",
+            info: "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+            infoEmpty: "无记录",
+            infoFiltered: "(从 _MAX_ 条记录过滤)",
+            search: "搜索",
+            processing: "处理中……",
+            loadingRecords: "加载中……",
+            paginate: {
+                first: "首页",
+                last: "尾页",
+                next: "下一页",
+                previous: "上一页"
+            },
+            aria: {
+                sortAscending:  "升序排列",
+                sortDescending: "降序排列"
+            }
+        },
+    });
+
+    var detailsTable;
+
+    $(document).on("click", ".btn-details", function () {
+        var team = teamsTable.row($(this).closest('tr')).data();
+        var teamId = team[0];
+
+        $('#teamDetailsName').text('团队名称：'+team[1]);
+        $('#teamDetailsDescription').text('团队描述：'+team[2]);
+        $('#teamDetailsLeader').text('团队负责人：'+team[3]);
+
+        detailsTable = $('#teamDetailsTable').DataTable({
+            dom:'t',
+            ajax: {
+                url: "team_detail.do?team_id="+teamId,
+                method: "get",
+                async: false
+            },
+            columns: [
+                {
+                    data: "id"
+                },
+                {
+                    data: "realName"
+                }
+            ]
+        });
+        $('#teamDetailsModal').modal();
+    });
+
+    $(document).on("hide.bs.modal", "#teamDetailsModal", function () {
+        detailsTable.destroy();
+    });
+
+
+</script>
+</html>
