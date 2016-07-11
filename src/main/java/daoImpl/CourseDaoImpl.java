@@ -139,7 +139,7 @@ public class CourseDaoImpl implements CourseDao{
                         "inner join selection on selection.course_id = course.id "+
                         "inner join teaching on teaching.course_id = course.id "+
                         "inner join teacher on teaching.teacher_id = teacher.id "+
-                        "where selection.student_id = \'"+student_id+"\'");
+                         "where selection.student_id = \'"+student_id+"\'");
         List<Object[]> teamResult = query.list();
         List<Map<String, Object>> targetList= new ArrayList<>();
         for(Object[] line : teamResult)

@@ -51,9 +51,9 @@ public class TeacherAssignmentDaoImpl implements TeacherAssignmentDao{
         for(Object[] line : personalResult)
         {
             Map<String, Object> tmp = new HashMap<>();
-            tmp.put("student.id", line[0]);
-            tmp.put("student.real_name", line[1]);
-            tmp.put("personalassignmentanswerr.submiyt_time", line[2]);
+            tmp.put("submitter_id", line[0]);
+            tmp.put("submitter_name", line[1]);
+            tmp.put("submit_time", line[2]);
             targetList.add(tmp);
         }
         return targetList;
@@ -66,9 +66,9 @@ public class TeacherAssignmentDaoImpl implements TeacherAssignmentDao{
         for(Object[] line : personalResult)
         {
             Map<String, Object> tmp = new HashMap<>();
-            tmp.put("team.id", line[0]);
-            tmp.put("team.team_name", line[1]);
-            tmp.put("teamassignmentanswerr.submiyt_time", line[2]);
+            tmp.put("submitter_id", line[0]);
+            tmp.put("submitter_name", line[1]);
+            tmp.put("submit_time", line[2]);
             targetList.add(tmp);
         }
         return targetList;

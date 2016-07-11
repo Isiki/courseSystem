@@ -3,6 +3,7 @@ import model.Student;
 import model.Team;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 陌上花开 on 2016/7/5.
@@ -27,5 +28,6 @@ public interface TeamDao extends Dao<Team,String>{
     public boolean createTeamInCourse(Team team, String course_id);
     public String getTeamIdByStudent(String student_id);
     public String  isTeamLeader(String sid,String cid);
+    List<Map<String,Object>> getAllTeamWithLeaders(String course_id);
 
 }

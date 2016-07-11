@@ -130,10 +130,15 @@ public class TeacherViewController {
                                        Model model)
     {
         String assignment_id = request.getParameter("assignment_id");
-        String student_id = getTeacherIdInSession(request.getSession());
+        Assignment assignment = assignmentService.getAssignmentById(assignment_id);
+        //String teacher_id = getTeacherIdInSession(request.getSession());
 
         int atype = assignmentService.getAssignmentTeamType(assignment_id);
+        Course c = courseService.getCourseById(assignment.getCourseId());
+        request.getSession().setAttribute("course_id", c.getId());
+        request.getSession().setAttribute("course_name", c.getCourseName());
 
+        model.addAttribute("assignment", assignment);
         if(StudentViewController.AssignmentTeamType.PERSONAL == atype) {
             //List<PersonalAssignmentAnswer> paas = taService.getAllPersonalSubmissions(assignment_id);
             List<Map<String, Object>> paas = taService.getAllAssignmentSubmissions(assignment_id, false);
