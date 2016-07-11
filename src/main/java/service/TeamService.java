@@ -26,5 +26,5 @@ public interface TeamService {
     public Team getStudentTeamInCourse(String course_id, String student_id);
     public List<Team> getAllTeamsUnderCourse(String course_id);
 
-
+    List<Team> getStudentTeamsInCourse(String course_id, String student_id);
 }

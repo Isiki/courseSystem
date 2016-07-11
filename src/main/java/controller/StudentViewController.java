@@ -223,7 +223,7 @@ public class StudentViewController {
         String student_id = getStudentIdInSession(request.getSession());
 
         Team team = teamService.getStudentTeamInCourse(course_id, student_id);
-        boolean hasTeam = (null!=team);
+        boolean hasTeam = (null==team);
         model.addAttribute("hasTeam", (hasTeam?"true":"false"));
         boolean isTeamLeader;
 
