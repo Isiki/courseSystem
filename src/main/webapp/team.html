@@ -72,7 +72,7 @@
                 <!--团队负责人页开始-->
                 <div th:if="${isTeamLeader == true}">
                     <!-- BEGIN PAGE HEADER-->
-                    <h3 class="page-title" th:text="'团队 - '"></h3>
+                    <h3 class="page-title" th:text="'团队 - '+ ${theTeam.teamName}"></h3>
 
                     <div class="page-bar">
                         <ul class="page-breadcrumb">
@@ -156,7 +156,7 @@
                         <tr th:each="stu:${studentsIn}" >
                             <td th:text="${stu.id}"></td>
                             <td th:text="${stu.realName}"></td>
-                            <td th:text="${stu.realName}"></td>
+                            <td th:text="${stu.id==theTeam.teamleaderId?'√':'×'}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -231,7 +231,7 @@
             <!-- 团队列表页开始 -->
             <div th:if="${hasTeam == 'false'}">
                 <!-- BEGIN PAGE HEADER-->
-                <h3 class="page-title" th:text="'所有团队 - '"></h3>
+                <h3 class="page-title" th:text="'所有团队 - '+${session.course_name}"></h3>
 
                 <div class="page-bar">
                     <ul class="page-breadcrumb">
@@ -286,7 +286,9 @@
 <script th:src="@{/resources/DataTables/datatables.js}"></script>
 
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+    var appAmount = [[${appAmount}]];
+
     $('#teammem_table').dataTable({
         dom: 'B<"pull-right"f>rt<"pull-right"p>',
         language: {
@@ -311,7 +313,7 @@
         },
         buttons: [
             {
-                text: '当前申请 <span class="badge">4</span>',
+                text: '当前申请'+ (appAmount>0?'<span class="badge">'+appAmount+'</span>':''),
                 className: 'btn btn-primary',
                 action: function(e, dt, node, config) {
                     $('#applicationModal').modal();
