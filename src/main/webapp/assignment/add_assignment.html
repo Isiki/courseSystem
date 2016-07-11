@@ -89,7 +89,7 @@
                             <div class="caption">发布作业</div>
                         </div>
                             <div class="portlet-body form">
-                                <form  class="form-horizontal" role="form" method="post" id="form">
+                                <form  class="form-horizontal" role="form" method="post" id="add_assignment">
                                     <div class="form-body">
                                         <input type="hidden" name="courseId"  th:value="${course.id}"/>
                                         <div class="form-group">
@@ -107,13 +107,13 @@
                                         <div class="form-group">
                                             <label for="startDate" class="col-md-2 control-label" >起始时间</label>
                                             <div class="col-md-4">
-                                                <input class="form-control" type="date" name="startDate" id="startDate">
+                                                <input class="form-control" type="text" name="startDate" id="startDate">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="endDate" class="col-md-2 control-label" >截止时间</label>
                                             <div class="col-md-4">
-                                                <input class="form-control" type="date" name="endDate" id="endDate">
+                                                <input class="form-control" type="text" name="endDate" id="endDate">
                                             </div>
                                         </div>
                                         <div class="form-group" th:if="${course.teamAllowed}">
@@ -166,5 +166,23 @@
             }
         });
     }
+    $(document).ready(function(){
+        var datepicker = $('#startDate').datetimepicker({
+            format: "yyyy-mm-dd hh:ii",
+            startView:2,
+            minView:0,
+            maxView:2,
+            minuteStep:15
+        });
+        var datepicker = $('#endDate').datetimepicker({
+            format: "yyyy-mm-dd hh:ii",
+            startView:2,
+            minView:0,
+            maxView:3,
+            minuteStep:15
+        });
+        $('#startDate').datetimepicker('setDate', new Date());
+        $('#endDate').datetimepicker('setDate', new Date());
+    });
 </script>
 </html>

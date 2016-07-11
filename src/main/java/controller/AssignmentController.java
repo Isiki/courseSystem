@@ -60,12 +60,13 @@ public class AssignmentController {
         assignment.setDescription(request.getParameter("description"));
         String startDateRaw = request.getParameter("startDate");
         String endDateRaw = request.getParameter("endDate");
-        assignment.setIsTeamwork(request.getParameter("isTeamwork").equals("true"));
+        String isTeamwork = request.getParameter("isTeamwork");
+        assignment.setIsTeamwork(isTeamwork.equals("true"));
         assignment.setTotalGrade(5);
         assignment.setAttachmentUrl("about:blank");
         int id = assignmentService.consultAssignmentMaxId(cid)+1;
         assignment.setIdInCourse(id);
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm");
         try {
             assignment.setStartTime(dateFormat.parse(startDateRaw));
             assignment.setEndTime(dateFormat.parse(endDateRaw));
