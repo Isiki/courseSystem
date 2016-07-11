@@ -101,7 +101,7 @@ public class AssignmentAnswerController {
     @Autowired
     private FileService fileService;
 
-    @RequestMapping(value = "downloadAnswer")
+    @RequestMapping(value = {"t/downloadAnswer", "s/downloadAnswer"})
     public void downloadFile(HttpServletRequest request, HttpServletResponse response){
         String assId = request.getParameter("ass_id");
         String subCataId = request.getParameter("sub_cata_id");

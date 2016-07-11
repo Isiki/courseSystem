@@ -36,13 +36,13 @@ public class TeacherAssignmentServiceImpl implements TeacherAssignmentService {
 
     public List<Map<String,Object>> getAllAssignmentSubmissions(String assignment_id, boolean is_team){
         List<Map<String,Object>> list=new ArrayList<>();
-        if(is_team==true)
+        if(is_team)
         {
-            list=teacherAssignmentDao.getAllStudentAssignmentSubmissions(assignment_id);
+            list=teacherAssignmentDao.getAllTeamAssignmentSubmissions(assignment_id);
         }
         else
         {
-            list=teacherAssignmentDao.getAllTeamAssignmentSubmissions(assignment_id);
+            list=teacherAssignmentDao.getAllStudentAssignmentSubmissions(assignment_id);
         }
         return list;
     }
