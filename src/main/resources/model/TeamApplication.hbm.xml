@@ -5,20 +5,17 @@
 <hibernate-mapping>
 
     <class name="model.TeamApplication" table="teamapplication" schema="coursecenter">
-        <id name="id">
-            <column name="id" sql-type="varchar(10)" length="10"/>
-            <generator class="guid" />
-        </id>
-        <property name="teamId">
+        <composite-id name="teamApplicationPK" class="model.TeamApplicationPK">
+        <key-property name="teamId">
             <column name="team_id" sql-type="varchar(10)" length="10" not-null="true"/>
-        </property>
+        </key-property>
+        <key-property name="studentId">
+            <column name="student_id" sql-type="varchar(10)" length="10" not-null="true"/>
+        </key-property>
+        </composite-id>
         <property name="courseId">
             <column name="course_id" sql-type="varchar(10)" length="10" not-null="true"/>
         </property>
-        <property name="studentId">
-            <column name="student_id" sql-type="varchar(10)" length="10" not-null="true"/>
-        </property>
-
         <property name="description">
             <column name="description" sql-type="varchar(50)" length="50" not-null="true"/>
         </property>

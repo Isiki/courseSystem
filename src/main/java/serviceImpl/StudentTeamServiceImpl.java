@@ -4,10 +4,7 @@ import dao.StudentDao;
 import dao.TeamApplicationDao;
 import dao.TeamDao;
 import dao.TeamingDao;
-import model.Student;
-import model.Team;
-import model.TeamApplication;
-import model.Teaming;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.StudentTeamService;
@@ -46,19 +43,21 @@ public class StudentTeamServiceImpl implements StudentTeamService {
         Student user=studentDao.getStudentById(studentId);
         TeamApplication apply= new TeamApplication();
         apply.setCourseId(teamDao.get(teamId).getCourseId());
-        apply.setStudentId(user.getId());
+        TeamApplicationPK pk=new TeamApplicationPK();
+        pk.setTeamId(teamId);
+        pk.setStudentId(studentId);
         apply.setRealName(user.getRealName());
-        apply.setTeamId(teamId);
+        apply.setTeamApplicationPK(pk);
         teamApplicationDao.save(apply);
         return true;
     }
 
     @Override
-    public boolean permitapply(String applyId) {
-        TeamApplication acc=teamApplicationDao.get(applyId);
+    public boolean permitapply(TeamApplicationPK pk) {
+        TeamApplication acc=teamApplicationDao.get(pk);
         Teaming tem=new Teaming();
-        tem.setStudentId(acc.getStudentId());
-        tem.setTeamId(acc.getTeamId());
+        tem.setStudentId(acc.getTeamApplicationPK().getStudentId());
+        tem.setTeamId(acc.getTeamApplicationPK().getTeamId());
         teamingDao.save(tem);
         List<TeamApplication> applist=teamApplicationDao.searchApplicationByCourseId(acc.getCourseId());
         teamApplicationDao.deleteAll(applist);
@@ -71,8 +70,8 @@ public class StudentTeamServiceImpl implements StudentTeamService {
     }
 
     @Override
-    public boolean denyapply(String id) {
-        teamApplicationDao.deleteByKey(id);
+    public boolean denyapply(TeamApplicationPK pk) {
+        teamApplicationDao.deleteByKey(pk);
         return true;
     }
     @Override

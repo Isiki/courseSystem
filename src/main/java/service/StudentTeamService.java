@@ -3,6 +3,7 @@ package service;
 import model.Student;
 import model.Team;
 import model.TeamApplication;
+import model.TeamApplicationPK;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public interface StudentTeamService {
     boolean         canStudentCreateTeamInCourse(String course_id, String student_id);
     boolean         createTeamInCourse(Team team, String course_id); // returns success
     boolean applyForTeam(String studentId, String teamId);
-    boolean permitapply(String id);
+    boolean permitapply(TeamApplicationPK pk);
     List<TeamApplication> consultapply(String teamId);
-    boolean denyapply(String id);
+    boolean denyapply(TeamApplicationPK pk);
     String  isTeamLeader(String sid,String cid);
 }
