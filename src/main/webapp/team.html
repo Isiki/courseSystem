@@ -68,74 +68,203 @@
             <!-- /.modal -->
             <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
-            <!--<div th:if="${hasTeam == 'true'}">
-                <div th:if="${isTeamLeader == true}"> -->
-                    <!--团队负责人页开始-->
+            <div th:if="${hasTeam == 'true'}">
+                <!--团队负责人页开始-->
+                <div th:if="${isTeamLeader == true}">
+                    <!-- BEGIN PAGE HEADER-->
+                    <h3 class="page-title" th:text="'团队 - '+ ${theTeam.teamName}"></h3>
 
-                        <!-- BEGIN PAGE HEADER-->
-                        <h3 class="page-title" th:text="'团队 - '"></h3>
+                    <div class="page-bar">
+                        <ul class="page-breadcrumb">
+                            <li>
+                                <i class="fa fa-home"></i>
+                                <a href="#">我的团队</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- END PAGE HEADER-->
+                    <!-- BEGIN PAGE CONTENT-->
+                    <!-- important 在这里开始正文的内容-->
 
-                        <div class="page-bar">
-                            <ul class="page-breadcrumb">
-                                <li>
-                                    <i class="fa fa-home"></i>
-                                    <a href="#">我的团队</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- END PAGE HEADER-->
-                        <!-- BEGIN PAGE CONTENT-->
-                        <!-- important 在这里开始正文的内容-->
-
-                        <!--Modal-->
-                        <div class="modal fade" id="applicationModal" tabindex="-1" role="dialog" aria-labelledby="applicationModalHead">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h4 class="modal-title" id="applicationModalHead">当前申请</h4>
+                    <!--Modal-->
+                    <div class="modal fade" id="applicationModal" tabindex="-1" role="dialog" aria-labelledby="applicationModalHead">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="applicationModalHead">当前申请</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="app_1"  class="panel-collapse collapse in">
+                                        <div class="row well">
+                                            <div class="col-md-10">
+                                                <p>申请人：赵天宇</p>
+                                                <p>学号：13211035</p>
+                                            </div>
+                                            <div class="col-md-2">
+                                                    <button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#app_1" aria-expanded="true" aria-controls="app_1">
+                                                        <i class="glyphicon glyphicon-ok"></i>同意
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-block" data-toggle="collapse" data-target="#app_1" aria-expanded="true" aria-controls="app_1">
+                                                        <i class="glyphicon glyphicon-trash"></i>拒绝
+                                                    </button>
+                                            </div>
+                                            <span></span>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
+                                    <div id="app_2"  class="panel-collapse collapse in">
+                                        <div class="row well">
+                                            <div class="col-md-10">
+                                                <p>申请人：赵天宇</p>
+                                                <p>学号：13211035</p>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#app_2" aria-expanded="true" aria-controls="app_2">
+                                                    <i class="glyphicon glyphicon-ok"></i>同意
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-block" data-toggle="collapse" data-target="#app_2" aria-expanded="true" aria-controls="app_2">
+                                                    <i class="glyphicon glyphicon-trash"></i>拒绝
+                                                </button>
+                                            </div>
+                                            <span></span>
+                                        </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                                 </div>
                             </div>
                         </div>
-                        <!--Modal-->
+                    </div>
+                    <!--Modal-->
 
 
-                        <div class="pull-right">
-                            <a href="#" class="btn blue"><i class="m-icon-swapright m-icon-white"></i>处理申请</a>
-                        </div>
-
-
-                        <table id="teammate_table" class="table table-striped table-bordered" style="margin: 0 0 0 0;">
-                            <thead>
-                            <tr>
-                                <th>队员学号</th>
-                                <th>队员姓名</th>
-                                <th>负责人</th>
-                            </tr>
-                            </thead>
-                            <tbody id="homework_show_case">
-                            <tr th:each="stu:${studentsIn}" >
-                                <td th:text="${stu.id}"></td>
-                                <td th:text="${stu.realName}"></td>
-                                <td th:text="${stu.id==team.teamleaderId?'√':'×'}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        <!--团队负责人页结束-->
-                    <!-- </div> -->
-                <!--团队队员页开始-->
+                    <!--<div class="pull-right">
+                        <a href="#" class="btn blue"><i class="m-icon-swapright m-icon-white"></i>处理申请</a>
+                    </div>-->
+                    <table id="teammem_table" class="table table-striped table-bordered" style="margin: 0 0 0 0;">
+                        <thead>
+                        <tr>
+                            <th>队员学号</th>
+                            <th>队员姓名</th>
+                            <th>负责人</th>
+                        </tr>
+                        </thead>
+                        <tbody id="homework_show_case">
+                        <tr th:each="stu:${studentsIn}" >
+                            <td th:text="${stu.id}"></td>
+                            <td th:text="${stu.realName}"></td>
+                            <td th:text="${stu.id==theTeam.teamleaderId?'√':'×'}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--团队负责人页结束-->
 
                 <!--团队队员页结束-->
-            <!-- </div> -->
+                <div th:if="${isTeamLeader == false}">
+
+
+                    <!-- BEGIN PAGE HEADER-->
+                    <h3 class="page-title" th:text="'团队 - '"></h3>
+
+                    <div class="page-bar">
+                        <ul class="page-breadcrumb">
+                            <li>
+                                <i class="fa fa-home"></i>
+                                <a href="#">我的团队</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- END PAGE HEADER-->
+                    <!-- BEGIN PAGE CONTENT-->
+                    <!-- important 在这里开始正文的内容-->
+
+                    <!--Modal-->
+                    <div class="modal fade" id="applicationModal" tabindex="-1" role="dialog" aria-labelledby="applicationModalHead">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="applicationModalHead">当前申请</h4>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Modal-->
+
+
+                    <div class="pull-right">
+                        <a href="#" class="btn blue"><i class="m-icon-swapright m-icon-white"></i>处理申请</a>
+                    </div>
+
+
+                    <table id="teammate_table" class="table table-striped table-bordered" style="margin: 0 0 0 0;">
+                        <thead>
+                        <tr>
+                            <th>队员学号</th>
+                            <th>队员姓名</th>
+                            <th>负责人</th>
+                        </tr>
+                        </thead>
+                        <tbody id="homework_show_case">
+                        <tr th:each="stu:${studentsIn}" >
+                            <td th:text="${stu.id}"></td>
+                            <td th:text="${stu.realName}"></td>
+                            <td th:text="${stu.realName}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--团队队员页结束-->
+            </div>
+
+            <!-- 团队列表页开始 -->
+            <div th:if="${hasTeam == 'false'}">
+                <!-- BEGIN PAGE HEADER-->
+                <h3 class="page-title" th:text="'所有团队 - '+${session.course_name}"></h3>
+
+                <div class="page-bar">
+                    <ul class="page-breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="#">所有团队</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END PAGE HEADER-->
+                <!-- BEGIN PAGE CONTENT-->
+                <!-- important 在这里开始正文的内容-->
+
+                <table id="teams_table" class="table table-striped table-bordered" style="margin: 0 0 0 0;">
+                    <thead>
+                    <tr>
+                        <th>团队编号</th>
+                        <th>团队名称</th>
+                        <th>团队负责人</th>
+                        <th>申请加入</th>
+                    </tr>
+                    </thead>
+                    <tbody id="homework_show_case">
+                    <tr th:each="team:${teams}" >
+                        <td th:text="${team.id}"></td>
+                        <td th:text="${team.teamName}"></td>
+                        <button class="btn-primary">申请加入</button>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <!-- 团队列表页结束 -->
 
 
 
@@ -157,9 +286,43 @@
 <script th:src="@{/resources/DataTables/datatables.js}"></script>
 
 
-<script type="text/javascript">
-    $('#teammate_table').dataTable({
+<script type="text/javascript" th:inline="javascript">
+    var appAmount = [[${appAmount}]];
 
+    $('#teammem_table').dataTable({
+        dom: 'B<"pull-right"f>rt<"pull-right"p>',
+        language: {
+            lengthMenu: "每页 _MENU_ 条记录",
+            zeroRecords: "没有找到记录",
+            info: "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+            infoEmpty: "无记录",
+            infoFiltered: "(从 _MAX_ 条记录过滤)",
+            search: "搜索",
+            processing: "处理中……",
+            loadingRecords: "加载中……",
+            paginate: {
+                first: "首页",
+                last: "尾页",
+                next: "下一页",
+                previous: "上一页"
+            },
+            aria: {
+                sortAscending:  "升序排列",
+                sortDescending: "降序排列"
+            }
+        },
+        buttons: [
+            {
+                text: '当前申请'+ (appAmount>0?'<span class="badge">'+appAmount+'</span>':''),
+                className: 'btn btn-primary',
+                action: function(e, dt, node, config) {
+                    $('#applicationModal').modal();
+                }
+            }
+        ]
+    });
+
+    $('#teammate_table').dataTable({
         language: {
             lengthMenu: "每页 _MENU_ 条记录",
             zeroRecords: "没有找到记录",
@@ -181,5 +344,29 @@
             }
         }
     });
+
+    $('#teams_table').dataTable({
+        language: {
+            lengthMenu: "每页 _MENU_ 条记录",
+            zeroRecords: "没有找到记录",
+            info: "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+            infoEmpty: "无记录",
+            infoFiltered: "(从 _MAX_ 条记录过滤)",
+            search: "搜索",
+            processing: "处理中……",
+            loadingRecords: "加载中……",
+            paginate: {
+                first: "首页",
+                last: "尾页",
+                next: "下一页",
+                previous: "上一页"
+            },
+            aria: {
+                sortAscending:  "升序排列",
+                sortDescending: "降序排列"
+            }
+        }
+    });
+
 </script>
 </html>

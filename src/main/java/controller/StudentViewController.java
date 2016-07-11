@@ -251,6 +251,7 @@ public class StudentViewController {
 
             List<Map<String,Object>> list=new ArrayList<>();
             list=teamService.getAllTeamWithLeader(course_id);
+            model.addAttribute("list", list);
         }
 
         return "team";
