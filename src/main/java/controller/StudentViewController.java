@@ -233,6 +233,9 @@ public class StudentViewController {
             String a=team.getTeamleaderId();
             if(a.equals(student_id)) {
                 isTeamLeader= true;
+                List<TeamApplication> apps=stService.consultapply(team.getId());
+                model.addAttribute("applications",apps);
+                model.addAttribute("appAmount",apps.size());
             }
             else{
                 isTeamLeader = false;
