@@ -54,7 +54,8 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
                         "left join personalassignmentanswer on assignment.id = personalassignmentanswer.assignment_id " +
                         "left join course on assignment.course_id = course.id " +
                         "left join selection on selection.course_id = course.id " +
-                        "where course.id=\'"+course_id+"\' and selection.student_id=\'"+student_id+"\' group by assignment.id"
+                        "where course.id=\'"+course_id+"\' and selection.student_id=\'"+student_id+"\' " +
+                        "and personalassignmentanswer.student_id=\'"+student_id+"\' group by assignment.id"
                 );
         List<Object[]> personalResult = query1.list();
         List<Map<String, Object>> targetList = new ArrayList<>();
@@ -107,12 +108,11 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
     public List<Map<String,Object>> allAssimentsWithCourseAndSubmission(String student_id){
         Query query1=sessionFactory.getCurrentSession()
                 .createSQLQuery(
-                        "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted,assignment.id " +
-                                "from assignment " +
-                                "left join personalassignmentanswer on assignment.id = personalassignmentanswer.assignment_id " +
-                                "left join course on assignment.course_id = course.id " +
-                                "left join selection on selection.course_id = course.id " +
-                                "where selection.student_id=\'"+student_id+"\'  group by assignment.id"
+                        "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted,assignment.id "+
+                        "from assignment left join personalassignmentanswer on assignment.id = personalassignmentanswer.assignment_id "+
+                        "left join course on assignment.course_id = course.id " +
+                        "left join selection on selection.course_id = course.id " +
+                        "where selection.student_id=\'"+student_id+"\' and personalassignmentanswer.student_id=\'"+student_id+"\'"
                 );
         List<Object[]> personalResult = query1.list();
         List<Map<String, Object>> targetList = new ArrayList<>();
