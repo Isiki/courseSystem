@@ -16,5 +16,5 @@ public interface TeamAssignmentAnswerDao extends Dao<TeamAssignmentAnswer, TeamA
     public List<TeamAssignmentAnswer> getTeamAssignmentToBeSubmittedByTeam(String teamId);
     public List<TeamAssignmentAnswer> getTeamAssignmentToBeSubmittedByCourseId(String courseId);
     public List<TeamAssignmentAnswer> getTeamAnswersByStudentId(String assignment_id,String student_id);
-
+    public String teamLeaderSubmit(String sid,String cid,String assignment_id);
 }

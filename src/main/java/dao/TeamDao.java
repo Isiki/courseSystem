@@ -26,5 +26,6 @@ public interface TeamDao extends Dao<Team,String>{
     public boolean canStudentCreateTeamInCourse(String course_id,String student_id);
     public boolean createTeamInCourse(Team team, String course_id);
     public String getTeamIdByStudent(String student_id);
+    public String  isTeamLeader(String sid,String cid);
 
 }

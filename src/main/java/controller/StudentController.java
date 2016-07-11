@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import service.*;
 import util.PageResultSet;
 import util.UserSession;
@@ -34,6 +35,12 @@ public class StudentController {
     private AssignmentAnswerService answerService;
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private  StudentTeamService studentTeamService;
+    @Autowired
+    private  StudentAssignmentService studentAssignmentService;
+    @Autowired
+    private AssignmentAnswerService assignmentAnswerService;
 
 
     /*@RequestMapping(value = "student/course")
@@ -121,6 +128,34 @@ public class StudentController {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 
+    @RequestMapping(value = "team_hand_in", method = RequestMethod.POST)
+    @ResponseBody
+    public String teamleaderSubmitt(String assignment_id,
+                                    HttpSession session){
+        UserSession userSession= new UserSession(session);
+        String sid= userSession.getUserId();
+        String cid = userSession.getCourse().getId();
+        String result = assignmentAnswerService.teamLeaderSubmit(sid,cid,assignment_id);
+        return  result;
+    }
+
+    @RequestMapping(value = "hand_in",method = RequestMethod.GET)
+    public String handInTeam (HttpSession session ,
+                              String assignment_id,
+                              Model model){
+        UserSession userSession= new UserSession(session);
+        String sid= userSession.getUserId();
+        String cid = userSession.getCourse().getId();
+        String is_teamLeader = studentTeamService.isTeamLeader(sid,cid);
+        String is_submitted ;
+        if(studentAssignmentService.getTeamSubmission(assignment_id,sid)==null)
+            is_submitted = "false";
+        else  is_submitted = "true";
+        model.addAttribute("is_teamleader",is_teamLeader);
+        model.addAttribute("is_submitted",is_submitted);
+        model.addAttribute("assignment",assignmentService.getAssignmentById(assignment_id));
+        return "hand_in";
+    }
 
     //@RequestMapping(value = "assignmentlist")
     public String listAssignment(String id, Model model){
