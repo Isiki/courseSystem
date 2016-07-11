@@ -20,15 +20,9 @@
         <!-- END RESPONSIVE MENU TOGGLER -->
         <!-- BEGIN TOP NAVIGATION MENU -->
         <div class="top-menu">
-            <ul class="nav navbar-nav pull-right">
-                <li class="dropdown dropdown-user">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                        <span th:text="${'欢迎您，'+session.username}"></span>
-                        <span><a href="logout.do"></a></span>
-					 </span>
-                    </a>
-                </li>
-
+            <ul class="nav navbar-nav pull-right" style="margin-top: 10px">
+                <span th:text="${'欢迎您，'+session.username}" style="color: #f0f2f1"></span>
+                <span><a href="/logout_action.do">登出</a></span>
             </ul>
         </div>
         <!-- END TOP NAVIGATION MENU -->
