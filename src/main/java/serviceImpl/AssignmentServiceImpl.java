@@ -58,9 +58,10 @@ public class AssignmentServiceImpl implements AssignmentService {
             throw new BaseException(ERROR.ASSIGNMENT_NUMBER_EXIST, ERROR.hashMap.get(ERROR.ASSIGNMENT_NUMBER_EXIST));
         }
     }
-    @Override
-    public int consultAssignmentMaxId(String coursId) {
-        return assignmentDao.countByCourseId(coursId);
+
+    public int consultAssignmentMaxId(String courseId) {
+        int i = assignmentDao.countByCourseId(courseId);
+        return i;
     }
 
     @Override

@@ -42,10 +42,7 @@ public class AssignmentController {
     private AssignmentAnswerService assignmentAnswerService;
     @Autowired
     private CourseService courseService;
-    @Autowired
-    private AssignmentAnswerService aaService;
-    @Autowired
-    private StudentService studentService;
+
 
     @RequestMapping(value = "t/add_assignment", method = RequestMethod.GET)
     public String addAssignment(HttpServletRequest request, Model model) {
@@ -55,35 +52,28 @@ public class AssignmentController {
     }
 
     @RequestMapping(value = "t/save_assignment", method = RequestMethod.POST)
-    @ResponseBody
-    public String saveAssignment(HttpServletRequest request, HttpSession session) {
+    public void saveAssignment(HttpServletRequest request,HttpServletResponse response) {
         Assignment assignment = new Assignment();
         String cid = request.getParameter("courseId");
-        String hding = request.getParameter("heading");
-        String dsc = request.getParameter("description");
-
-        assignment.setCourseId(request.getParameter("courseId"));
+        assignment.setCourseId(cid);
         assignment.setHeading(request.getParameter("heading"));
         assignment.setDescription(request.getParameter("description"));
         String startDateRaw = request.getParameter("startDate");
         String endDateRaw = request.getParameter("endDate");
         assignment.setIsTeamwork(request.getParameter("isTeamwork").equals("true"));
-        assignment.setIdInCourse(1);
         assignment.setTotalGrade(5);
         assignment.setAttachmentUrl("about:blank");
-        //assignment.setIdInCourse(assignmentService.consultAssignmentMaxId(assignment.getCourseId())+1);
+        int id = assignmentService.consultAssignmentMaxId(cid)+1;
+        assignment.setIdInCourse(id);
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
         try {
             assignment.setStartTime(dateFormat.parse(startDateRaw));
             assignment.setEndTime(dateFormat.parse(endDateRaw));
         }catch (Exception e){
-            System.out.println(e);
-            return "fail";
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
-
         assignmentService.insertAssignment(assignment);
-        return "success";
-
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     //@RequestMapping(value = "t/assignment",method = RequestMethod.GET)

@@ -155,13 +155,11 @@
             type:"POST",
             data:$('#add_assignment').serialize(),
             dataType:"json",
-            success: function(res, state){
-                if(res=="success"){
-                    res = "提交成功";
-                }else{
-                    res="提交失败";
-                }
-                alert(res);
+            success: function() {
+                layer.alert("发布成功")
+            },
+            failure: function () {
+                layer.alert("发布失败")
             }
         });
     }
