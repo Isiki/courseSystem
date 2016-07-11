@@ -31,19 +31,38 @@ public class ResourceController {
     @Autowired
     private FileService fileService;
 
-    @RequestMapping(value = "resource")
-    public String resouceManage()
+    @RequestMapping(value = "t/resource")
+    public String resouceManage(HttpServletRequest request)
     {
+        setResCoursePath(request);
+        createCourseResFolderIfNotExsits(request);
         return "resource";
     }
 
-    private void setResRootPath(HttpServletRequest request) {
-        resCoursePath += request.getSession().getAttribute("course_id").toString();
+    @RequestMapping(value = "s/resource")
+    public String studentResouceManage(HttpServletRequest request)
+    {
+        setResCoursePath(request);
+        createCourseResFolderIfNotExsits(request);
+        return "student_resource";
+    }
+
+    private void createCourseResFolderIfNotExsits(HttpServletRequest request) {
+        File folder = new File(request.getSession().getServletContext().getRealPath(resCoursePath));
+        if(!folder.exists())
+        {
+            folder.mkdirs();
+        }
+    }
+
+    private void setResCoursePath(HttpServletRequest request) {
+        resCoursePath = resRootPath + "/" + request.getSession().getAttribute("course_id").toString();
     }
 
     @RequestMapping(value = "show_resource")
     public void showResource(HttpServletRequest request, HttpServletResponse response){
-         String resURL = request.getSession().getServletContext().getRealPath(resRootPath + request.getParameter("path"));
+        setResCoursePath(request);
+         String resURL = request.getSession().getServletContext().getRealPath(resCoursePath + request.getParameter("path"));
         List<File> files = fileService.getAllFiles(resURL);
         String json = fileService.filesToJson(files);
 
@@ -55,9 +74,10 @@ public class ResourceController {
 
     @RequestMapping(value = "saveResource_action")
     public void saveResource(HttpServletRequest request, HttpServletResponse response){
+        setResCoursePath(request);
         PrintWriter respWriter=null;
         try {
-            String resURL = request.getSession().getServletContext().getRealPath(resRootPath);
+            String resURL = request.getSession().getServletContext().getRealPath(resCoursePath + request.getParameter("path"));
             String uploadFilesJson = fileService.saveFile(request, resURL);
 
             response.setCharacterEncoding("UTF-8");
@@ -76,9 +96,10 @@ public class ResourceController {
     @RequestMapping(value = "downloadResource")
     public void downloadResource(HttpServletRequest request, HttpServletResponse response)
     {
+        setResCoursePath(request);
         String path = request.getParameter("path");
         String filename = request.getParameter("filename");
-        String filepath = request.getSession().getServletContext().getRealPath(resRootPath) + path + filename;
+        String filepath = request.getSession().getServletContext().getRealPath(resCoursePath) + path + filename;
 
         File file = new File(filepath);
         if(!file.exists()){
@@ -113,7 +134,8 @@ public class ResourceController {
     @RequestMapping(value = "show_resTree")
     public void showResTree(HttpServletRequest request, HttpServletResponse response)
     {
-        String rootPath = request.getSession().getServletContext().getRealPath(resRootPath);
+        setResCoursePath(request);
+        String rootPath = request.getSession().getServletContext().getRealPath(resCoursePath);
         String resTreeJson = fileService.getDirStructionJson(rootPath);
 
         response.setCharacterEncoding("UTF-8");
@@ -139,8 +161,9 @@ public class ResourceController {
     @RequestMapping(value = "moveFile")
     public void moveFile(HttpServletRequest request, HttpServletResponse response)
     {
-        String src = request.getSession().getServletContext().getRealPath(resRootPath+request.getParameter("source"));
-        String dst = request.getSession().getServletContext().getRealPath(resRootPath+request.getParameter("destination"));
+        setResCoursePath(request);
+        String src = request.getSession().getServletContext().getRealPath(resCoursePath+request.getParameter("source"));
+        String dst = request.getSession().getServletContext().getRealPath(resCoursePath+request.getParameter("destination"));
         try {
             Path sourcePath = Paths.get(src);
             Path destinationPath = Paths.get(dst);
@@ -156,10 +179,11 @@ public class ResourceController {
     @RequestMapping(value = "removeFile")
     public void removeFile(HttpServletRequest request, HttpServletResponse response)
     {
+        setResCoursePath(request);
         String filePath = null;
         try {
             String path = request.getParameter("path");
-            filePath = request.getSession().getServletContext().getRealPath(resRootPath + path);
+            filePath = request.getSession().getServletContext().getRealPath(resCoursePath + path);
             Path fileToBeDel = Paths.get(filePath);
 
             Files.deleteIfExists(fileToBeDel);
@@ -173,10 +197,11 @@ public class ResourceController {
     @RequestMapping(value = "newFolder")
     public void newFolder(HttpServletRequest request, HttpServletResponse response)
     {
+
         String path = request.getParameter("path");
         String folderName = request.getParameter("folderName");
         try {
-            String folderPath = request.getSession().getServletContext().getRealPath(resRootPath + path + folderName);
+            String folderPath = request.getSession().getServletContext().getRealPath(resCoursePath + path + folderName);
             File folder = new File(folderPath);
             if(folder.exists())
             {

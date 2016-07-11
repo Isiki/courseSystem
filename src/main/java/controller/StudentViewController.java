@@ -102,11 +102,11 @@ public class StudentViewController {
      * 返回学生资源页面，详情咨询赵天宇
      * session.getAttribute("course_id")
      */
-    @RequestMapping(value = "resource", method = RequestMethod.GET)
+    /*@RequestMapping(value = "resource", method = RequestMethod.GET)
     public String showResource(HttpServletRequest request, Model model) {
         // i know nothing about this.
         return "resource";
-    }
+    }*/
 
 
     /* 显示课程下作业列表
