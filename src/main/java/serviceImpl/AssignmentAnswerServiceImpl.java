@@ -103,4 +103,8 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
     public PersonalAssignmentAnswer getPersonalAnswerByPK(PersonalAssignmentAnswerPK pk) {
         return personalAssignmentAnswerDao.get(pk);
     }
+    public String teamLeaderSubmit(String sid,String cid,String assignment_id){
+        String result = teamAssignmentAnswerDao.teamLeaderSubmit(sid,cid,assignment_id);
+        return  result;
+    }
 }

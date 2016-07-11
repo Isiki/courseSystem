@@ -3,9 +3,11 @@ package daoImpl;
 import dao.Dao;
 import dao.TeamAssignmentAnswerDao;
 import model.PersonalAssignmentAnswer;
+import model.TeamAssignmentAnswer;
 import model.Team;
 import model.TeamAssignmentAnswer;
 import model.TeamAssignmentAnswerPK;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +64,17 @@ public class TeamAssignmentAnswerDaoImpl extends DaoImpl<TeamAssignmentAnswer, T
                 .createSQLQuery("select teamassignmentanswer.* from teamassignmentanswer inner join teaming on teaming.team_id=teamassignmentanswer.team_id inner join assignment on teamassignmentanswer.assignment_id=assignment.id where assignment_id=\'"+assignment_id+"\'and student_id=\'"+student_id+"\'" )
                 .addEntity(TeamAssignmentAnswer.class);
         return query.list();
+    }
+    public String teamLeaderSubmit(String sid,String cid,String assignment_id){
+        Query query=sessionFactory.getCurrentSession()
+                .createSQLQuery("SELECT teamassignmentanswer.* FROM  teamassignmentanswer " +
+                        "INNER  JOIN team ON teamassignmentanswer.team_id = team.id WHERE assignment_id = \'"
+                        + assignment_id+"\'AND  course_id = \'"+cid+"\'AND team.teamleader_id =\'"+sid+"\'" )
+                .addEntity(TeamAssignmentAnswer.class);
+
+        TeamAssignmentAnswer teamAssignmentAnswer = (TeamAssignmentAnswer)query.list().get(0);
+        teamAssignmentAnswer.setIsSubmitted(true);
+        sessionFactory.getCurrentSession().save(teamAssignmentAnswer);
+        return  "success";
     }
 }

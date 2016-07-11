@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import service.*;
 import util.PageResultSet;
 import util.UserSession;
@@ -38,6 +39,8 @@ public class StudentController {
     private  StudentTeamService studentTeamService;
     @Autowired
     private  StudentAssignmentService studentAssignmentService;
+    @Autowired
+    private AssignmentAnswerService assignmentAnswerService;
 
 
     /*@RequestMapping(value = "student/course")
@@ -125,6 +128,16 @@ public class StudentController {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 
+    @RequestMapping(value = "team_hand_in", method = RequestMethod.POST)
+    @ResponseBody
+    public String teamleaderSubmitt(String assignment_id,
+                                    HttpSession session){
+        UserSession userSession= new UserSession(session);
+        String sid= userSession.getUserId();
+        String cid = userSession.getCourse().getId();
+        String result = assignmentAnswerService.teamLeaderSubmit(sid,cid,assignment_id);
+        return  result;
+    }
 
     @RequestMapping(value = "hand_in",method = RequestMethod.GET)
     public String handInTeam (HttpSession session ,
