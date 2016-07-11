@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -173,10 +174,11 @@ public class TeacherViewController {
     * 教师查看团队成员名单
      */
     @RequestMapping(value = "team_detail",method = RequestMethod.GET)
-    public String showTeamMembers(HttpServletRequest request,Model model){
+    public String showTeamMembers(HttpServletRequest request,HttpServletResponse response){
         String teamId = request.getParameter("team_id");
         List<Student> students = teamService.getStudentsInTeam(teamId);
-        model.addAttribute("students",students);
+        JSONArray array = new JSONArray();
+        array.fromObject(students);
         return "team_detail";
     }
 
