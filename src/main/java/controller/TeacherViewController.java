@@ -135,14 +135,14 @@ public class TeacherViewController {
         int atype = assignmentService.getAssignmentTeamType(assignment_id);
 
         if(StudentViewController.AssignmentTeamType.PERSONAL == atype) {
-            List<PersonalAssignmentAnswer> paas = taService.getAllPersonalSubmissions(assignment_id);
-            taService.getAllAssignmentSubmissions(assignment_id, false);
+            //List<PersonalAssignmentAnswer> paas = taService.getAllPersonalSubmissions(assignment_id);
+            List<Map<String, Object>> paas = taService.getAllAssignmentSubmissions(assignment_id, false);
             model.addAttribute("assignmentAnswers", paas);
             model.addAttribute("teamType", "personal");
         }
         else if(StudentViewController.AssignmentTeamType.TEAM == atype) {
-            List<TeamAssignmentAnswer> taas = taService.getAllTeamSubmissions(assignment_id);
-            taService.getAllAssignmentSubmissions(assignment_id, true);
+            //List<TeamAssignmentAnswer> taas = taService.getAllTeamSubmissions(assignment_id);
+            List<Map<String, Object>> taas = taService.getAllAssignmentSubmissions(assignment_id, true);
             model.addAttribute("assignmentAnswers", taas);
             model.addAttribute("teamType", "team");
         }
