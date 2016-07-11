@@ -72,26 +72,26 @@ public class AssignmentAnswerController {
 
     @RequestMapping(value = "t/check_team_assignment", method = RequestMethod.POST)
     @ResponseBody
-    public String commentTeamAssignment(String assignment_id,String team_id,String comment,int grade){
+    public String commentTeamAssignment(String assignment_id,String team_id,String comment,String grade){
         TeamAssignmentAnswerPK pk= new TeamAssignmentAnswerPK();
         pk.setAssignmentId(assignment_id);
         pk.setTeamId(team_id);
         TeamAssignmentAnswer answer=assignmentAnswerService.getTeamAnswerByPK(pk);
         answer.setComment(comment);
-        answer.setGrade(grade);
+        answer.setGrade(Integer.parseInt(grade));
         assignmentAnswerService.commentAssignment(answer);
         return "success";
     }
     
     @RequestMapping(value = "t/check_personal_assignment", method = RequestMethod.POST)
     @ResponseBody
-    public String commentPersonalAssignment(String assignment_id,String student_id,String comment,int grade){
+    public String commentPersonalAssignment(String assignment_id,String student_id,String comment,String grade){
         PersonalAssignmentAnswerPK pk=new PersonalAssignmentAnswerPK();
         pk.setAssignmentId(assignment_id);
         pk.setStudentId(student_id);
         PersonalAssignmentAnswer answer=assignmentAnswerService.getPersonalAnswerByPK(pk);
         answer.setComment(comment);
-        answer.setGrade(grade);
+        answer.setGrade(Integer.parseInt(grade));
         assignmentAnswerService.commentAssignment(answer);
         return "success";
     }
