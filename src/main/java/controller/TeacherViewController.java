@@ -172,7 +172,13 @@ public class TeacherViewController {
     /*
     * 教师查看团队成员名单
      */
-    @RequestMapping(value = "")
+    @RequestMapping(value = "team_detail",method = RequestMethod.GET)
+    public String showTeamMembers(HttpServletRequest request,Model model){
+        String teamId = request.getParameter("team_id");
+        List<Student> students = teamService.getStudentsInTeam(teamId);
+        model.addAttribute("students",students);
+        return "team_detail";
+    }
 
 
 
