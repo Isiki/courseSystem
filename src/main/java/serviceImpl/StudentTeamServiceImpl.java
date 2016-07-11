@@ -39,7 +39,7 @@ public class StudentTeamServiceImpl implements StudentTeamService {
     }
 
     @Override
-    public boolean applyForTeam(String studentId, String teamId) {
+    public boolean applyForTeam(String studentId, String teamId, String description) {
         Student user=studentDao.getStudentById(studentId);
         TeamApplication apply= new TeamApplication();
         apply.setCourseId(teamDao.get(teamId).getCourseId());
@@ -48,6 +48,11 @@ public class StudentTeamServiceImpl implements StudentTeamService {
         pk.setStudentId(studentId);
         apply.setRealName(user.getRealName());
         apply.setTeamApplicationPK(pk);
+        apply.setDescription(description);
+        if(teamApplicationDao.get(pk)!=null)
+        {
+            return false;
+        }
         teamApplicationDao.save(apply);
         return true;
     }
@@ -59,14 +64,14 @@ public class StudentTeamServiceImpl implements StudentTeamService {
         tem.setStudentId(acc.getTeamApplicationPK().getStudentId());
         tem.setTeamId(acc.getTeamApplicationPK().getTeamId());
         teamingDao.save(tem);
-        List<TeamApplication> applist=teamApplicationDao.searchApplicationByCourseId(acc.getCourseId());
+        List<TeamApplication> applist=teamApplicationDao.searchApplicationByCourseId(pk.getStudentId(), acc.getCourseId());
         teamApplicationDao.deleteAll(applist);
         return true;
     }
 
     @Override
     public List<TeamApplication> consultapply(String teamId) {
-        return teamApplicationDao.searchApplicationByTeamId(teamId);
+        return  teamApplicationDao.searchApplicationByTeamId(teamId);
     }
 
     @Override
@@ -78,5 +83,11 @@ public class StudentTeamServiceImpl implements StudentTeamService {
     public String isTeamLeader(String sid,String cid){
         String isTeamLeader = teamDao.isTeamLeader(sid,cid);
         return  isTeamLeader;
+    }
+
+    @Override
+    public void clearTeamAppByStudentId(String studentId,String courseId) {
+        List<TeamApplication> applist=teamApplicationDao.searchApplicationByCourseId(studentId, courseId);
+        teamApplicationDao.deleteAll(applist);
     }
 }

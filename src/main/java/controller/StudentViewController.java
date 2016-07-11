@@ -88,7 +88,7 @@ public class StudentViewController {
 
         Course c = courseService.getCourseById(course_id);
         request.getSession().setAttribute("course_name", c.getCourseName());
-
+        request.getSession().setAttribute("team_allowed", c.isTeamAllowed());
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/text;charset=utf-8");
         try {
@@ -257,45 +257,47 @@ public class StudentViewController {
     }
 
 
-    /* 显示创建团队的界面
-     * 首先需要确认该课程/学生组合是否满足新建团队的条件，如不满足返回错误页面
-     */
-    @RequestMapping(value = "team_create", method = RequestMethod.GET)
-    public String showCreateTeam(HttpServletRequest request, Model model){
-        String course_id = getCourseIdInSession(request.getSession());
-        String student_id = getStudentIdInSession(request.getSession());
+    /* 处理创建团队请求*/
+    @RequestMapping(value = "team_create")
+    public void teamCreateHandler(HttpServletRequest request, HttpServletResponse response){
+        String courseId = getCourseIdInSession(request.getSession());
+        String studentId = getStudentIdInSession(request.getSession());
 
-        boolean isValid = stService.canStudentCreateTeamInCourse(course_id, student_id);
-        if(isValid) return "team_create";
+        String teamName = request.getParameter("team_name");
+        String teamDescription = request.getParameter("team_description");
 
-        return "team_creation_invalid";
-    }
+        Team team = new Team();
+        team.setCourseId(courseId);
+        team.setIsFull(false);
+        team.setTeamName(teamName);
+        team.setTeamDescription(teamDescription);
+        team.setTeamleaderId(studentId);
 
-
-    /* 处理创建团队请求
-     * 接受一个team作为参数，其中leader_id已经在前台填写完毕
-     * model return values
-     * success: "true"/"false"
-     */
-    @RequestMapping(value = "team_create", method = RequestMethod.POST)
-    public String teamCreateHandler(HttpServletRequest request, Team team, Model model){
-        String course_id = getCourseIdInSession(request.getSession());
-        //String student_id = getStudentIdInSession(request.getSession());
-        // student id already got in session at frontend
-
-        boolean success = stService.createTeamInCourse(team, course_id);
-        model.addAttribute("success", success?"true":"false");
-
-        return "team_create";
+        if(stService.createTeamInCourse(team, courseId)) {
+            stService.clearTeamAppByStudentId(studentId,courseId);
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 
 
     /* 处理加入团队请求
      * 具体实现方式未讨论
      */
-    @RequestMapping(value = "apply_team", method = RequestMethod.POST)
-    @ResponseBody
-    public String joinTeam(String team_id, HttpSession session){
+    @RequestMapping(value = "apply_team")
+    public void joinTeam(HttpServletRequest request, HttpServletResponse response) {
+        UserSession user = new UserSession(request.getSession());
+        String userId = user.getUserId();
+        String teamId = request.getParameter("team_id");
+        String description = request.getParameter("description");
+        if(stService.applyForTeam(userId, teamId, description)) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+    /*public String joinTeam(String team_id, HttpSession session){
         // 学生类型
         UserSession user = new UserSession(session);
         if(stService.applyForTeam(user.getUserId(),team_id)) {
@@ -304,7 +306,7 @@ public class StudentViewController {
         else{
             return "failed";
         }
-    }
+    }*/
 
     @RequestMapping(value = "team_app", method = RequestMethod.GET)
     public String consultTeamApplication(Model model,HttpSession session){
@@ -322,38 +324,26 @@ public class StudentViewController {
         return "team_application";
     }
 
-    @RequestMapping(value = "commit_team_app", method = RequestMethod.POST)
-    @ResponseBody
-    public String commitTeamApplication(String id, HttpSession session){
-        // 学生类型
-        UserSession user = new UserSession(session);
-        Team team=teamService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
-        if(team.getTeamleaderId()==user.getUserId()) {
-            if(true) {
-                return "success";
-            }else{
-                return "failed";
-            }
-        }else{
-            return "no authority";
-        }
+    @RequestMapping(value = "commit_team_app")
+    public void commitTeamApplication(HttpServletRequest request, HttpServletResponse reponse){
+        String studentId = request.getParameter("student_id");
+        String team_id = request.getParameter("team_id");
+        TeamApplicationPK pk = new TeamApplicationPK();
+        pk.setStudentId(studentId);
+        pk.setTeamId(team_id);
+        stService.permitapply(pk);
+        reponse.setStatus(HttpServletResponse.SC_OK);
     }
 
-    @RequestMapping(value = "deny_team_app", method = RequestMethod.POST)
-    @ResponseBody
-    public String denyTeamApplication(String id, HttpSession session){
-        // 学生类型
-        UserSession user = new UserSession(session);
-        Team team=teamService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
-        if(team.getTeamleaderId()==user.getUserId()) {
-            if(true) {
-                return "success";
-            }else{
-                return "failed";
-            }
-        }else{
-            return "no authority";
-        }
+    @RequestMapping(value = "deny_team_app")
+    public void denyTeamApplication(HttpServletRequest request, HttpServletResponse reponse){
+        String studentId = request.getParameter("student_id");
+        String team_id = request.getParameter("team_id");
+        TeamApplicationPK pk = new TeamApplicationPK();
+        pk.setStudentId(studentId);
+        pk.setTeamId(team_id);
+        stService.denyapply(pk);
+        reponse.setStatus(HttpServletResponse.SC_OK);
     }
 
 /* ------------------------ Util functions below ------------------------------ */

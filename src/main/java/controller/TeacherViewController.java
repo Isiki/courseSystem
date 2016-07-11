@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +17,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.ref.ReferenceQueue;
+
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +81,7 @@ public class TeacherViewController {
         request.getSession().setAttribute("course_id", course_id);
 
         Course c = courseService.getCourseById(course_id);
+        request.getSession().setAttribute("team_allowed",c.isTeamAllowed());
         request.getSession().setAttribute("course_name", c.getCourseName());
 
         response.setStatus(HttpServletResponse.SC_OK);
@@ -159,32 +164,27 @@ public class TeacherViewController {
 
 
 
-    /* 显示team信息或team列表（有一个小判断-分转）
-     * model return values
-     * hasTeam: "true"/"false" 该用户是否已属于某个团队
-     * team:                   该用户所属团队          (when hasTeam is true)
-     * studentsIn:             该用户所属团队的成员表  (when hasTeam is true)
-     * teams:                  该课程所有团队列表      (when hasTeam is false)
+    /*
+     * 教师查看当前课程所有团队
      */
     @RequestMapping(value = "team", method = RequestMethod.GET)
     public String showTeam(HttpServletRequest request, Model model){
         String course_id = getCourseIdInSession(request.getSession());
-        String student_id = getTeacherIdInSession(request.getSession());
+        List<Map<String,Object>> list = teamService.getAllTeamWithLeader(course_id);
+        model.addAttribute("teams", list);
+        return "teacher_team";
+    }
 
-        Team team = teamService.getStudentTeamInCourse(course_id, student_id);
-        boolean hasTeam = (null!=team);
-        model.addAttribute("hasTeam", (hasTeam?"true":"false"));
-
-        if(hasTeam) {
-            List<Student> studentsIn = teamService.getStudentsInTeam(team.getId());
-            model.addAttribute("team", team);
-            model.addAttribute("studentsIn", studentsIn);
-        } else {
-            List<Team> teams = teamService.getAllTeamsUnderCourse(course_id);
-            model.addAttribute("teams", teams);
-        }
-
-        return "team";
+    /*
+    * 教师查看团队成员名单
+     */
+    @RequestMapping(value = "team_detail",method = RequestMethod.GET)
+    public String showTeamMembers(HttpServletRequest request,HttpServletResponse response){
+        String teamId = request.getParameter("team_id");
+        List<Student> students = teamService.getStudentsInTeam(teamId);
+        JSONArray array = new JSONArray();
+        array.fromObject(students);
+        return "team_detail";
     }
 
     @RequestMapping(value = "update_assignment_info", method = RequestMethod.POST)
@@ -194,6 +194,7 @@ public class TeacherViewController {
         String column_name = request.getParameter("column_name");
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         Assignment ass = assignmentService.getAssignmentById(assid);
         if("heading".equals(column_name)) {
@@ -208,7 +209,7 @@ public class TeacherViewController {
             String start_time = request.getParameter("new_value");
             Date dt = null;
             try {
-                dt = df.parse(start_time);
+                dt = dfm.parse(start_time);
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -219,7 +220,7 @@ public class TeacherViewController {
             String end_time = request.getParameter("new_value");
             Date dt = null;
             try {
-                dt = df.parse(end_time);
+                dt = dfm.parse(end_time);
             }
             catch (Exception e){
                 e.printStackTrace();

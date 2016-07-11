@@ -7,7 +7,7 @@
     <class name="model.TeamApplication" table="teamapplication" schema="coursecenter">
         <composite-id name="teamApplicationPK" class="model.TeamApplicationPK">
         <key-property name="teamId">
-            <column name="team_id" sql-type="varchar(10)" length="10" not-null="true"/>
+            <column name="team_id" sql-type="varchar(50)" length="10" not-null="true"/>
         </key-property>
         <key-property name="studentId">
             <column name="student_id" sql-type="varchar(10)" length="10" not-null="true"/>
