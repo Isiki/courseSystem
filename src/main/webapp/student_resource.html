@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Metronic | Page Layouts - Blank Page</title>
+    <title></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -69,9 +69,8 @@
             <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
             <!-- BEGIN PAGE HEADER-->
-            <h3 class="page-title">
-                Blank Page <small>blank page</small>
-            </h3>
+            <h3 class="page-title" th:text="'资源 - '+${session.course_name}"></h3>
+
             <div class="page-bar">
                 <ul id="respath-bar" class="page-breadcrumb">
                     <li class="dirPath-home-li">
