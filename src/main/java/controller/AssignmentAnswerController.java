@@ -79,8 +79,8 @@ public class AssignmentAnswerController {
         TeamAssignmentAnswer answer=assignmentAnswerService.getTeamAnswerByPK(pk);
         answer.setComment(comment);
         answer.setGrade(Integer.parseInt(grade));
-        assignmentAnswerService.commentAssignment(answer);
-        return "success";
+        boolean success = assignmentAnswerService.commentAssignment(answer);
+        return success?"success":"failed";
     }
     
     @RequestMapping(value = "t/check_personal_assignment", method = RequestMethod.POST)
@@ -111,7 +111,7 @@ public class AssignmentAnswerController {
         }
         File file = files.get(0);
         String filename = file.getName();
-        String fullpath = request.getSession().getServletContext().getRealPath(path + "/" + filename);
+        String fullpath = request.getSession().getServletContext().getRealPath(answerRootPath + "/" + assId + "/" + subCataId + "/" + filename);
         try {
             response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
             FileInputStream in = new FileInputStream(fullpath);

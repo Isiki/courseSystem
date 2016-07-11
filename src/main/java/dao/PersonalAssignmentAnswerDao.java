@@ -14,4 +14,6 @@ public interface PersonalAssignmentAnswerDao extends Dao<PersonalAssignmentAnswe
     public List<PersonalAssignmentAnswer> getPersonalAnswersByCourseId(String id);
     public List<PersonalAssignmentAnswer> getPersonalAssignmentsToBeSubmittedByStudent(String studentId);
     public List<PersonalAssignmentAnswer> getPersonalAssignmentsToBeSubmittedByCourseId(String courseId);
+    int UpdatePersonalGradeAndComment(String assid, String stuid, int grade, String comment);
+
 }

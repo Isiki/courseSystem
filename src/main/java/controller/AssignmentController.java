@@ -54,20 +54,34 @@ public class AssignmentController {
         return "assignment/add_assignment";
     }
 
-    @RequestMapping("save_assignment")
+    @RequestMapping(value = "t/save_assignment", method = RequestMethod.POST)
     @ResponseBody
-    public String saveAssignment(Assignment assignment, @ModelAttribute("startDate") String startDate , @ModelAttribute("endDate")String endDate, HttpSession session) {
-        assignment.setIdInCourse(assignmentService.consultAssignmentMaxId(assignment.getCourseId()));
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss" );
+    public String saveAssignment(HttpServletRequest request, HttpSession session) {
+        Assignment assignment = new Assignment();
+        String cid = request.getParameter("courseId");
+        String hding = request.getParameter("heading");
+        String dsc = request.getParameter("description");
+
+        assignment.setCourseId(request.getParameter("courseId"));
+        assignment.setHeading(request.getParameter("heading"));
+        assignment.setDescription(request.getParameter("description"));
+        String startDateRaw = request.getParameter("startDate");
+        String endDateRaw = request.getParameter("endDate");
+        assignment.setIsTeamwork(request.getParameter("isTeamwork").equals("true"));
+        assignment.setIdInCourse(1);
+        assignment.setTotalGrade(5);
+        assignment.setAttachmentUrl("about:blank");
+        //assignment.setIdInCourse(assignmentService.consultAssignmentMaxId(assignment.getCourseId())+1);
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
         try {
-            assignment.setStartTime(dateFormat.parse(startDate));
-            assignment.setEndTime(dateFormat.parse(endDate));
+            assignment.setStartTime(dateFormat.parse(startDateRaw));
+            assignment.setEndTime(dateFormat.parse(endDateRaw));
         }catch (Exception e){
             System.out.println(e);
             return "fail";
         }
-/*        assignment.setId("7");*/
-            assignmentService.insertAssignment(assignment);
+
+        assignmentService.insertAssignment(assignment);
         return "success";
 
     }

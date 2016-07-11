@@ -50,6 +50,15 @@ public class PersonalAssignmentAnswerDaoImpl extends DaoImpl<PersonalAssignmentA
     }
 
     @Override
+    public int UpdatePersonalGradeAndComment(String assid, String stuid, int grade, String comment) {
+        Query query = sessionFactory.getCurrentSession().createSQLQuery(
+                "UPDATE personalassignmentanswer " +
+                        "SET grade = " + grade + ", comment='"+comment+"' " +
+                        "WHERE assignment_id='"+assid+"' AND student_id='"+stuid+"'");
+        return query.executeUpdate();
+    }
+
+    @Override
     public List<PersonalAssignmentAnswer> getAnswerByAssignmentId(String assignmentId) {
         if (assignmentId!=null)
         {

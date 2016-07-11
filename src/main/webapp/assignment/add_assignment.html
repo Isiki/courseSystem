@@ -65,21 +65,17 @@
 
             <!-- BEGIN PAGE HEADER-->
             <h3 class="page-title">
-                Blank Page <small>blank page</small>
+                添加作业
             </h3>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
                         <i class="fa fa-home"></i>
-                        <a href="index.html">Home</a>
+                        <a href="assignment.do">作业管理</a>
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <a href="#">Page Layouts</a>
-                        <i class="fa fa-angle-right"></i>
-                    </li>
-                    <li>
-                        <a href="#">Blank Page</a>
+                        <a href="#">添加作业</a>
                     </li>
                 </ul>
             </div>
@@ -93,7 +89,7 @@
                             <div class="caption">发布作业</div>
                         </div>
                         <div class="portlet-body">
-                        <form id="add_assignment" th:action="@{/teacher/save_assignment.do}" role="add_assignment" method="post">
+                        <form id="add_assignment" action="save_assignment.do" role="add_assignment" method="post">
                             <hr class="clearfix"/>
                             <table class="table table-striped table-bordered table-hover table-full-width m-table"
                                    id="sample_1">
@@ -154,16 +150,12 @@
 </body>
 <script type="application/javascript">
     function assign(){
-
         $.ajax({
             url:"save_assignment.do",
             type:"POST",
             data:$('#add_assignment').serialize(),
             dataType:"json",
-            error: function(request) {
-                alert("Commit error!");
-            },
-            success:function(res){
+            success: function(res, state){
                 if(res=="success"){
                     res = "提交成功";
                 }else{

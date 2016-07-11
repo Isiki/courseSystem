@@ -1,5 +1,7 @@
 package controller;
 
+import model.Course;
+import model.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +31,19 @@ public class AdminViewController {
 
     @RequestMapping(value = "course", method = RequestMethod.GET)
     public String showCourses(Model model){
-        model.addAttribute("courses", courseService.getAllCourses());
+        List<Course> courses = courseService.getAllCourses();
+        List<String> teacherNames = new ArrayList<>();
+
+        for(Course c : courses){
+            String name = "";
+            List<Teacher> teachers = courseService.getTeachers(c.getId());
+            for(Teacher t : teachers){
+                name += t.getRealName()+" ";
+            }
+            teacherNames.add(name);
+        }
+        model.addAttribute("courses", courses);
+        model.addAttribute("teacher_names", teacherNames);
         return "course_front";
     }
 
