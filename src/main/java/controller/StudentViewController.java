@@ -295,8 +295,16 @@ public class StudentViewController {
      * 具体实现方式未讨论
      */
     @RequestMapping(value = "apply_team", method = RequestMethod.POST)
-    @ResponseBody
-    public String joinTeam(String team_id, HttpSession session){
+    public void joinTeam(HttpServletRequest request, HttpServletResponse response) {
+        UserSession user = new UserSession(request.getSession());
+        if(stService.applyForTeam(user.getUserId(), request.getParameter("team_id"))) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+    /*public String joinTeam(String team_id, HttpSession session){
         // 学生类型
         UserSession user = new UserSession(session);
         if(stService.applyForTeam(user.getUserId(),team_id)) {
@@ -305,7 +313,7 @@ public class StudentViewController {
         else{
             return "failed";
         }
-    }
+    }*/
 
     @RequestMapping(value = "team_app", method = RequestMethod.GET)
     public String consultTeamApplication(Model model,HttpSession session){

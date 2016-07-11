@@ -97,6 +97,23 @@
                                     <h4 class="modal-title" id="applicationModalHead">当前申请</h4>
                                 </div>
                                 <div class="modal-body">
+                                    <div th:each="app,i:${applications}" th:id="'app_'+${i}" class="panel-collapse collapse in">
+                                        <div class="row well">
+                                            <div class="col-md-10">
+                                                <p th:text="'申请人：'+${app.realName}"></p>
+                                                <p th:text="'学号：'+${app.studentId}"></p>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" class="btn btn-primary btn-block" data-toggle="collapse" th:data-target="'#app_'+${i}" aria-expanded="true" th:aria-controls="'app_'+${i}">
+                                                    <i class="glyphicon glyphicon-ok"></i>同意
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-block" data-toggle="collapse" th:data-target="'#app_'+${i}" aria-expanded="true" th:aria-controls="'app_'+${i}">
+                                                    <i class="glyphicon glyphicon-trash"></i>拒绝
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div id="app_1"  class="panel-collapse collapse in">
                                         <div class="row well">
                                             <div class="col-md-10">
@@ -250,15 +267,18 @@
                     <tr>
                         <th>团队编号</th>
                         <th>团队名称</th>
+                        <th>团队描述</th>
                         <th>团队负责人</th>
-                        <th>申请加入</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody id="homework_show_case">
-                    <tr th:each="team:${teams}" >
-                        <td th:text="${team.id}"></td>
-                        <td th:text="${team.teamName}"></td>
-                        <button class="btn-primary">申请加入</button>
+                    <tr th:each="team:${list}" >
+                        <td th:text="${team['team_id']}"></td>
+                        <td th:text="${team['team_name']}"></td>
+                        <td th:text="${team['team_description']}"></td>
+                        <td th:text="${team['teamleader_name']}"></td>
+                        <td><button class="btn btn-primary btn-send-app">申请加入</button></td>
                     </tr>
                     </tbody>
                 </table>
@@ -289,7 +309,7 @@
 <script type="text/javascript" th:inline="javascript">
     var appAmount = [[${appAmount}]];
 
-    $('#teammem_table').dataTable({
+    $('#teammem_table').DataTable({
         dom: 'B<"pull-right"f>rt<"pull-right"p>',
         language: {
             lengthMenu: "每页 _MENU_ 条记录",
@@ -322,7 +342,7 @@
         ]
     });
 
-    $('#teammate_table').dataTable({
+    $('#teammate_table').DataTable({
         language: {
             lengthMenu: "每页 _MENU_ 条记录",
             zeroRecords: "没有找到记录",
@@ -345,7 +365,26 @@
         }
     });
 
-    $('#teams_table').dataTable({
+    var teamsTable = $('#teams_table').DataTable({
+        dom: '<"pull-right"f>rt<"pull-right"p>',
+        columnDefs: [
+            {
+                width: "150px",
+                targets: 0
+            },
+            {
+                width: "150px",
+                targets: 1
+            },
+            {
+                width: "150px",
+                targets: 3
+            },
+            {
+                width: "120px",
+                targets: 4
+            }
+        ],
         language: {
             lengthMenu: "每页 _MENU_ 条记录",
             zeroRecords: "没有找到记录",
@@ -366,6 +405,24 @@
                 sortDescending: "降序排列"
             }
         }
+    });
+    
+    $(document).on('click', '.btn-send-app', function () {
+        var team = teamsTable.row($(this).closest('tr')).data();
+        var teamId = team[0];
+        $.ajax({
+            url: "apply_team.do",
+            method: "post",
+            data: {
+                team_id: teamId
+            },
+            success: function() {
+                layer.alert("申请成功！");
+            },
+            failure: function() {
+                layer.alert("申请失败！");
+            }
+        });
     });
 
 </script>
