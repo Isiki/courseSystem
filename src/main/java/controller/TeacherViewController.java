@@ -173,13 +173,27 @@ public class TeacherViewController {
     /*
     * 教师查看团队成员名单
      */
-    @RequestMapping(value = "team_detail",method = RequestMethod.GET)
-    public String showTeamMembers(HttpServletRequest request,HttpServletResponse response){
+    @RequestMapping(value = "team_detail")
+    public void showTeamMembers(HttpServletRequest request,HttpServletResponse response){
         String teamId = request.getParameter("team_id");
         List<Student> students = teamService.getStudentsInTeam(teamId);
-        JSONArray array = new JSONArray();
-        array.fromObject(students);
-        return "team_detail";
+        JSONArray array = JSONArray.fromObject(students);
+        JSONObject obj = new JSONObject();
+        obj.put("data", array);
+
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        PrintWriter respWriter = null;
+        try {
+            respWriter = response.getWriter();
+            respWriter.append(obj.toString());
+        } catch(IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (respWriter != null)
+                respWriter.close();
+        }
     }
 
 
