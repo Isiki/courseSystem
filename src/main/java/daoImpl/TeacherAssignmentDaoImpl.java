@@ -45,7 +45,7 @@ public class TeacherAssignmentDaoImpl implements TeacherAssignmentDao{
 
     public List<Map<String,Object>> getAllStudentAssignmentSubmissions(String assignment_id){
         Query query=sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT student.id,student.real_name,personalassignmentanswer.submit_time FROM personalassignmentanswer INNER JOIN student ON student.id=personalassignmentanswer.student_id WHERE assignment_id=\'"+assignment_id+"\'");
+                .createSQLQuery("SELECT student.id,student.real_name,personalassignmentanswer.submit_time,personalassignmentanswer.text FROM personalassignmentanswer INNER JOIN student ON student.id=personalassignmentanswer.student_id WHERE assignment_id=\'"+assignment_id+"\'");
         List<Object[]> personalResult = query.list();
         List<Map<String, Object>> targetList = new ArrayList<>();
         for(Object[] line : personalResult)
@@ -54,13 +54,14 @@ public class TeacherAssignmentDaoImpl implements TeacherAssignmentDao{
             tmp.put("submitter_id", line[0]);
             tmp.put("submitter_name", line[1]);
             tmp.put("submit_time", line[2]);
+            tmp.put("text",line[3]);
             targetList.add(tmp);
         }
         return targetList;
     }
     public List<Map<String,Object>> getAllTeamAssignmentSubmissions(String assignment_id){
         Query query=sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT team.id,team.team_name,teamassignmentanswer.submit_time FROM teamassignmentanswer INNER JOIN team ON team.id=teamassignmentanswer.team_id WHERE assignment_id=\'"+assignment_id+"\'");
+                .createSQLQuery("SELECT team.id,team.team_name,teamassignmentanswer.submit_time,teamassignmentanswer.text FROM teamassignmentanswer INNER JOIN team ON team.id=teamassignmentanswer.team_id WHERE assignment_id=\'"+assignment_id+"\'");
         List<Object[]> personalResult = query.list();
         List<Map<String, Object>> targetList = new ArrayList<>();
         for(Object[] line : personalResult)
@@ -69,6 +70,7 @@ public class TeacherAssignmentDaoImpl implements TeacherAssignmentDao{
             tmp.put("submitter_id", line[0]);
             tmp.put("submitter_name", line[1]);
             tmp.put("submit_time", line[2]);
+            tmp.put("text",line[3]);
             targetList.add(tmp);
         }
         return targetList;

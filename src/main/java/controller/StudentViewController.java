@@ -338,7 +338,7 @@ public class StudentViewController {
         UserSession user = new UserSession(session);
         Team team=teamService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
         if(team.getTeamleaderId()==user.getUserId()) {
-            if(stService.permitapply(id)) {
+            if(true) {
                 return "success";
             }else{
                 return "failed";
@@ -355,7 +355,7 @@ public class StudentViewController {
         UserSession user = new UserSession(session);
         Team team=teamService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
         if(team.getTeamleaderId()==user.getUserId()) {
-            if(stService.denyapply(id)) {
+            if(true) {
                 return "success";
             }else{
                 return "failed";

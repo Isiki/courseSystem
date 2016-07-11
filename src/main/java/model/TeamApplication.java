@@ -7,33 +7,20 @@ import javax.persistence.*;
  */
 @Entity
 public class TeamApplication {
-    private String id;
-    private String studentId;
-    private String teamId;
+    private TeamApplicationPK teamApplicationPK;
     private String courseId;
     private String description;
     private String realName;
-    @Id
-    @Column(name = "id", nullable = false, length = 10)
-    public String getId() {
-        return id;
+
+    public TeamApplicationPK getTeamApplicationPK() {
+        return teamApplicationPK;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-    @JoinTable
-    @Column(name = "team_id", nullable = false, length = 10)
-    public String getTeamId() {
-        return teamId;
+    public void setTeamApplicationPK(TeamApplicationPK teamApplicationPK) {
+        this.teamApplicationPK = teamApplicationPK;
     }
 
-    public void setTeamId(String teamId) {
-        this.teamId = teamId;
-    }
 
-    @JoinTable
-    @Column(name = "course_id", nullable = false, length = 10)
     public String getCourseId() {
         return courseId;
     }
@@ -42,18 +29,9 @@ public class TeamApplication {
         this.courseId = courseId;
     }
 
-    @JoinTable
-    @Column(name = "student_id", nullable = false, length = 10)
-    public String getStudentId() {
-        return studentId;
-    }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
 
-    @Basic
-    @Column(name = "description", length = 50)
+
     public String getDescription() {
         return description;
     }
@@ -62,8 +40,7 @@ public class TeamApplication {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "real_name", length = 10)
+
     public String getRealName() {
         return realName;
     }
@@ -71,7 +48,7 @@ public class TeamApplication {
     public void setRealName(String realName) {
         this.realName = realName;
     }
-
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -79,10 +56,9 @@ public class TeamApplication {
         TeamApplication that = (TeamApplication) o;
 
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+
         if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (studentId != null ? !studentId.equals(that.studentId) : that.studentId != null) return false;
-        if (teamId != null ? !teamId.equals(that.teamId) : that.teamId != null) return false;
+        if (teamApplicationPK != null ? !teamApplicationPK.equals(that.teamApplicationPK) : that.teamApplicationPK != null) return false;
         if (realName != null ? !realName.equals(that.realName) : that.realName != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
 
@@ -92,10 +68,8 @@ public class TeamApplication {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = teamApplicationPK != null ? teamApplicationPK.hashCode() : 0;
         result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
-        result = 31 * result + (studentId != null ? studentId.hashCode() : 0);
-        result = 31 * result + (teamId != null ? teamId.hashCode() : 0);
         result = 31 * result + (realName != null ? realName.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
