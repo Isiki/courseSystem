@@ -225,7 +225,7 @@ public class StudentViewController {
         String student_id = getStudentIdInSession(request.getSession());
 
         Team team = teamService.getStudentTeamInCourse(course_id, student_id);
-        boolean hasTeam = (null==team);
+        boolean hasTeam = (null!=team);
         model.addAttribute("hasTeam", (hasTeam?"true":"false"));
         boolean isTeamLeader;
 
@@ -233,6 +233,9 @@ public class StudentViewController {
             String a=team.getTeamleaderId();
             if(a.equals(student_id)) {
                 isTeamLeader= true;
+                List<TeamApplication> apps=stService.consultapply(team.getId());
+                model.addAttribute("applications",apps);
+                model.addAttribute("appAmount",apps.size());
             }
             else{
                 isTeamLeader = false;
@@ -241,9 +244,13 @@ public class StudentViewController {
             model.addAttribute("theTeam", team);
             model.addAttribute("isTeamLeader",isTeamLeader);
             model.addAttribute("studentsIn", studentsIn);
+
         } else {
-            List<Team> teams = teamService.getAllTeamsUnderCourse(course_id);
-            model.addAttribute("teams", teams);
+           //List<Team> teams = teamService.getAllTeamsUnderCourse(course_id);
+            //model.addAttribute("teams", teams);
+
+            List<Map<String,Object>> list=new ArrayList<>();
+            list=teamService.getAllTeamWithLeader(course_id);
         }
 
         return "team";
@@ -305,8 +312,10 @@ public class StudentViewController {
         UserSession user = new UserSession(session);
         Team team=teamService.getStudentTeamInCourse(user.getCourse().getId(),user.getUserId());
         if(team.getTeamleaderId()==user.getUserId()) {
+            List<TeamApplication> apps=stService.consultapply(team.getId());
             model.addAttribute("isTeamLeader","true");
-            model.addAttribute("applications",stService.consultapply(team.getId()));
+            model.addAttribute("applications",apps);
+            model.addAttribute("appAmount",apps.size());
         }else{
             model.addAttribute("isTeamLeader","false");
         }
