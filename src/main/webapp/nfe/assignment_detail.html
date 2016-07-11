@@ -58,6 +58,9 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                             <h4 class="modal-title">批改</h4>
                         </div>
+                        <div id="check_assid" value=""></div>
+                        <div id="check_subid" value=""></div>
+                        <div id="check_isteam" value=""></div>
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <div class="form-group">
@@ -76,7 +79,7 @@
                         </div>
                         <div class="modal-footer">
                             <button id="check_submit_btn" class="btn red">确认</button>
-                            <button id="check_cancel_btn" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button class="btn btn-default" data-dismiss="modal">取消</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -131,10 +134,7 @@
                                 <td>
                                     <div>
                                         <button class="btn-primary btn-modal-open"
-                                                th:with="ctt=${ass['text']}"
-                                                th:with="assid=${ass['assignment_id']"
-                                                th:with="subid=${ass['submitter_id']"
-                                                th:onclick="|openModal(,2,3)|">
+                                                th:onclick="|openModal('${ass['text']}', '${assignment.id}', '${ass['submitter_id']}', '${assignment.isTeamwork==true?'true':'false'}')|">
                                             详情
                                         </button>
                                         <button class="btn-primary btn-download-att" th:with="bid=${ass['submitter_id']}"
@@ -257,10 +257,44 @@
         openUrlUtil('POST', 'downloadAnswer.do', {ass_id: aid, sub_cata_id: bid}, '_self');
     }
 
-    function openModal(content, aid, sid){
+    function handIn(grade, comment, assid, subid, isteam){
+        if(isteam == "true") {
+            $.post("check_team_assignment",
+                    {
+                        grade: grade,
+                        comment: comment,
+                        assignment_id: assid,
+                        team_id: sub_id
+                    },
+                    function(data, status, xhr){
+                        alert(data);
+                        $("#portlet-config").toggle();
+                    });
+        }
+        else{
+            $.post("check_personal_assignment",
+                    {
+                        grade: grade,
+                        comment: comment,
+                        assignment_id: assid,
+                        student_id: sub_id
+                    },
+                    function(data, status, xhr){
+                        alert(data);
+                        $("#portlet-config").toggle();
+                    }
+            );
+        }
+    }
+
+    function openModal(content, assid, subid, isteam){
         $("#portlet-config").modal();
         $("#check_content").text(content);
-        $("#check_")
+        var grade = $("#check_score").text();
+        var comment = $("#check_comment").text();
+        $("#check_submit_btn").click(function(){
+            handIn(grade, comment, assid, subid, isteam);
+        });
     }
 </script>
 
