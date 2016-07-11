@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ElaineC on 2016/7/5.
@@ -129,5 +131,27 @@ public class CourseDaoImpl implements CourseDao{
 
         if(sts == null) sts = new ArrayList<>();
         return sts;
+    }
+
+    public List<Map<String,Object>> getCourseWithTeacherAndTeamAllowedByStudentId(String student_id){
+        Query query=sessionFactory.getCurrentSession()
+                .createSQLQuery("select course_name,teacher.real_name,team_allowed from course "+
+                        "inner join selection on selection.course_id = course.id "+
+                        "inner join teaching on teaching.course_id = course.id "+
+                        "inner join teacher on teaching.teacher_id = teacher.id "+
+                        "where selection.student_id = \'"+student_id+"\'");
+        List<Object[]> teamResult = query.list();
+        List<Map<String, Object>> targetList= new ArrayList<>();
+        for(Object[] line : teamResult)
+        {
+            Map<String, Object> tmp = new HashMap<>();
+            tmp.put("course_name", line[0]);
+            tmp.put("teacher.real_name", line[1]);
+            tmp.put("team_allowed", line[2]);
+
+            targetList.add(tmp);
+        }
+        targetList.addAll(targetList);
+        return targetList;
     }
 }

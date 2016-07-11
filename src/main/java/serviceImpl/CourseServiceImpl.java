@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import service.CourseService;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -58,5 +59,10 @@ public class CourseServiceImpl implements CourseService {
     public Course getCourseById(String course_id){
         Course course = courseDao.getCourseById(course_id);
         return  course;
+    }
+
+    public List<Map<String,Object>> getCourseWithTeacherAndTeamAllowedByStudentId(String student_id){
+        List<Map<String,Object>> list=courseDao.getCourseWithTeacherAndTeamAllowedByStudentId(student_id);
+        return list;
     }
 }
