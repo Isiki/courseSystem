@@ -166,8 +166,13 @@ public class TeacherViewController {
         String course_id = getCourseIdInSession(request.getSession());
         List<Map<String,Object>> list = teamService.getAllTeamWithLeader(course_id);
         model.addAttribute("teams", list);
-        return "team";
+        return "teacher_team";
     }
+
+    /*
+    * 教师查看团队成员名单
+     */
+    @RequestMapping(value = "")
 
 
 
