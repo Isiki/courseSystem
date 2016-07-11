@@ -107,12 +107,14 @@
                                     <div class="form-group">
                                         <label for="startTime" class="col-md-2 control-label">开始时间</label>
                                         <div class="col-md-4">
+                                            <div id="start-time-saver" th:value="${assignment.startTime}"></div>
                                             <span class="form-control-static" name="startTime" id="startTime" th:text="${assignment.startTime}"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="endTime" class="col-md-2 control-label">结束时间</label>
                                         <div class="col-md-4">
+                                            <div id="end-time-saver" th:value="${assignment.endTime}"></div>
                                             <span class="form-control-static" name="endTime" id="endTime" th:text="${assignment.endTime}"></span>
                                         </div>
                                     </div>
@@ -160,6 +162,18 @@
 
 <script type="application/javascript">
     function assign(){
+
+        if(comptime(getNowStr(), $("#start-time-saver").attr("value").substring(0, 19)))
+        {
+            alert("未到开始时间！");
+            return ;
+        }
+
+        if(comptime($("#end-time-saver").attr("value").substring(0, 19), getNowStr())){
+            alert("已过结束时间！");
+            return ;
+        }
+
         var data= $.param($('#form').serializeArray());
         $.ajax({
             url:"savePAnswer_action.do",
@@ -187,7 +201,37 @@
 
     })
 
+    function getNowStr(){
+        var d = new Date();
+        var vYear = d.getFullYear();
+        var vMon = d.getMonth() + 1;
+        var vDay = d.getDate();
+        var h = d.getHours();
+        var m = d.getMinutes();
+        var se = d.getSeconds();
+        var s = vYear+"-"+(vMon<10 ? "0" + vMon : vMon)+"-"+(vDay<10 ? "0"+ vDay : vDay)+" "+(h<10 ? "0"+ h : h)+":"+(m<10 ? "0" + m : m)+":"+(se<10 ? "0" +se : se);
+        return s;
+    }
 
+    function comptime(beginTime, endTime) {
+        // yyyy-MM-hh HH:mm:ss
+        var beginTimes = beginTime.substring(0, 10).split('-');
+        var endTimes = endTime.substring(0, 10).split('-');
+
+        beginTime = beginTimes[1] + '-' + beginTimes[2] + '-' + beginTimes[0] + ' ' + beginTime.substring(10, 19);
+        endTime = endTimes[1] + '-' + endTimes[2] + '-' + endTimes[0] + ' ' + endTime.substring(10, 19);
+
+        var a = (Date.parse(endTime) - Date.parse(beginTime)) / 3600 / 1000;
+        if (a < 0) {
+            return false;
+        } else if (a > 0) {
+            return true;
+        } else if (a == 0) {
+            return true;
+        } else {
+            return 'exception'
+        }
+    }
 
 
 </script>
