@@ -112,6 +112,11 @@
                                 <th>文件链接</th>
                             </tr>
                             </thead>
+                            <tbody th:if="teamType == 'personal'">
+                            <tr th:each="ass:${assignmentAnswers}">
+                                <td th:text="${teamType}"></td>
+                            </tr>
+                            </tbody>
                         </table>
                     </div>
                     <!-- 作业提交统计表结束 -->
@@ -194,7 +199,7 @@
 <script th:src="@{/resources/DataTables/datatables.js}"></script>
 <script>
 
-    // BEGIN RICH TEXT
+    /* BEGIN RICH TEXT
     $(document).ready(function () {
         $("#btn_richtext_submit").click(function() {
             alert(UE.getEditor('container').getAllHtml());
@@ -243,46 +248,49 @@
             'vbs', 'vsd', 'vss', 'vst', 'wav', 'wave', 'wm', 'wma', 'wmd',
             'wmf', 'wmv', 'wps', 'wpt', 'xls', 'xlsx', 'xlt', 'xml', 'zip'];
 
-        $(document).ready(function () {
-            table = $('#resTable').DataTable({
-                dom: "Bfrtip",
-                ajax: "/show_resource.do",
-                paging: false,
-                info: false,
-                searching: false,
-                columns: [
-                    {
-                        data: "fileName",
-                        render: function (data, type, row) {
-                            var ext = data.match('\\.([^\\.]*)$');
-                            if (ext == null)
-                                ext = 'folder';
-                            else if (fileType.indexOf(ext) == -1)
-                                ext = 'unknown';
-                            else ext = ext[1];
-                            return '<img src="resources/image/filetype/' + ext + '.gif" />' + data;
-                        }
-                    },
-                    {
-                        data: "fileCTime"
-                    },
-                    {
-                        data: "fileSize"
-                    }],
-                select: true,
-                buttons: [
-                    {
-                        text: "上传文件",
-                        action: function (e, dt, node, config) {
-                            $('#uploadModal').modal();
-                        }
+
+    });*/
+    // END FILE UPLOAD
+    /*$(document).ready(function () {
+        table = $('#resTable').DataTable({
+            dom: "Bfrtip",
+            ajax: "/show_resource.do",
+            paging: false,
+            info: false,
+            searching: false,
+            columns: [
+                {
+                    data: "fileName",
+                    render: function (data, type, row) {
+                        var ext = data.match('\\.([^\\.]*)$');
+                        if (ext == null)
+                            ext = 'folder';
+                        else if (fileType.indexOf(ext) == -1)
+                            ext = 'unknown';
+                        else ext = ext[1];
+                        return '<img src="resources/image/filetype/' + ext + '.gif" />' + data;
                     }
-                ]
-            });
+                },
+                {
+                    data: "fileCTime"
+                },
+                {
+                    data: "fileSize"
+                }],
+            select: true,
+            buttons: [
+                {
+                    text: "上传文件",
+                    action: function (e, dt, node, config) {
+                        $('#uploadModal').modal();
+                    }
+                }
+            ]
         });
     });
-    // END FILE UPLOAD
+    */
 
+    $("#resTable").dataTable();
 </script>
 
 </html>
