@@ -104,7 +104,17 @@ public class AssignmentAnswerController {
         String assId = request.getParameter("ass_id");
         String subCataId = request.getParameter("sub_cata_id");
         String path = request.getSession().getServletContext().getRealPath(answerRootPath + "/" + assId + "/" + subCataId);
-        List<File> files = fileService.getAllFiles(path);
+        List<File> files = null;
+        try{
+            files = fileService.getAllFiles(path);
+        } catch (Exception e){
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            try {
+                response.sendRedirect("assignment_detail.do?assignment_id="+assId);
+            }catch (Exception ee){ ee.printStackTrace();}
+            return;
+        }
+
         if(files.size() <= 0 || files.size() >= 2) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;

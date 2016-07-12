@@ -61,7 +61,8 @@ public class AssignmentController {
         String startDateRaw = request.getParameter("startDate");
         String endDateRaw = request.getParameter("endDate");
         String isTeamwork = request.getParameter("isTeamwork");
-        assignment.setIsTeamwork(isTeamwork.equals("true"));
+        boolean tw = isTeamwork==null?false:(isTeamwork.equals("true"));
+        assignment.setIsTeamwork(tw);
         assignment.setTotalGrade(5);
         assignment.setAttachmentUrl("about:blank");
         int id = assignmentService.consultAssignmentMaxId(cid)+1;
