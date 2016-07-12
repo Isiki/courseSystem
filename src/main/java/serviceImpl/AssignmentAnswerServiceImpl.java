@@ -90,7 +90,7 @@ public class AssignmentAnswerServiceImpl implements AssignmentAnswerService{
     }
 
     public boolean insertTAnswer(TeamAssignmentAnswer answer) {
-        answer.setIsSubmitted(false);
+        answer.setIsSubmitted(true);
         answer.setSubmitTime(new Date());
         teamAssignmentAnswerDao.saveOrUpdate(answer);
         return true;

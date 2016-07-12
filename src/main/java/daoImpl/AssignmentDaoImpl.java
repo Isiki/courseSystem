@@ -48,7 +48,7 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
         Query query = sessionFactory.getCurrentSession().createSQLQuery(
                 "select MAX(id_in_course) from assignment WHERE course_id='"+courseId+"'");
         List<Object> list = query.list();
-        if(list.isEmpty()) return 0;
+        if(list.isEmpty() || list.get(0) == null) return 0;
         Integer i  = (Integer) list.get(0);
         return i.intValue();
     }
@@ -77,7 +77,6 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
             tmp.put("is_submitted", (line[7]!=null&&(byte)line[7]==1)?"true":"false");
-            System.out.println(line[7]);
             tmp.put("assignment_id", line[8]);
             targetList.add(tmp);
         }
@@ -103,7 +102,6 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
             tmp.put("is_submitted", (line[7]!=null&&(byte)line[7]==1)?"true":"false");
-            System.out.println(line[7]);
             tmp.put("assignment_id", line[8]);
             targetList1.add(tmp);
         }
@@ -113,15 +111,15 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
     }
 
     public List<Map<String,Object>> allAssimentsWithCourseAndSubmission(String student_id){
-        String psql = "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted,a.id\n" +
-                " from\n" +
-                "(select assignment.* from assignment\n" +
-                "left JOIN selection on selection.course_id = assignment.course_id\n" +
-                "where selection.student_id=\'"+student_id+"\' and assignment.is_teamwork = 0) as a \n" +
-                "left join\n" +
-                "(select * from personalassignmentanswer WHERE student_id=\'"+student_id+"\' ) as b\n" +
-                "on a.id = b.assignment_id\n" +
-                "left join course on course.id=course_id;\n";
+        String psql = "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted,a.id " +
+                " from" +
+                "(select assignment.* from assignment " +
+                "left JOIN selection on selection.course_id = assignment.course_id " +
+                "where selection.student_id=\'"+student_id+"\' and assignment.is_teamwork = 0) as a  " +
+                "left join " +
+                "(select * from personalassignmentanswer WHERE student_id=\'"+student_id+"\') as b " +
+                "on a.id = b.assignment_id " +
+                "left join course on course.id=course_id; ";
         Query query1=sessionFactory.getCurrentSession().createSQLQuery(psql);
 
 
@@ -143,14 +141,14 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             targetList.add(tmp);
         }
 
-        String tsql = "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted,a.id\n" +
-                " from\n" +
-                "(select assignment.* from assignment\n" +
-                "left JOIN selection on selection.course_id = assignment.course_id\n" +
-                "where selection.student_id=\'"+student_id+"\' and assignment.is_teamwork = 1) as a \n" +
-                "left join\n" +
+        String tsql = "select heading,course_name,start_time,end_time,is_teamwork,totalgrade,grade,is_submitted,a.id " +
+                " from " +
+                "(select assignment.* from assignment " +
+                "left JOIN selection on selection.course_id = assignment.course_id " +
+                "where selection.student_id=\'"+student_id+"\' and assignment.is_teamwork = 1) as a  " +
+                "left join " +
                 "(select * from teamassignmentanswer WHERE team_id in (select team_id from teaming where student_id = \'"
-                +student_id+"\')) as b\n"+"on a.id = b.assignment_id \n" +
+                +student_id+"\')) as b "+"on a.id = b.assignment_id  " +
                 "left join course on course_id = course.id;";
         Query query2=sessionFactory.getCurrentSession().createSQLQuery(tsql);
         List<Object[]> teamResult = query2.list();

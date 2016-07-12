@@ -48,7 +48,7 @@
 <div class="page-container">
 
     <!-- 侧边导航栏 -->
-    <div th:replace="sidebar::sidebar"></div>
+    <div th:replace="sidebar_static_admin::sidebar"></div>
 
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
@@ -104,6 +104,7 @@
                 <div th:unless="${teachersIn.isEmpty()}" th:each="t:${teachersIn}">
                     <span class="col-xs-2"><a href="#" th:text="${t.realName}"></a></span>
                 </div>
+                <p></p>
                 <h4>学生名单</h4>
                 <span th:unless="${studentsIn.isEmpty()}" th:each="s:${studentsIn}">
                     <span class="col-xs-2"><a href="#" th:text="${s.realName}"></a></span>
