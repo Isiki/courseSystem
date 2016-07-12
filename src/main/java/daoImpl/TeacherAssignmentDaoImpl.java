@@ -45,7 +45,10 @@ public class TeacherAssignmentDaoImpl implements TeacherAssignmentDao{
 
     public List<Map<String,Object>> getAllStudentAssignmentSubmissions(String assignment_id){
         Query query=sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT student.id,student.real_name,personalassignmentanswer.submit_time,personalassignmentanswer.text FROM personalassignmentanswer INNER JOIN student ON student.id=personalassignmentanswer.student_id WHERE assignment_id=\'"+assignment_id+"\'");
+                .createSQLQuery("SELECT student.id,student.real_name,personalassignmentanswer.submit_time,personalassignmentanswer.text " +
+                        "FROM personalassignmentanswer " +
+                        "LEFT JOIN student ON student.id=personalassignmentanswer.student_id " +
+                        "WHERE assignment_id=\'"+assignment_id+"\'");
         List<Object[]> personalResult = query.list();
         List<Map<String, Object>> targetList = new ArrayList<>();
         for(Object[] line : personalResult)

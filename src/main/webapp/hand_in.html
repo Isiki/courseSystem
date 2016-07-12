@@ -67,6 +67,7 @@
             <h3 class="page-title">
                 <p th:text="${assignment.heading}"></p>
             </h3>
+            <div id="team-work-saver" th:value="${assignment.isTeamwork?'true':'false'}"></div>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
@@ -174,9 +175,14 @@
             return ;
         }
 
+        var isTeamWork = $("#team-work-saver").attr("value");
+
+        var ajaxurl;
+        if(isTeamWork == 'false'){ajaxurl="savePAnswer_action.do";}
+        else {ajaxurl="saveTAnswer_action.do";}
         var data= $.param($('#form').serializeArray());
         $.ajax({
-            url:"savePAnswer_action.do",
+            url: ajaxurl,
             type:"POST",
             data:data,
             dataType:"json",
@@ -189,16 +195,19 @@
         });
     }
 
+    var isTeamWork = $("#team-work-saver").attr("value");
+    if(isTeamWork == 'false'){fileurl="savePAttach_action.do";}
+    else {fileurl="saveTAttach_action.do";}
+
     var assign_id = $("#id").attr("value");
     $("#input-file").fileinput({
         language: "zh",
-        uploadUrl: "savePAttach_action.do",
+        uploadUrl: fileurl,
         uploadExtraData: {id: assign_id},
         uploadAsync: true,
         maxFileCount: 1,
         autoReplace: true
     }).on("fileuploaded", function (e, data) {
-
     })
 
     function getNowStr(){

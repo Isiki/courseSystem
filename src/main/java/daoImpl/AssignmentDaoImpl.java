@@ -60,7 +60,7 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
                         "from (select * from assignment " +
                         "where course_id = \'"+course_id+"\' and is_teamwork = 0 ) as a " +
                         "left join (select * from personalassignmentanswer " +
-                        "WHERE student_id=\' "+student_id+"\' ) as b " +
+                        "WHERE student_id=\'"+student_id+"\' ) as b " +
                         "on a.id = b.assignment_id " +
                         "left join course on course.id=course_id;"
                 );
@@ -73,10 +73,11 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("course_name", line[1]);
             tmp.put("start_time", line[2]);
             tmp.put("end_time", line[3]);
-            tmp.put("is_teamwork", line[4]);
+            tmp.put("is_teamwork", (line[4]!=null&&(byte)line[4]==1)?"true":"false");
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
-            tmp.put("is_submitted", line[7]!=null&&(byte)line[7]==1?"true":"false");
+            tmp.put("is_submitted", (line[7]!=null&&(byte)line[7]==1)?"true":"false");
+            System.out.println(line[7]);
             tmp.put("assignment_id", line[8]);
             targetList.add(tmp);
         }
@@ -98,10 +99,11 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("course_name", line[1]);
             tmp.put("start_time", line[2]);
             tmp.put("end_time", line[3]);
-            tmp.put("is_teamwork", line[4]);
+            tmp.put("is_teamwork", (line[4]!=null&&(byte)line[4]==1)?"true":"false");
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
-            tmp.put("is_submitted", line[7]!=null&&(byte)line[7]==1?"true":"false");
+            tmp.put("is_submitted", (line[7]!=null&&(byte)line[7]==1)?"true":"false");
+            System.out.println(line[7]);
             tmp.put("assignment_id", line[8]);
             targetList1.add(tmp);
         }
@@ -133,10 +135,10 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("course_name", line[1]);
             tmp.put("start_time", line[2]);
             tmp.put("end_time", line[3]);
-            tmp.put("is_teamwork", line[4]);
+            tmp.put("is_teamwork", (line[4]!=null&&(byte)line[4]==1)?"true":"false");
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
-            tmp.put("is_submitted", line[7]!=null&&(byte)line[7]==1?"true":"false");
+            tmp.put("is_submitted", (line[7]!=null&&(byte)line[7]==1)?"true":"false");
             tmp.put("assignment_id", line[8]);
             targetList.add(tmp);
         }
@@ -160,10 +162,10 @@ public class AssignmentDaoImpl extends DaoImpl<Assignment,String> implements Ass
             tmp.put("course_name", line[1]);
             tmp.put("start_time", line[2]);
             tmp.put("end_time", line[3]);
-            tmp.put("is_teamwork", line[4]);
+            tmp.put("is_teamwork", (line[4]!=null&&(byte)line[4]==1)?"true":"false");
             tmp.put("total_grade", line[5]);
             tmp.put("grade", line[6]);
-            tmp.put("is_submitted",  line[7]!=null&&(byte)line[7]==1?"true":"false");
+            tmp.put("is_submitted",  (line[7]!=null&&(byte)line[7]==1)?"true":"false");
             tmp.put("assignment_id", line[8]);
             targetList1.add(tmp);
         }

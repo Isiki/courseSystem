@@ -96,8 +96,6 @@ public class StudentController {
 
         System.out.println(request.toString());
 
-
-
         PersonalAssignmentAnswer answer = new PersonalAssignmentAnswer();
         String aid = request.getParameter("id");
         String uid = new UserSession(session).getUserId();
