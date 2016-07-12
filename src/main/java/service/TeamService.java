@@ -23,7 +23,7 @@ public interface TeamService {
 
     public String joinTeam(String team_id,String course_id,String student_id);
     */
-    public String getTeamIdByStudent(String student_id);
+    public String getTeamIdByStudentInCourse(String student_id, String course_id);
     public List<Student> getStudentsInTeam(String team_id);
     public Team getStudentTeamInCourse(String course_id, String student_id);
     public List<Team> getAllTeamsUnderCourse(String course_id);

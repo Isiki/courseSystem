@@ -80,8 +80,9 @@ public class StudentController {
 
     @RequestMapping(value = "saveTAttach_action")
     public void saveTAttach(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        String cid = (String)request.getSession().getAttribute("course_id");
         String aid = request.getParameter("id");
-        String tid = teamService.getTeamIdByStudent(new UserSession(session).getUserId());
+        String tid = teamService.getTeamIdByStudentInCourse(new UserSession(session).getUserId(), cid);
         String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment/"+aid+"/"+tid);
         try {
             fileService.saveFile(request, resURL);
@@ -112,9 +113,10 @@ public class StudentController {
 
     @RequestMapping(value = "saveTAnswer_action")
     public void saveTAnswer(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        String cid = (String)request.getSession().getAttribute("course_id");
         TeamAssignmentAnswer answer = new TeamAssignmentAnswer();
         String aid = request.getParameter("id");
-        String tid = teamService.getTeamIdByStudent(new UserSession(session).getUserId());
+        String tid = teamService.getTeamIdByStudentInCourse(new UserSession(session).getUserId(), cid);
         String resURL = request.getSession().getServletContext().getRealPath("/uploadFiles/assignment/"+aid+"/"+tid);
         answer.setAssignmentId(aid);
         answer.setTeamId(tid);

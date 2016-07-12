@@ -184,9 +184,9 @@ public class TeamDaoImpl extends DaoImpl<Team,String> implements TeamDao{
         return true;
     }
 
-    public String getTeamIdByStudent(String student_id){
+    public String getTeamIdByStudentInCourse(String student_id, String course_id){
         Query query = sessionFactory.getCurrentSession()
-                .createSQLQuery("SELECT * FROM teaming WHERE student_id = \'"+student_id+"\'")
+                .createSQLQuery("SELECT teaming.* FROM team, teaming WHERE teaming.team_id = team.id and student_id = \'"+student_id+"\' and course_id=\'"+course_id+"\'")
                 .addEntity(Teaming.class);
         List<Teaming> teamming = query.list();
         return teamming.get(0).getTeamId();

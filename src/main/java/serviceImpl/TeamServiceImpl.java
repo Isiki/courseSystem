@@ -78,8 +78,8 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public String getTeamIdByStudent(String student_id){
-        String team_id = teamDao.getTeamIdByStudent(student_id);
+    public String getTeamIdByStudentInCourse(String student_id, String course_id){
+        String team_id = teamDao.getTeamIdByStudentInCourse(student_id, course_id);
         return  team_id;
     }
 
